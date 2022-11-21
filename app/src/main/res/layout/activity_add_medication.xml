@@ -639,6 +639,8 @@
         android:text="Effectué"
         android:background="@drawable/round_element"
         android:layout_gravity="center"
+        android:textColor="@color/white"
+        
         />
 
 </LinearLayout>
