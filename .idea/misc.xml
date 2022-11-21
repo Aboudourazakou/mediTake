@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/drawable/round_element.xml" value="0.1" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/activity_home.xml" value="0.22" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/activity_login.xml" value="0.1796875" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/activity_main.xml" value="0.103125" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/activity_more_menu.xml" value="0.165625" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/days_item.xml" value="0.22" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/fragment_dashboard.xml" value="0.103125" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/fragment_home.xml" value="0.103125" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/more_menu_item.xml" value="0.17864583333333334" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/segment_medicament_home_list.xml" value="0.7333333333333334" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/menu/bottom_nav_menu.xml" value="0.103125" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.22" />
+      </ProjectState>
+    </option>
   </component>
 </project>
