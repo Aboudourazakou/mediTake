@@ -30,11 +30,11 @@ public class AddMedicationActivity extends AppCompatActivity {
 
 
     LinearLayout partie2,buttons;
-    Button btnNext , btnNext2 , btnBarSave;
+    Button btnNext , btnNext2 , btnBarSave,btnOtherOptions , btnSaveFirst;
     Spinner spnFrequence;
     EditText medName;
     ImageButton btnClose;
-    LinearLayout addTitle;
+    LinearLayout addTitle , otherOptionView;
     CardView medIcons;
 
     @SuppressLint({"MissingInflatedId", "RestrictedApi"})
@@ -53,6 +53,9 @@ public class AddMedicationActivity extends AppCompatActivity {
         btnClose = findViewById(R.id.close_btn);
         medIcons = findViewById(R.id.cardview_icon_med);
         btnBarSave = findViewById(R.id.btnbar_save);
+        btnOtherOptions = findViewById(R.id.other_option);
+        btnSaveFirst = findViewById(R.id.btn_save_first);
+        otherOptionView = findViewById(R.id.other_option_view);
 
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +85,7 @@ public class AddMedicationActivity extends AppCompatActivity {
         ArrayList<String> frequences = new ArrayList<String>();
         frequences.addAll(Arrays.asList(new String[]{"Une fois par jours", "2 fois par jour", "toutes les 12 heures"}));
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(AddMedicationActivity.this, android.R.layout.simple_spinner_item, frequences);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(AddMedicationActivity.this, android.R.layout.simple_spinner_item, frequences);
 
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -132,6 +135,15 @@ public class AddMedicationActivity extends AppCompatActivity {
                 medIcons.setVisibility(View.VISIBLE);
                 btnNext2.setVisibility(View.GONE);
                 btnBarSave.setVisibility(View.VISIBLE);
+            }
+        });
+
+        btnOtherOptions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnOtherOptions.setVisibility(View.GONE);
+                btnSaveFirst.setVisibility(View.GONE);
+                otherOptionView.setVisibility(View.VISIBLE);
             }
         });
     }
