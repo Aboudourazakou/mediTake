@@ -4,14 +4,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import com.example.meditake.adapters.DaysAdapter;
 import com.example.meditake.adapters.MenuItemAdapter;
+import com.example.meditake.adapters.RappelAdapter;
+import com.example.meditake.alarm.AlarmReceiver;
 import com.example.meditake.databinding.ActivityHomeBinding;
 import com.example.meditake.models.MenuItem;
+import com.example.meditake.models.Rappel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,6 +37,9 @@ import java.util.TreeSet;
 public class HomeActivity extends AppCompatActivity {
     List<String> daysList=new ArrayList<>();
     ActivityHomeBinding binding;
+    List<Rappel>rappelList=new ArrayList<>();
+    AlarmManager alarmManager;
+    PendingIntent pendingIntent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +94,58 @@ public class HomeActivity extends AppCompatActivity {
         binding.dayNumberListView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
         binding.dayNumberListView.setAdapter(new DaysAdapter(totalDays,this,isWeekDays));
         binding.dayNumberListView.smoothScrollBy(2520,1500);
+        for (int i = 0; i < 4; i++) {
+            Rappel rappel=new Rappel();
+            rappelList.add(rappel);
+        }
+
+        binding.rappelsList.setLayoutManager(new LinearLayoutManager(this));
+        binding.rappelsList.setAdapter(new RappelAdapter(rappelList,this));
+        createNotificationChannel();
+        createAlarm();
+
 
 
     }
+
+    private void createAlarm() {
+        alarmManager=(AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent=new Intent(this, AlarmReceiver.class);
+        pendingIntent=PendingIntent.getBroadcast(this,0,intent,0);
+        Calendar calendar=Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY,8);
+        calendar.set(Calendar.MINUTE,26);
+        calendar.set(Calendar.SECOND,0);
+        calendar.set(Calendar.MILLISECOND,0);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
+
+
+
+
+    }
+
+    private void createNotificationChannel() {
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+            CharSequence sequence="TakingMedicamentChannel";
+            String description="Ce canal cree les notifications";
+            int importance= NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel=new NotificationChannel("takemedicament",sequence,importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager=getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+
+        }
+
+
+    }
+    private void cancelAlarm(){
+        Intent intent=new Intent(this,AlarmReceiver.class);
+        pendingIntent=PendingIntent.getBroadcast(this,0,intent,0);
+        if(alarmManager==null){
+            alarmManager= (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        }
+        alarmManager.cancel(pendingIntent);
+
+    }
+
 }
