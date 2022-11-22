@@ -6,17 +6,18 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Journal {
     @PrimaryKey
-    private int id;
+    private Long id;
+
 
     private String message;
 
     private int rappelId;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
