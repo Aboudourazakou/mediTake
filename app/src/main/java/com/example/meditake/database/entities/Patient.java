@@ -6,19 +6,21 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class Patient extends Utilisateur{
-    @PrimaryKey(autoGenerate = true)
-    private int id;
+    @PrimaryKey
+    private Long id;
 
-    public Patient(String prenom, String nom, String motDePasse, int id) {
+    public Patient(String prenom, String nom, String motDePasse) {
         super(prenom, nom, motDePasse);
-        this.id = id;
     }
 
-    public int getId() {
+    public Patient() {
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }

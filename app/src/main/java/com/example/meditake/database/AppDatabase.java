@@ -11,6 +11,7 @@ import com.example.meditake.database.dao.MedecinDao;
 import com.example.meditake.database.dao.MedicamentDao;
 import com.example.meditake.database.dao.PatientDao;
 import com.example.meditake.database.dao.ProgrammeDao;
+import com.example.meditake.database.dao.ProgrammeWithRappelDao;
 import com.example.meditake.database.dao.RappelDao;
 import com.example.meditake.database.dao.TypeMedicamentDao;
 import com.example.meditake.database.entities.Journal;
@@ -18,6 +19,7 @@ import com.example.meditake.database.entities.Medecin;
 import com.example.meditake.database.entities.Medicament;
 import com.example.meditake.database.entities.Patient;
 import com.example.meditake.database.entities.Programme;
+import com.example.meditake.database.entities.ProgrammeWithRappel;
 import com.example.meditake.database.entities.Rappel;
 import com.example.meditake.database.entities.TypeMedicament;
 
@@ -32,6 +34,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract ProgrammeDao programmeDao();
     public abstract RappelDao rappelDao();
     public abstract JournalDao journalDao();
+    public abstract ProgrammeWithRappelDao programmeWithRappelDao();
 
     private static AppDatabase appDatabase;
 

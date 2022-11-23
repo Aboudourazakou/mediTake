@@ -3,7 +3,9 @@ package com.example.meditake.database.dao;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
-import androidx.room.Query;import com.example.meditake.database.entities.Rappel;
+import androidx.room.Query;
+
+import com.example.meditake.database.entities.Rappel;
 
 import java.util.List;
 
@@ -11,6 +13,10 @@ import java.util.List;
 public interface RappelDao {
     @Query("Select * from Rappel")
     List<Rappel> getAll();
+
+
+    @Insert
+    long insert(Rappel p);
 
     @Query("Select * from Rappel where id = :id")
     Rappel getById(int id);

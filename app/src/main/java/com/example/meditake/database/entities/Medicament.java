@@ -7,7 +7,7 @@ import androidx.room.Relation;
 @Entity
 public class Medicament {
     @PrimaryKey
-    private  int id;
+    private Long id;
 
     private String nom;
 
@@ -17,11 +17,22 @@ public class Medicament {
 
     private int typeMedicamentId;
 
-    public int getId() {
+    public Medicament() {
+    }
+
+    public Medicament(Long id, String nom, String img, int qte, int typeMedicamentId) {
+        this.id = id;
+        this.nom = nom;
+        this.img = img;
+        this.qte = qte;
+        this.typeMedicamentId = typeMedicamentId;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

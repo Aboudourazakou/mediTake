@@ -3,35 +3,65 @@ package com.example.meditake.database.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.Date;
 
 @Entity
 public class Programme {
     @PrimaryKey
-    private int id;
+    private Long id;
 
-    private String debut;
+    private int heure;
+
+    private int minutes;
 
     private int duree;
 
-    private int repetition;
+    private String jours;
 
-    private int medicamentId;
+    private Long medicamentId;
 
-    public int getId() {
+    public Programme(Long id, int heure, int minutes, int duree, String jours, int medicamentId) {
+        this.id = id;
+        this.heure = heure;
+        this.minutes = minutes;
+        this.duree = duree;
+        this.jours = jours;
+        this.medicamentId = (long) medicamentId;
+    }
+
+    public Programme() {
+    }
+
+    public Programme(int heure, int minutes, int duree, String jours, int medicamentId) {
+        this.heure = heure;
+        this.minutes = minutes;
+        this.duree = duree;
+        this.jours = jours;
+        this.medicamentId = (long) medicamentId;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getDebut() {
-        return debut;
+
+    public int getHeure() {
+        return heure;
     }
 
-    public void setDebut(String debut) {
-        this.debut =  debut;
+    public void setHeure(int heure) {
+        this.heure = heure;
+    }
+
+    public int getMinutes() {
+        return minutes;
+    }
+
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
     }
 
     public int getDuree() {
@@ -42,19 +72,32 @@ public class Programme {
         this.duree = duree;
     }
 
-    public int getRepetition() {
-        return repetition;
+    public String getJours() {
+        return jours;
     }
 
-    public void setRepetition(int repetition) {
-        this.repetition = repetition;
+    public void setJours(String jours) {
+        this.jours = jours;
     }
 
-    public int getMedicamentId() {
+    public Long getMedicamentId() {
         return medicamentId;
     }
 
-    public void setMedicamentId(int medicamentId) {
+    public void setMedicamentId(Long medicamentId) {
         this.medicamentId = medicamentId;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Programme{" +
+                "id=" + id +
+                ", heure=" + heure +
+                ", minutes=" + minutes +
+                ", duree=" + duree +
+                ", jours='" + jours + '\'' +
+                ", medicamentId=" + medicamentId +
+                '}';
     }
 }
