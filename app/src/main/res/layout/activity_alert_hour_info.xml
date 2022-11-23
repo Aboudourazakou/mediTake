@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".AlertHourInfoActivity"
+
+    android:orientation="vertical"
+    android:padding="20dp">
+
+
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quand devez-vous prendre cette dose ?"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="36dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Combien en prenez vous ?"
+        android:textColor="@color/main_blue"
+        android:textSize="13sp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_marginBottom="12dp">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/decrement_number"
+            android:src="@drawable/ic_baseline_clear_24"
+            />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/number"
+            android:inputType="numberDecimal"
+            android:hint="1"
+            android:textColorHint="@color/black"
+            android:backgroundTint="@color/granite"
+            />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/increment_number"
+            android:src="@drawable/ic_baseline_clear_24"
+            />
+
+
+    </LinearLayout>
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner_type_med"
+        android:layout_gravity="end"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="end"
+        android:layout_marginTop="20dp"
+       >
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:id="@+id/cancel_hour_alert"
+            android:text="Annuler"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/main_blue"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/define_hour_alert"
+            android:text="Definir"
+            android:textColor="@color/main_blue"
+            android:backgroundTint="@color/white"
+
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

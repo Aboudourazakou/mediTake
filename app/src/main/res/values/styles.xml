@@ -9,4 +9,8 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
     </style>
+
+    <style name="SwitchCompatTheme" >
+        <item name="colorControlActivated">@color/main_blue</item>
+    </style>
 </resources>

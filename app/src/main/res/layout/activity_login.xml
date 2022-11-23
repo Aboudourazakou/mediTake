@@ -89,6 +89,21 @@
 
            </TextView>
 
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/circular_indicator"
+                app:indicatorColor="@color/main_blue"
+                app:trackThickness="10dp"
+                app:indicatorSize="100px"
+                app:indicatorDirectionCircular="counterclockwise"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:indeterminate="true"
+                android:indeterminateDuration="3000"
+
+                />
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

@@ -10,6 +10,7 @@ import androidx.core.content.res.ResourcesCompat;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -30,7 +31,7 @@ public class AddMedicationActivity extends AppCompatActivity {
 
 
     LinearLayout partie2,buttons;
-    Button btnNext , btnNext2 , btnBarSave,btnOtherOptions , btnSaveFirst;
+    Button btnNext , btnNext2 , btnBarSave,btnOtherOptions , btnSaveFirst , btnAEffacer;
     Spinner spnFrequence;
     EditText medName;
     ImageButton btnClose;
@@ -56,6 +57,8 @@ public class AddMedicationActivity extends AppCompatActivity {
         btnOtherOptions = findViewById(R.id.other_option);
         btnSaveFirst = findViewById(R.id.btn_save_first);
         otherOptionView = findViewById(R.id.other_option_view);
+
+        btnAEffacer = findViewById(R.id.login);
 
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,5 +149,34 @@ public class AddMedicationActivity extends AppCompatActivity {
                 otherOptionView.setVisibility(View.VISIBLE);
             }
         });
+
+        btnAEffacer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(AddMedicationActivity.this,activity_login.class);
+                i.putExtra("value",1);
+                startActivity(i);
+            }
+        });
     }
+
+
+   /* private void showAlertDialog() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddMedicationActivity.this);
+        final View customLayout = getLayoutInflater().inflate(R.layout.custom, null);
+        alertDialog.setView(customLayout);
+        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // send data from the AlertDialog to the Activity
+                EditText editText = customLayout.findViewById(R.id.editText);
+                Toast.makeText(MainActivity.this,editText.getText().toString(),Toast.LENGTH_LONG).show();
+            }
+        });
+        AlertDialog alert = alertDialog.create();
+        alert.setCanceledOnTouchOutside(false);
+        alert.show();
+    }*/
+
+
 }

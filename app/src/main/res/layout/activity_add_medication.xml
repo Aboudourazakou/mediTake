@@ -120,35 +120,54 @@
                 android:background="@color/cardview_light_background"
                 android:padding="8dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:text="Heures de rappel"
-                    android:id="@+id/heure_rappel"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/main_blue"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
                     android:layout_marginBottom="10dp"
+
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Heures de rappel"
+                        android:id="@+id/heure_rappel"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/main_blue"
+                        android:layout_marginBottom="10dp"
+                        />
+
+                    <Switch
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/switch_hour_alert"
+                    android:layout_gravity="end"
+                        android:theme="@style/SwitchCompatTheme"
                     />
+
+                </LinearLayout>
+
 
                 <Spinner
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:id="@+id/spinner_frequence"
                     android:layout_marginBottom="10dp"
+                    android:layout_gravity="start"
                     />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/med_hour_and_number"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:id="@+id/alert_hour"
                         android:text="08:00"
                         android:textColor="@color/main_blue"
                         />
@@ -156,6 +175,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:id="@+id/number_medication"
                         android:text="Prendre 1"
                         android:gravity="end"
                         android:textColor="@color/main_blue"
@@ -611,18 +631,24 @@
                     />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2"
                         android:text="Rappel de renouvellement"
                         android:layout_marginBottom="10dp"
                         />
 
+                    <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/switch_update_alert"
+                        android:layout_gravity="end"
+                        android:theme="@style/SwitchCompatTheme"
+                        />
 
 
                 </LinearLayout>
@@ -643,7 +669,17 @@
         
         />
 
+
+
 </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/login"
+        android:text="Se connecter"
+
+        />
 
 </LinearLayout>
 </ScrollView>
