@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 import java.util.Date;
 
 @Entity
-public class Rappel {
+public class  Rappel {
     @PrimaryKey
     private int id;
 

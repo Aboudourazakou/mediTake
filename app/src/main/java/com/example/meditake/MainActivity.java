@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void testDatabase(){
-        AppDatabase db = AppDatabase.getDataBase(getApplicationContext());
+
 
         MedecinDao medecinDao = db.medecinDao();
 
