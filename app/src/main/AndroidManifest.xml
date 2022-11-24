@@ -14,6 +14,13 @@
         android:theme="@style/Theme.MediTake"
         tools:targetApi="31">
         <activity
+            android:name=".CalendarActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".PotencyConfigActivity"
             android:exported="false">
             <meta-data
@@ -29,8 +36,26 @@
         </activity>
         <activity
             android:name=".AddMedicationActivity"
-            android:exported="true"
+            android:exported="false"
             android:theme="@style/AppTheme.fullscreen">
+
+
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activity_login"
+            android:exported="false" />
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.fullscreen" />
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,16 +66,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity
-            android:name=".activity_login"
-            android:exported="false" />
-
-
-
-        <activity
-            android:name=".HomeActivity"
-            android:exported="false"
-            android:theme="@style/AppTheme.fullscreen" />
     </application>
 
 </manifest>

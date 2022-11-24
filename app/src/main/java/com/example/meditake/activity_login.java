@@ -4,8 +4,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +27,13 @@ public class activity_login extends AppCompatActivity {
     Map<String,String> comptes;
     CircularProgressIndicator mCircularProgressIndicator;
 
+    SharedPreferences  sharedPreferences;
+    SharedPreferences.Editor editor;
+    public static final  String SHARED_PREF_NAME = "mysharedpref";
+    private static final  String KEY_PHONE = "myphone";
+    private static final  String KEY_PASSWORD = "mypassword";
+
+
     @SuppressLint({"WrongViewCast", "ResourceAsColor"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,17 +46,15 @@ public class activity_login extends AppCompatActivity {
         loginButton = findViewById(R.id.loginButton);
         mCircularProgressIndicator = findViewById(R.id.circular_indicator);
 
+        sharedPreferences = getSharedPreferences(this.SHARED_PREF_NAME,  MODE_PRIVATE);
+
         comptes = new HashMap<String,String>(){{
             put("06754","admin");
             put("09876","user");
         }};
 
 
-      /*  mCircularProgressIndicator.setIndicatorDirection(CircularProgressIndicator.INDICATOR_DIRECTION_COUNTERCLOCKWISE);
-        mCircularProgressIndicator.setIndicatorSize(100);
-        mCircularProgressIndicator.setTrackThickness(10);
-        mCircularProgressIndicator.setIndeterminate(false);
-        mCircularProgressIndicator.setIndicatorColor(R.color.coton);*/
+
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,9 +66,8 @@ public class activity_login extends AppCompatActivity {
 
                     if(password.equals(comptes.get(phone))){
 
-                        mCircularProgressIndicator.setVisibility(View.VISIBLE);
-                        Intent myIntent = new Intent(activity_login.this,HomeActivity.class);
-                        startActivity(myIntent);
+                       DoLogin(phone,password);
+
                     }
                     else{
                       AlertDialog alertDialog = new AlertDialog.Builder(activity_login.this).create();
@@ -97,4 +103,23 @@ public class activity_login extends AppCompatActivity {
 
 
     }
+
+    private void DoLogin(String phone , String psswrd){
+        editor = sharedPreferences.edit();
+        editor.putString(KEY_PHONE,phone);
+        editor.putString(KEY_PASSWORD,psswrd);
+        editor.putBoolean("hasLoggedIn",true);
+        editor.commit();
+
+        mCircularProgressIndicator.setVisibility(View.VISIBLE);
+        Intent myIntent = new Intent(activity_login.this,HomeActivity.class);
+        startActivity(myIntent);
+
+        String p = sharedPreferences.getString(KEY_PHONE,null);
+        String mdp = sharedPreferences.getString(KEY_PASSWORD,null);
+        Toast.makeText(activity_login.this, "phone : "+p+"  mdp: "+mdp+"", Toast.LENGTH_SHORT).show();
+
+    }
+
+
 }

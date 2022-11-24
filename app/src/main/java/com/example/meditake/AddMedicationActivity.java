@@ -1,36 +1,41 @@
 package com.example.meditake;
 
-import static com.google.android.material.internal.ContextUtils.getActivity;
-
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 
 public class AddMedicationActivity extends AppCompatActivity {
 
 
 
-    LinearLayout partie2,buttons;
+    LinearLayout partie2,buttons ,mDateBegin;
     Button btnNext , btnNext2 , btnBarSave,btnOtherOptions , btnSaveFirst , btnAEffacer;
     Spinner spnFrequence;
     EditText medName;
@@ -58,6 +63,7 @@ public class AddMedicationActivity extends AppCompatActivity {
         btnSaveFirst = findViewById(R.id.btn_save_first);
         otherOptionView = findViewById(R.id.other_option_view);
 
+        mDateBegin = findViewById(R.id.date_begin);
         btnAEffacer = findViewById(R.id.login);
 
         btnClose.setOnClickListener(new View.OnClickListener() {
@@ -131,6 +137,13 @@ public class AddMedicationActivity extends AppCompatActivity {
             }
         });
 
+        mDateBegin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showCalendarAlertDialog();
+            }
+        });
+
         btnNext2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -153,30 +166,82 @@ public class AddMedicationActivity extends AppCompatActivity {
         btnAEffacer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(AddMedicationActivity.this,activity_login.class);
-                i.putExtra("value",1);
-                startActivity(i);
+                checkLogin();
             }
         });
     }
 
 
-   /* private void showAlertDialog() {
+   private void showCalendarAlertDialog() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddMedicationActivity.this);
-        final View customLayout = getLayoutInflater().inflate(R.layout.custom, null);
-        alertDialog.setView(customLayout);
-        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        View customLayout = getLayoutInflater().inflate(R.layout.activity_calendar, null);
+        CalendarView   mCalendarView = (CalendarView) customLayout.findViewById(R.id.calendar_id);
+        TextView  myear = (TextView) customLayout.findViewById(R.id.txtview_year);
+        TextView mdaysMonth = (TextView) customLayout.findViewById(R.id.days_month);
+        TextView  texte = (TextView) customLayout.findViewById(R.id.text_view);
+
+
+       Date date = new Date();
+       Date current = Calendar.getInstance().getTime();
+       int days = current.getDate();
+
+
+       mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+           @Override
+           public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
+               date.setYear(i);
+               date.setMonth(i1);
+               date.setDate(i2);
+
+
+               myear.setText(""+i);
+
+               SimpleDateFormat form = new SimpleDateFormat("EEE. dd MMM.");
+               String daysMonth = form.format(date);
+               mdaysMonth.setText(daysMonth);
+
+               SimpleDateFormat formatter = new SimpleDateFormat("dd MMM");
+               String  date_choice = formatter.format(date);
+
+               if(i2==days-1)
+                   texte.setText("Hier, "+date_choice);
+               else if(i2==days)
+                   texte.setText("Aujourd'hui, "+date_choice);
+               else if(i2==days+1)
+                   texte.setText("Demain, "+date_choice);
+               else
+                   texte.setText(date_choice);
+
+
+           }
+       });
+
+       alertDialog.setView(customLayout);
+       AlertDialog dialog = alertDialog.create();
+       dialog.show();
+
+
+    }
+
+   private void checkLogin(){
+
+        new Handler().postDelayed(new Runnable() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // send data from the AlertDialog to the Activity
-                EditText editText = customLayout.findViewById(R.id.editText);
-                Toast.makeText(MainActivity.this,editText.getText().toString(),Toast.LENGTH_LONG).show();
+            public void run() {
+                SharedPreferences sharedPreferences = getSharedPreferences(activity_login.SHARED_PREF_NAME,MODE_PRIVATE);
+                boolean hasLoggedIn = sharedPreferences.getBoolean("hasLoggedIn",false);
+                if(hasLoggedIn){
+                    Intent intent = new Intent(AddMedicationActivity.this,HomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    Intent intent = new Intent(AddMedicationActivity.this,activity_login.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
-        });
-        AlertDialog alert = alertDialog.create();
-        alert.setCanceledOnTouchOutside(false);
-        alert.show();
-    }*/
+        },1000);
+   }
 
 
 }
