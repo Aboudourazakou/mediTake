@@ -5,22 +5,60 @@ package com.example.meditake.models;
  "Project name "MediTake
  */
 public class Rappel {
-    private  String nom;
-    private  String dosage;
+    private  int heure;
+    private  int minutes;
+    private  int  qtePilule;
+    private String message;
+    private String statut;
+    private  Medicament medicament;
+    private  String reschedulemsg;
+    private  String ignoreMsg;
 
-    public String getNom() {
-        return nom;
+    public Medicament getMedicament() {
+        return medicament;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setMedicament(Medicament medicament) {
+        this.medicament = medicament;
     }
 
-    public String getDosage() {
-        return dosage;
+    public int getHeure() {
+        return heure;
     }
 
-    public void setDosage(String dosage) {
-        this.dosage = dosage;
+    public void setHeure(int heure) {
+        this.heure = heure;
+    }
+
+    public int getMinutes() {
+        return minutes;
+    }
+
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
+    }
+
+    public int getQtePilule() {
+        return qtePilule;
+    }
+
+    public void setQtePilule(int qtePilule) {
+        this.qtePilule = qtePilule;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getStatut() {
+        return statut;
+    }
+
+    public void setStatut(String statut) {
+        this.statut = statut;
     }
 }

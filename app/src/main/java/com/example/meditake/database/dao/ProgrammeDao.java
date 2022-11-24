@@ -12,6 +12,9 @@ public interface ProgrammeDao {
     @Query("Select * from Programme")
     List<Programme> getAll();
 
+    @Insert
+    long insert(Programme p);
+
     @Query("Select * from Programme where id = :id")
     Programme getById(int id);
 

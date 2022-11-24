@@ -10,4 +10,6 @@
     <color name="main_background">#F0F1F5</color>
     <color name="main_blue">#1686C5</color>
     <color name="blue_fonce">#0A4F86</color>
+    <color name="dialog_icon_background">#E3E0E7</color>
+    <color name="cendre">#C1C6CC</color>
 </resources>

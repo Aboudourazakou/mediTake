@@ -3,14 +3,15 @@ package com.example.meditake.database.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.Date;
+
+
 
 @Entity
 public class  Rappel {
     @PrimaryKey
-    private int id;
+    private Long id;
 
-    private String heure;
+    private Long date;
 
     private int nbrPillule;
 
@@ -18,22 +19,67 @@ public class  Rappel {
 
     private int nbrDeFois;
 
-    private int medicamentId;
+    private Long programmeId;
 
-    public int getId() {
+    private boolean statut;
+
+
+    private String message;
+
+    public Rappel() {
+    }
+
+    public Rappel(Long date, int nbrPillule, boolean active, int nbrDeFois, Long programmeId, boolean statut, String message) {
+        this.date = date;
+        this.nbrPillule = nbrPillule;
+        this.active = active;
+        this.nbrDeFois = nbrDeFois;
+        this.programmeId = programmeId;
+        this.statut = statut;
+        this.message = message;
+    }
+
+    public Rappel(Long id, Long date, int nbrPillule, boolean active, int nbrDeFois, Long programmeId, boolean statut, String message) {
+        this.id = id;
+        this.date = date;
+        this.nbrPillule = nbrPillule;
+        this.active = active;
+        this.nbrDeFois = nbrDeFois;
+        this.programmeId = programmeId;
+        this.statut = statut;
+        this.message = message;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getHeure() {
-        return heure;
+    public Long getDate() {
+        return date;
     }
 
-    public void setHeure(String heure) {
-        this.heure = heure;
+    public void setDate(Long date) {
+        this.date = date;
+    }
+
+    public boolean isStatut() {
+        return statut;
+    }
+
+    public void setStatut(boolean statut) {
+        this.statut = statut;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public int getNbrPillule() {
@@ -60,11 +106,25 @@ public class  Rappel {
         this.nbrDeFois = nbrDeFois;
     }
 
-    public int getMedicamentId() {
-        return medicamentId;
+    public Long getProgrammeId() {
+        return programmeId;
     }
 
-    public void setMedicamentId(int medicamentId) {
-        this.medicamentId = medicamentId;
+    public void setProgrammeId(Long programmeId) {
+        this.programmeId = programmeId;
+    }
+
+    @Override
+    public String toString() {
+        return "Rappel{" +
+                "id=" + id +
+                ", date=" + date +
+                ", nbrPillule=" + nbrPillule +
+                ", active=" + active +
+                ", nbrDeFois=" + nbrDeFois +
+                ", programmeId=" + programmeId +
+                ", statut=" + statut +
+                ", message='" + message + '\'' +
+                '}';
     }
 }

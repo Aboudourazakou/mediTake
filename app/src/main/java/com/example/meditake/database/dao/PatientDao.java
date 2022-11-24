@@ -6,6 +6,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 
 import com.example.meditake.database.entities.Patient;
+import com.example.meditake.database.entities.Programme;
 
 import java.util.List;
 
@@ -13,6 +14,9 @@ import java.util.List;
 public interface PatientDao {
     @Query("Select * from Patient")
     List<Patient> getAll();
+
+    @Insert
+    long insert(Patient p);
 
     @Query("Select * from Patient where id = :id")
     Patient getById(int id);
