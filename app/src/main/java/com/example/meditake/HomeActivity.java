@@ -1,6 +1,7 @@
 package com.example.meditake;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,20 +17,27 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 
 import com.example.meditake.adapters.DaysAdapter;
 import com.example.meditake.adapters.ProgrammeAdapter;
 import com.example.meditake.alarm.AlarmReceiver;
+import com.example.meditake.databinding.IgnoreMessageDialogBinding;
 import com.example.meditake.databinding.RappelClickDialogBinding;
 import com.example.meditake.databinding.RappelsListWrapperBinding;
+import com.example.meditake.databinding.RescheduleReminderDialogBinding;
 import com.example.meditake.models.Medicament;
 import com.example.meditake.models.Programm;
 import com.example.meditake.databinding.ActivityHomeBinding;
 import com.example.meditake.models.Rappel;
+import com.example.meditake.models.Rapport;
 import com.example.meditake.viewmodels.HomeActivityViewModel;
 
 import java.text.SimpleDateFormat;
@@ -37,6 +45,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -176,13 +185,13 @@ public class HomeActivity extends AppCompatActivity {
         programm.setJours("lun. mar. mer. jeu. ven.");
         programm.setMinutes(45);
         Rappel rappel=new Rappel();
-        rappel.setStatut("pas encore");
+        rappel.setId(1);
         rappel.setQtePilule(8);
         rappel.setMessage("Prendre "+rappel.getQtePilule()+" pilulles");
         rappel.setHeure(13);
         rappel.setMinutes(12);
         Rappel rappel1=new Rappel();
-        rappel1.setStatut("pas encore");
+        rappel1.setId(2);
         rappel1.setQtePilule(9);
         rappel1.setMessage("Prendre "+rappel.getQtePilule()+" pilulles");
         rappel1.setHeure(13);
@@ -226,6 +235,64 @@ public class HomeActivity extends AppCompatActivity {
          dialogBinding.setRappel(rappel);
         System.out.println(rappel.getMedicament().getNom()+"ocrmed");
 
+        this.dialog = new Dialog(HomeActivity.this, android.R.style.Theme_DeviceDefault_Dialog_MinWidth);
+        //We have added a title in the custom layout. So let's disable the default title.
+        this.dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //The user will be able to cancel the dialog bu clicking anywhere outside the dialog.
+        this.dialog.setCancelable(true);
+        this.dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        this.dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+        //Mention the name of the layout of your custom dialog.
+        this.dialog.setContentView(dialogBinding.getRoot());
+        dialogBinding.ignorePillBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Rapport rapport=new Rapport();
+                rapport.setDate(new Date().getTime());
+                rapport.setStatut("ignore");
+                rapport.setMessage("Medicament est termine");
+                rappel.getRapportList().add(rapport);
+                showDialogForIgnoreMessage(rappel);
+            }
+        });
+        dialogBinding.takePillBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Rapport rapport=new Rapport();
+                rapport.setDate(new Date().getTime());
+                rapport.setStatut("pris");
+                rapport.setMessage("Le pilule a ete pris le "+new SimpleDateFormat("EEE d MMM h:mm a", Locale.FRANCE).format(Calendar.getInstance().getTime()));
+                rappel.getRapportList().add(rapport);
+                updateDb(rappel);
+                dialog.cancel();
+            }
+        });
+        dialogBinding.reschedulePillBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                showDialogForReminderRescheduling(rappel);
+
+            }
+        });
+
+        dialog.show();
+    }
+
+    public  void updateDb(Rappel rappel){
+
+        binding.rappelsList.setAdapter(new ProgrammeAdapter(programmList,this));
+        binding.dayNumberListView.smoothScrollToPosition(35);
+        this.dialog.cancel();
+
+    }
+
+
+    public  void  showDialogForIgnoreMessage(Rappel rappel){
+        LayoutInflater layoutInflater=LayoutInflater.from(getApplicationContext());
+        IgnoreMessageDialogBinding dialogBinding= DataBindingUtil.inflate(layoutInflater,R.layout.ignore_message_dialog,null,false);
+
         dialog = new Dialog(HomeActivity.this, android.R.style.Theme_DeviceDefault_Dialog_MinWidth);
         //We have added a title in the custom layout. So let's disable the default title.
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -235,26 +302,183 @@ public class HomeActivity extends AppCompatActivity {
         dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
         //Mention the name of the layout of your custom dialog.
         dialog.setContentView(dialogBinding.getRoot());
-        dialogBinding.ignorePillBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams wlp = window.getAttributes();
 
-            }
-        });
-        dialogBinding.takePillBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-        dialogBinding.reschedulePillBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
+        wlp.gravity = Gravity.BOTTOM;
+        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        window.setAttributes(wlp);
         dialog.show();
+
+        dialogBinding.selectReasonIgnoreBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+    }
+    public  void   showDialogForReminderRescheduling(Rappel rappel){
+        LayoutInflater layoutInflater=LayoutInflater.from(getApplicationContext());
+        RescheduleReminderDialogBinding dialogBinding= DataBindingUtil.inflate(layoutInflater,R.layout.reschedule_reminder_dialog,null,false);
+
+       Dialog dialog2 = new Dialog(HomeActivity.this, android.R.style.Theme_DeviceDefault_Dialog_MinWidth);
+        //We have added a title in the custom layout. So let's disable the default title.
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //The user will be able to cancel the dialog bu clicking anywhere outside the dialog.
+        dialog2.setCancelable(true);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog2.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+        //Mention the name of the layout of your custom dialog.
+        dialog2.setContentView(dialogBinding.getRoot());
+        Window window = dialog2.getWindow();
+        WindowManager.LayoutParams wlp = window.getAttributes();
+
+        wlp.gravity = Gravity.BOTTOM;
+        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        window.setAttributes(wlp);
+        dialog2.show();
+        EditText editText1=dialogBinding.codeInputEdittext1;
+        EditText editText2=dialogBinding.codeInputEdittext2;
+        EditText editText3=dialogBinding.codeInputEdittext3;
+        EditText editText4=dialogBinding.codeInputEdittext4;
+        Context context=getApplicationContext();
+
+        editText1.addTextChangedListener(new TextWatcher() {
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (editText1.getText().toString().length() == 1)     //size as per your requirement
+                {
+
+                    editText1.setBackground(ContextCompat.getDrawable(context, R.color.white));
+                    editText2.requestFocus();
+                }
+                else {
+
+
+
+                    editText1.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.line));
+                    editText1.requestFocus();
+
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            public void afterTextChanged(Editable s) {
+            }
+
+        });
+
+        editText2.addTextChangedListener(new TextWatcher() {
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (editText2.getText().toString().length() == 1)     //size as per your requirement
+                {
+
+                    editText2.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
+                    editText3.requestFocus();
+                }
+                else {
+
+                    editText2.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.line));
+                    editText1.requestFocus();
+
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            public void afterTextChanged(Editable s) {
+            }
+
+        });
+
+        editText3.addTextChangedListener(new TextWatcher() {
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (editText3.getText().toString().length() == 1)     //size as per your requirement
+                {
+
+                    editText3.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
+                    editText4.requestFocus();
+                }
+                else {
+                    editText3.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.line));
+                    editText2.requestFocus();
+
+                }
+
+            }
+
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            public void afterTextChanged(Editable s) {
+            }
+
+        });
+
+        editText4.addTextChangedListener(new TextWatcher() {
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (editText4.getText().toString().length() == 1)     //size as per your requirement
+                {
+
+                    editText4.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
+
+                }
+                else {
+                    editText4.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.line));
+                    editText3.requestFocus();
+
+                }
+
+            }
+
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            public void afterTextChanged(Editable s) {
+            }
+
+        });
+
+           dialogBinding.reschedulePillBtn.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                   int h1=Integer.parseInt(editText1.getText().toString());
+                   int h2=Integer.parseInt(editText2.getText().toString());
+                   int m1=Integer.parseInt(editText3.getText().toString());
+                   int m2=Integer.parseInt(editText4.getText().toString());
+
+                   Rapport rapport=createRapport();
+                   rappel.setHeure(h1*10+h2);
+                   rappel.setMinutes(m1*10+m2);
+                   rappel.getRapportList().add(rapport);
+                   rapport.setStatut("reprogramme");
+                   rapport.setMessage("La pilule a ete reprogramme pour " +rappel.getHeure()+":"+rappel.getMinutes());
+                   dialog2.cancel();
+                   updateDb(rappel);
+
+
+               }
+           });
+
+    }
+
+    public  Rapport createRapport(){
+        Rapport rapport=new Rapport();
+        rapport.setDate(new Date().getTime());
+
+         return  rapport;
     }
 
 

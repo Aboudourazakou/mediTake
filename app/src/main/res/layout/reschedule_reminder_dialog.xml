@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/main_blue"
+            android:text="Reprogrammer un rappel">
+
+        </TextView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+
+            android:layout_marginTop="20dp"
+            android:textSize="15dp"
+
+            android:text="Entrez convenablement la nouvelle horaire convenable">
+
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+
+            android:orientation="horizontal">
+
+            <EditText
+                android:layout_width="15dp"
+                android:maxLines="1"
+                android:layout_marginRight="3dp"
+                android:background="@drawable/line"
+                android:layout_height="match_parent"
+                android:maxLength="1"
+                android:inputType="number"
+                android:textCursorDrawable="@drawable/cursor_color"
+                android:id="@+id/codeInputEdittext1">
+
+            </EditText>
+            <EditText
+                android:layout_width="15dp"
+                android:maxLines="1"
+                android:layout_marginRight="3dp"
+                android:background="@drawable/line"
+                android:layout_height="match_parent"
+                android:maxLength="1"
+                android:inputType="number"
+                android:textCursorDrawable="@drawable/cursor_color"
+                android:id="@+id/codeInputEdittext2">
+
+            </EditText>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:text=":">
+
+            </TextView>
+            <EditText
+                android:layout_width="15dp"
+                android:maxLines="1"
+                android:layout_marginRight="3dp"
+                android:background="@drawable/line"
+                android:layout_height="match_parent"
+                android:maxLength="1"
+                android:inputType="number"
+                android:textCursorDrawable="@drawable/cursor_color"
+                android:id="@+id/codeInputEdittext3">
+
+            </EditText>
+
+            <EditText
+                android:layout_width="15dp"
+                android:maxLines="1"
+                android:layout_marginRight="3dp"
+                android:background="@drawable/line"
+                android:layout_height="match_parent"
+                android:maxLength="1"
+                android:inputType="number"
+                android:textCursorDrawable="@drawable/cursor_color"
+                android:id="@+id/codeInputEdittext4">
+
+            </EditText>
+
+
+        </LinearLayout>
+        <View
+            android:layout_width="120dp"
+            android:layout_height="2dp"
+            android:background="#E91E63"
+            android:layout_marginTop="2dp"
+            android:layout_gravity="center"
+
+            android:backgroundTint="@color/main_blue"
+            />
+        <TextView
+            android:id="@+id/reschedulePillBtn"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:text="Valider"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/round_element"
+            android:layout_marginTop="20dp">
+
+        </TextView>
+
+    </LinearLayout>
+</layout>
