@@ -79,17 +79,17 @@ public class MainActivity extends AppCompatActivity {
 
         ProgrammeDao programmeDao = db.programmeDao();
 
-        programmeDao.insertAll(new Programme(1L,2,30,20,"Lundi Mardi Vendredi",1),
-                new Programme(2L,2,30,20,"Lundi Samedi Vendredi",2),
-                new Programme(14,30,20,"Lundi Mercredi Vendredi",4),
-                new Programme(19,30,20,"Mardi Dimanche Jeudi",3));
+        programmeDao.insertAll(new Programme(1L,2,30,20,"Lundi Mardi Vendredi"),
+                new Programme(2L,2,30,20,"Lundi Samedi Vendredi"),
+                new Programme(14,30,20,"Lundi Mercredi Vendredi"),
+                new Programme(19,30,20,"Mardi Dimanche Jeudi"));
 
 
         RappelDao rappelDao = db.rappelDao();
-        rappelDao.insertAll(new Rappel(1L,36000L,13,true,7,1L,true,"Prend on medicament"),
-                new Rappel(2L,36000L,13,true,7,1L,true,"Prend medicament"),
-                new Rappel(3L,36000L,13,true,7,1L,true,"medicament"),
-                new Rappel(4L,36000L,13,true,7,1L,true,"Prend"));
+        rappelDao.insertAll(new Rappel(1L,36000L,13,true,7,1L,true,"Prend on medicament",1),
+                new Rappel(2L,36000L,13,true,7,1L,true,"Prend medicament",1),
+                new Rappel(3L,36000L,13,true,7,1L,true,"medicament",1),
+                new Rappel(4L,36000L,13,true,7,1L,true,"Prend",1));
 
         ProgrammeWithRappelDao programmeWithRappelDao = db.programmeWithRappelDao();
         ProgrammeWithRappel programmeWithRappel = programmeWithRappelDao.getProgrammeWithRappels(1L);

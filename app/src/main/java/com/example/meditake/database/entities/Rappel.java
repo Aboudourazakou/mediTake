@@ -25,10 +25,12 @@ public class Rappel {
 
     private String message;
 
+    private long medicamentId;
+
     public Rappel() {
     }
 
-    public Rappel(Long date, int nbrPillule, boolean active, int nbrDeFois, Long programmeId, boolean statut, String message) {
+    public Rappel(Long date, int nbrPillule, boolean active, int nbrDeFois, Long programmeId, boolean statut, String message, long medicamentId) {
         this.date = date;
         this.nbrPillule = nbrPillule;
         this.active = active;
@@ -36,9 +38,10 @@ public class Rappel {
         this.programmeId = programmeId;
         this.statut = statut;
         this.message = message;
+        this.medicamentId = medicamentId;
     }
 
-    public Rappel(Long id, Long date, int nbrPillule, boolean active, int nbrDeFois, Long programmeId, boolean statut, String message) {
+    public Rappel(Long id, Long date, int nbrPillule, boolean active, int nbrDeFois, Long programmeId, boolean statut, String message, long medicamentId) {
         this.id = id;
         this.date = date;
         this.nbrPillule = nbrPillule;
@@ -47,6 +50,15 @@ public class Rappel {
         this.programmeId = programmeId;
         this.statut = statut;
         this.message = message;
+        this.medicamentId = medicamentId;
+    }
+
+    public long getMedicamentId() {
+        return medicamentId;
+    }
+
+    public void setMedicamentId(long medicamentId) {
+        this.medicamentId = medicamentId;
     }
 
     public Long getId() {
