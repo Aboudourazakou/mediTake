@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         AppDatabase db = AppDatabase.getDataBase(getApplicationContext());
 
+
         /*MedecinDao medecinDao = db.medecinDao();
 
         List<Medecin> medecins = new ArrayList<>(Arrays.asList(new Medecin(1L,"Kodjo","Godwin","1234"),new Medecin(2L,"Amavi","Adjo","1234")));

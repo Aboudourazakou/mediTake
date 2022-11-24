@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 
 
 @Entity
-public class Rappel {
+public class  Rappel {
     @PrimaryKey
     private Long id;
 
@@ -22,6 +22,7 @@ public class Rappel {
     private Long programmeId;
 
     private boolean statut;
+
 
     private String message;
 
@@ -136,6 +137,7 @@ public class Rappel {
                 ", programmeId=" + programmeId +
                 ", statut=" + statut +
                 ", message='" + message + '\'' +
+                ", medicamentId=" + medicamentId +
                 '}';
     }
 }
