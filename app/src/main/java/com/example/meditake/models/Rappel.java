@@ -13,6 +13,16 @@ public class Rappel {
     private  int minutes;
     private  int  qtePilule;
     private String message;
+    private  long lastTimeTaken;
+
+
+    public String getLastTimeTaken() {
+        return "lun. 21 nov a 18h45";
+    }
+
+    public void setLastTimeTaken(long lastTimeTaken) {
+        this.lastTimeTaken = lastTimeTaken;
+    }
 
     private  Medicament medicament;
     private List<Rapport> rapportList=new ArrayList<>();
