@@ -3,25 +3,25 @@ package com.example.meditake.database.dao;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
-import androidx.room.Query;import com.example.meditake.database.entities.TypeMedicament;
+import androidx.room.Query;import com.example.meditake.database.entities.CategorieMedicament;
 
 import java.util.List;
 
 @Dao
 public interface TypeMedicamentDao {
-    @Query("Select * from TypeMedicament")
-    List<TypeMedicament> getAll();
+    @Query("Select * from CategorieMedicament")
+    List<CategorieMedicament> getAll();
 
-    @Query("Select * from TypeMedicament where id = :id")
-    TypeMedicament getById(int id);
+    @Query("Select * from CategorieMedicament where id = :id")
+    CategorieMedicament getById(int id);
 
-    @Query("SELECT * FROM TypeMedicament WHERE id IN (:userIds)")
-    List<TypeMedicament> loadAllByIds(int[] userIds);
+    @Query("SELECT * FROM CategorieMedicament WHERE id IN (:userIds)")
+    List<CategorieMedicament> loadAllByIds(int[] userIds);
 
 
     @Insert
-    void insertAll(TypeMedicament ...typeMedicaments);
+    void insertAll(CategorieMedicament... categorieMedicaments);
 
     @Delete
-    void delete(TypeMedicament typeMedicament);
+    void delete(CategorieMedicament categorieMedicament);
 }

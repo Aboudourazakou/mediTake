@@ -1,6 +1,7 @@
 package com.example.meditake.database.entities;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 
@@ -9,6 +10,7 @@ public class Patient extends Utilisateur{
     @PrimaryKey
     private Long id;
 
+    @Ignore
     public Patient(String prenom, String nom, String motDePasse,String login) {
         super(prenom, nom, motDePasse,login);
     }
