@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "c23f5775dd4c823aa42aad5308b131a2",
+    "identityHash": "aa10abac1076721edc70c458d50c71cd",
     "entities": [
       {
         "tableName": "Medecin",
@@ -170,7 +170,7 @@
       },
       {
         "tableName": "Medicament",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `nom` TEXT, `img` TEXT, `qte` INTEGER NOT NULL, `typeMedicamentId` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `nom` TEXT, `img` TEXT, `qte` INTEGER NOT NULL, `categorieId` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`categorieId`) REFERENCES `CategorieMedicament`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -197,8 +197,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "typeMedicamentId",
-            "columnName": "typeMedicamentId",
+            "fieldPath": "categorieId",
+            "columnName": "categorieId",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -210,11 +210,23 @@
           "autoGenerate": false
         },
         "indices": [],
-        "foreignKeys": []
+        "foreignKeys": [
+          {
+            "table": "CategorieMedicament",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "categorieId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       },
       {
         "tableName": "Rappel",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `date` INTEGER, `nbrPillule` INTEGER NOT NULL, `active` INTEGER NOT NULL, `nbrDeFois` INTEGER NOT NULL, `programmeId` INTEGER, `statut` INTEGER NOT NULL, `message` TEXT, `medicamentId` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `heure` INTEGER NOT NULL, `minutes` INTEGER NOT NULL, `qtePilule` INTEGER NOT NULL, `message` TEXT, `lastTimeTaken` TEXT, `medicamentId` INTEGER NOT NULL, `programmeId` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -223,38 +235,20 @@
             "notNull": false
           },
           {
-            "fieldPath": "date",
-            "columnName": "date",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "nbrPillule",
-            "columnName": "nbrPillule",
+            "fieldPath": "heure",
+            "columnName": "heure",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "active",
-            "columnName": "active",
+            "fieldPath": "minutes",
+            "columnName": "minutes",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "nbrDeFois",
-            "columnName": "nbrDeFois",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "programmeId",
-            "columnName": "programmeId",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "statut",
-            "columnName": "statut",
+            "fieldPath": "qtePilule",
+            "columnName": "qtePilule",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -265,8 +259,20 @@
             "notNull": false
           },
           {
+            "fieldPath": "lastTimeTaken",
+            "columnName": "lastTimeTaken",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
             "fieldPath": "medicamentId",
             "columnName": "medicamentId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "programmeId",
+            "columnName": "programmeId",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -281,7 +287,7 @@
         "foreignKeys": []
       },
       {
-        "tableName": "TypeMedicament",
+        "tableName": "CategorieMedicament",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `libelle` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
@@ -305,12 +311,85 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "Rapport",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `message` TEXT, `statut` TEXT, `date` INTEGER NOT NULL, `idPatient` INTEGER NOT NULL, `idRappel` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`idPatient`) REFERENCES `Patient`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`idRappel`) REFERENCES `Rappel`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "message",
+            "columnName": "message",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "statut",
+            "columnName": "statut",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "idPatient",
+            "columnName": "idPatient",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "idRappel",
+            "columnName": "idRappel",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "Patient",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "idPatient"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "Rappel",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "idRappel"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c23f5775dd4c823aa42aad5308b131a2')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'aa10abac1076721edc70c458d50c71cd')"
     ]
   }
 }

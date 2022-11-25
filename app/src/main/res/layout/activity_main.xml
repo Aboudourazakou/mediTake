@@ -27,25 +27,19 @@
         android:id="@+id/bluetwitter"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/twitter"
+<<<<<<< HEAD
+        android:src="@drawable/logo"/>
+=======
+        android:src="@drawable/twitter"/>
+>>>>>>> 7c7a128ceb941affc3de1939f9897bd55925f08b
 
 
-    <Button
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="fill Database" />
 
     <ImageView
         android:id="@+id/whitetwitter"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/twitter"
+        android:src="@drawable/logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

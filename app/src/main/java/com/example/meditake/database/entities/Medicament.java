@@ -1,10 +1,10 @@
 package com.example.meditake.database.entities;
 
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
-import androidx.room.Relation;
 
-@Entity
+@Entity(foreignKeys = @ForeignKey(entity=CategorieMedicament.class, parentColumns="id", childColumns="categorieId"))
 public class Medicament {
     @PrimaryKey
     private Long id;
@@ -15,17 +15,17 @@ public class Medicament {
 
     private int qte;
 
-    private int typeMedicamentId;
+    private int categorieId;
 
     public Medicament() {
     }
 
-    public Medicament(Long id, String nom, String img, int qte, int typeMedicamentId) {
+    public Medicament(Long id, String nom, String img, int qte, int categorieId) {
         this.id = id;
         this.nom = nom;
         this.img = img;
         this.qte = qte;
-        this.typeMedicamentId = typeMedicamentId;
+        this.categorieId = categorieId;
     }
 
     public Long getId() {
@@ -60,11 +60,22 @@ public class Medicament {
         this.qte = qte;
     }
 
-    public int getTypeMedicamentId() {
-        return typeMedicamentId;
+    public int getCategorieId() {
+        return categorieId;
     }
 
-    public void setTypeMedicamentId(int typeMedicamentId) {
-        this.typeMedicamentId = typeMedicamentId;
+    public void setCategorieId(int categorieId) {
+        this.categorieId = categorieId;
+    }
+
+    @Override
+    public String toString() {
+        return "Medicament{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", img='" + img + '\'' +
+                ", qte=" + qte +
+                ", categorieId=" + categorieId +
+                '}';
     }
 }
