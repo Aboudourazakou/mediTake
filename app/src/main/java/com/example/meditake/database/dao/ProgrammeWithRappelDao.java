@@ -5,6 +5,7 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 
 import com.example.meditake.database.entities.ProgrammeWithRappel;
+import com.example.meditake.database.entities.RappelWithRapportAndMedicament;
 
 import java.util.List;
 

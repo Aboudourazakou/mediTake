@@ -12,7 +12,7 @@ import com.example.meditake.models.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
-public class activity_more_menu extends AppCompatActivity {
+public class ActivityMoreMenuBindind extends AppCompatActivity {
     List<MenuItem>itemList=new ArrayList<>();
     ActivityMoreMenuBinding binding;
 

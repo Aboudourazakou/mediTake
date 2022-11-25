@@ -6,7 +6,8 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 ;
 
-import com.example.meditake.activity_login;
+import com.example.meditake.LoginActivity;
+
 
 import org.json.JSONObject;
 
@@ -22,7 +23,7 @@ public class NetworkChangeListener extends BroadcastReceiver {
 
 
     Context context;
-    activity_login login;
+    LoginActivity login;
     public  static  boolean internetAvalaible;
 
     MediaPlayer mediaPlayer;
@@ -37,13 +38,13 @@ public class NetworkChangeListener extends BroadcastReceiver {
         if(!InternetConnectivityChecker.isConnectedToInternet(context)){
 
 
-           if(activity_login.getInstance()!=null)activity_login.getInstance().showDialog();
+           if(LoginActivity.getInstance()!=null)LoginActivity.getInstance().showDialog();
            internetAvalaible=false;
         }
         else{
 
              internetAvalaible=true;
-            if(activity_login.getInstance()!=null)activity_login.getInstance().cancelDialog();
+            if(LoginActivity.getInstance()!=null)LoginActivity.getInstance().cancelDialog();
         }
         System.out.println("Internet avalaible");
 
