@@ -6,12 +6,8 @@
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:shape="rectangle"
             >
-
-
             <corners android:radius="100dp"/>
-
             <gradient android:startColor="@color/blue_fonce" android:endColor="@color/blue_fonce" >
-
             </gradient>
 
             />

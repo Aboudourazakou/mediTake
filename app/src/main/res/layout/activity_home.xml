@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/main_blue"
+    android:background="@color/main_background"
     tools:context=".activity_login">
     <LinearLayout
+        android:id="@+id/home_header"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:layout_alignParentTop="true"
+        android:background="@color/main_blue"
         android:padding="10dp">
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/patientIcon"
@@ -43,55 +45,98 @@
         </ImageView>
 
     </LinearLayout>
+
     <androidx.cardview.widget.CardView
+        android:id="@+id/calendar_card"
         android:layout_width="match_parent"
-        android:layout_weight="90"
-        android:backgroundTint="@color/main_background"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+       android:layout_below="@+id/home_header"
+
         >
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:orientation="vertical">
-           <LinearLayout
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:paddingLeft="20dp"
-               android:paddingRight="20dp"
-               android:layout_marginTop="20dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/week_days"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:layout_marginTop="20dp">
 
-               <androidx.recyclerview.widget.RecyclerView
-                   android:id="@+id/days_list_view"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:clipToPadding="false"
-                   android:divider="@null">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/days_list_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:divider="@null">
 
-               </androidx.recyclerview.widget.RecyclerView>
-           </LinearLayout>
-           <LinearLayout
-               android:layout_width="340dp"
-               android:layout_height="wrap_content"
-               android:paddingLeft="20dp"
-               android:paddingRight="20dp"
-               android:layout_marginTop="10dp">
+                </androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
+            <LinearLayout
 
-               <androidx.recyclerview.widget.RecyclerView
-                   android:id="@+id/day_number_list_view"
-                   android:layout_width="match_parent"
-                   android:clipToPadding="false"
-                   android:layout_height="wrap_content"
-                   android:divider="@null">
+                android:layout_width="340dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
 
-               </androidx.recyclerview.widget.RecyclerView>
-           </LinearLayout>
+                android:layout_marginTop="10dp"
 
+                >
 
-       </LinearLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/day_number_list_view"
+                    android:layout_width="match_parent"
+                    android:clipToPadding="false"
+                    android:layout_height="wrap_content"
+                    android:divider="@null">
 
+                </androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/main_blue"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:text="lun. 20 nov">
 
+            </TextView>
+
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rappels_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/calendar_card"
 
-</LinearLayout>
+        >
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+<com.google.android.material.bottomnavigation.BottomNavigationView
+    android:id="@+id/bottomNavigation"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:itemIconTint="@color/main_blue"
+    app:itemTextColor="@color/main_blue"
+    app:menu="@menu/bottom_nav_menu"
+    android:background="@color/design_default_color_on_primary"
+    android:layout_alignParentBottom="true">
+
+</com.google.android.material.bottomnavigation.BottomNavigationView>
+
+
+
+
+
+
+</RelativeLayout>

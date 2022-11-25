@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.meditake">
 
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -40,12 +42,8 @@
         </activity>
         <activity
             android:name=".activity_login"
-            android:exported="false" />
-        <activity
-            android:name=".HomeActivity"
             android:exported="false"
-            android:theme="@style/AppTheme.fullscreen" />
-
+            />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -60,6 +58,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <receiver android:name=".alarm.AlarmReceiver"/>
     </application>
 
 </manifest>
