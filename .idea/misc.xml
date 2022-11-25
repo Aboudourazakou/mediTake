@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/drawable/cursor_color.xml" value="0.1" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/drawable/ic_baseline_notifications_blue.xml" value="0.1" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.1" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/drawable/ignore_pill_background.xml" value="0.1" />
@@ -17,15 +18,18 @@
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/days_item.xml" value="0.22" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/fragment_dashboard.xml" value="0.103125" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/fragment_home.xml" value="0.103125" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/ignore_message.xml" value="0.1" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/more_menu_item.xml" value="0.17864583333333334" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/rappel_click_dialog.xml" value="0.22" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/rappels_list_wrapper.xml" value="0.10208333333333333" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/reasons_radio_element.xml" value="0.10208333333333333" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/reschedule_reminder_dialog.xml" value="0.1" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/segment_medicament_home_list.xml" value="0.7333333333333334" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/menu/bottom_nav_menu.xml" value="0.103125" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17_PREVIEW" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
@@ -34,7 +38,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.22" />
+        <option name="scale" value="0.75" />
       </ProjectState>
     </option>
   </component>

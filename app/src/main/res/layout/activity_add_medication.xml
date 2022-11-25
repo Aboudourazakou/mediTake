@@ -1,0 +1,687 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddMedicationActivity"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+
+    android:background="@color/coton"
+
+    >
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:id="@+id/add_title"
+        android:background="@color/main_blue"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/close_btn"
+            android:src="@drawable/ic_baseline_clear_24"
+            android:backgroundTint="@color/main_blue"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:text="Ajouter les medicaments"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnbar_save"
+            android:layout_weight="3"
+            android:text="Effectué"
+            android:backgroundTint="@color/main_blue"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            />
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/cardview_light_background"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="4dp"
+            >
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nom du médicament"
+                android:id="@+id/name_med"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_blue"
+                android:layout_marginBottom="10dp"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edt_nom_med"
+                android:hint="Saisir le principe actif ou le nom du médicament"
+                android:singleLine="true"
+                android:backgroundTint="@color/main_blue"
+
+                />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
+    <LinearLayout
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/page2"
+        android:visibility="gone"
+        >
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/cardview_light_background"
+                android:padding="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginBottom="10dp"
+
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Heures de rappel"
+                        android:id="@+id/heure_rappel"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/main_blue"
+                        android:layout_marginBottom="10dp"
+                        />
+
+                    <Switch
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/switch_hour_alert"
+                    android:layout_gravity="end"
+                        android:theme="@style/SwitchCompatTheme"
+                    />
+
+                </LinearLayout>
+
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinner_frequence"
+                    android:layout_marginBottom="10dp"
+                    android:layout_gravity="start"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/med_hour_and_number"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:id="@+id/alert_hour"
+                        android:text="08:00"
+                        android:textColor="@color/main_blue"
+                        />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:id="@+id/number_medication"
+                        android:text="Prendre 1"
+                        android:gravity="end"
+                        android:textColor="@color/main_blue"
+                        />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/cardview_light_background"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Programme"
+                    android:id="@+id/programme"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/main_blue"
+                    android:layout_marginBottom="10dp"
+                    />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="horizontal"
+                    android:id="@+id/date_begin_llayout">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Date de début"
+                        android:textColor="@color/black"
+                        android:textSize="13sp"
+                        />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:id="@+id/date_begin"
+                        android:text=""
+                        android:textColor="@color/main_blue"
+                        />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20px"
+                    android:outlineSpotShadowColor="@color/black"
+                    android:layout_marginBottom="8dp"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="Durée"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        />
+
+
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rd_group_duree">
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Traitement en cours"
+                            android:textSize="13sp"/>
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="13sp"
+                            android:text="nombre de jours"/>
+                    </RadioGroup>
+
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20px"
+                    android:outlineSpotShadowColor="@color/black"
+                    android:layout_marginBottom="8dp"
+                    />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Jours"
+                        android:textSize="13sp"/>
+
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rd_group_jour">
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tous les jours"
+                            android:textSize="13sp"/>
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="13sp"
+                            android:text="jours spécifiques de la semaine"/>
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="13sp"
+                            android:text="intervalle de jours"/>
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="13sp"
+                            android:text="Cycle récurrent"/>
+
+                    </RadioGroup>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+<androidx.cardview.widget.CardView
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="20dp"
+    android:visibility="gone"
+    android:id="@+id/cardview_icon_med">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Icone du médicament"
+        android:id="@+id/icon_med"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/main_blue"
+        android:layout_marginBottom="10dp"
+        />
+
+</androidx.cardview.widget.CardView>
+
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_next2"
+            android:text="Suivant"
+            android:layout_marginTop="20sp"
+            android:background="@drawable/round_element"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+
+            />
+
+    </LinearLayout>
+
+
+
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/next_button"
+        android:text="Suivant"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/round_element"
+        android:textColor="@color/white"
+
+        />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttons"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        >
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:id="@+id/other_option"
+            android:text="Plus d'options"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="20sp"
+            android:backgroundTint="@color/granite"
+            android:textColor="@color/white"
+            />
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_save_first"
+            android:text="Effectué"
+            android:background="@drawable/round_element"
+            android:layout_marginTop="20sp"
+            android:textColor="@color/white"
+
+            />
+
+    </LinearLayout>
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/other_option_view"
+    android:visibility="gone"
+    android:orientation="vertical">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/potency_config">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="Puissance "
+                android:id="@+id/potency"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_blue"
+                android:layout_marginBottom="10dp"
+                />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/med_potency"
+            android:layout_marginBottom="10dp"
+            >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Puissance du médicament : "
+            android:id="@+id/txtview_potency"
+            android:textSize="13sp"
+            android:textStyle="bold"
+
+            />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/potency_click"
+                android:text="cliquer pour configurer"
+                android:textSize="13sp"
+                android:textColor="@color/main_blue"
+
+                />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Instructions"
+                android:id="@+id/instruction"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_blue"
+                android:layout_marginBottom="10dp"
+            />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="Doit-il etre pris avec la nourriture?"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                />
+
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/food_istruction">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/before_food"
+                        android:text="Avant de manger"
+                        android:textSize="13sp"/>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/while_food"
+                        android:textSize="13sp"
+                        android:text="Pendant que vous mangez"/>
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/after_food"
+                        android:textSize="13sp"
+                        android:text="Apres avoir mangé"/>
+                </RadioGroup>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20px"
+                    android:outlineSpotShadowColor="@color/black"
+                    android:layout_marginBottom="8dp"
+                    />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/other_instruction"
+                    android:hint="D'autres instructions?"
+                    android:singleLine="true"
+                    android:backgroundTint="@color/main_blue"
+
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="4dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Renouvellement d'ordonnance"
+                android:id="@+id/update"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_blue"
+                android:layout_marginBottom="10dp"
+                />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Indiquez le nombre de médicaments que vous avez actuellement pour recevoir un rappel de renouvellemetn"
+                android:id="@+id/update_text"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="14dp"
+                />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="Doit-il etre pris avec la nourriture?"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    />
+
+
+
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/number_medication_to_add"
+                    android:hint="Nombre de médicaments"
+                    android:layout_marginBottom="8dp"
+
+
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rappel de renouvellement"
+                        android:layout_marginBottom="10dp"
+                        />
+
+                    <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/switch_update_alert"
+                        android:layout_gravity="end"
+                        android:theme="@style/SwitchCompatTheme"
+                        />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_save_final"
+        android:text="Effectué"
+        android:background="@drawable/round_element"
+        android:layout_gravity="center"
+        android:textColor="@color/white"
+        
+        />
+
+
+
+</LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/login"
+        android:text="Se connecter"
+
+        />
+
+</LinearLayout>
+</ScrollView>

@@ -1,18 +1,49 @@
 package com.example.meditake.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /***
  "Created by  TETEREOU Aboudourazakou on "11/21/2022
  "Project name "MediTake
  */
 public class Rappel {
+    private  long id;
     private  int heure;
     private  int minutes;
     private  int  qtePilule;
     private String message;
-    private String statut;
+    private  long lastTimeTaken;
+
+
+    public String getLastTimeTaken() {
+        return "lun. 21 nov a 18h45";
+    }
+
+    public void setLastTimeTaken(long lastTimeTaken) {
+        this.lastTimeTaken = lastTimeTaken;
+    }
+
     private  Medicament medicament;
-    private  String reschedulemsg;
-    private  String ignoreMsg;
+    private List<Rapport> rapportList=new ArrayList<>();
+
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+
+    public List<Rapport> getRapportList() {
+        return rapportList;
+    }
+
+    public void setRapportList(List<Rapport> rapportList) {
+        this.rapportList = rapportList;
+    }
 
     public Medicament getMedicament() {
         return medicament;
@@ -54,11 +85,5 @@ public class Rappel {
         this.message = message;
     }
 
-    public String getStatut() {
-        return statut;
-    }
 
-    public void setStatut(String statut) {
-        this.statut = statut;
-    }
 }
