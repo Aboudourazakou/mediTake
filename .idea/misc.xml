@@ -15,10 +15,13 @@
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/activity_login.xml" value="0.1796875" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/activity_main.xml" value="0.103125" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/activity_more_menu.xml" value="0.165625" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/credentials_verification_dialog.xml" value="0.1" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/days_item.xml" value="0.22" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/fragment_dashboard.xml" value="0.103125" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/fragment_home.xml" value="0.103125" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/ignore_message.xml" value="0.1" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/incorrect_credentials_dialog.xml" value="0.1" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/internet_unavalaible_dialog.xml" value="0.22" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/more_menu_item.xml" value="0.17864583333333334" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/rappel_click_dialog.xml" value="0.22" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/rappels_list_wrapper.xml" value="0.10208333333333333" />
@@ -38,7 +41,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.75" />
+        <option name="scale" value="0.22" />
       </ProjectState>
     </option>
   </component>
