@@ -2,7 +2,11 @@ package com.example.meditake;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.WindowManager;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -32,15 +36,25 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+
 public class MainActivity extends AppCompatActivity {
 
     Button btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startActivity(new Intent(MainActivity.this,AddMedicationActivity.class));
+                finish();
+            }
+        },4000);
         btn = findViewById(R.id.btn);
 
         btn.setOnClickListener(new View.OnClickListener() {
