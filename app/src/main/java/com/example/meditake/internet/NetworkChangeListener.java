@@ -9,14 +9,9 @@ import android.media.MediaPlayer;
 import com.example.meditake.LoginActivity;
 
 
-import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
+
 
 
 public class NetworkChangeListener extends BroadcastReceiver {
@@ -49,10 +44,6 @@ public class NetworkChangeListener extends BroadcastReceiver {
         System.out.println("Internet avalaible");
 
     }
-
-
-
-
 
 
 
