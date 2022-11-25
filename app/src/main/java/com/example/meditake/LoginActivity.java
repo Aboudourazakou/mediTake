@@ -4,30 +4,38 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.meditake.database.dto.UtilisateurLogin;
+import com.example.meditake.database.entities.Medecin;
+import com.example.meditake.services.RetrofitGenerator;
+import com.example.meditake.services.UtilisateurService;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class activity_login extends AppCompatActivity {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class LoginActivity extends AppCompatActivity {
+
 
     EditText loginphone,loginpassword;
     TextView loginButton;
     Map<String,String> comptes;
     CircularProgressIndicator mCircularProgressIndicator;
 
-    SharedPreferences  sharedPreferences;
+    SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     public static final  String SHARED_PREF_NAME = "mysharedpref";
     private static final  String KEY_PHONE = "myphone";
@@ -56,6 +64,8 @@ public class activity_login extends AppCompatActivity {
 
 
 
+
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,7 +76,7 @@ public class activity_login extends AppCompatActivity {
 
                     if(password.equals(comptes.get(phone))){
 
-                       DoLogin(phone,password);
+                        DoLogin(phone,password);
 
                     }
                     else{
@@ -86,7 +96,7 @@ public class activity_login extends AppCompatActivity {
     }
 
     private void dialog(String title,String msg){
-        AlertDialog alertDialog = new AlertDialog.Builder(activity_login.this).create();
+        AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
         alertDialog.setTitle(title);
         alertDialog.setMessage(msg);
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
@@ -107,10 +117,49 @@ public class activity_login extends AppCompatActivity {
         editor.commit();
 
         mCircularProgressIndicator.setVisibility(View.VISIBLE);
-        Intent myIntent = new Intent(activity_login.this,HomeActivity.class);
+        Intent myIntent = new Intent(LoginActivity.this,HomeActivity.class);
         startActivity(myIntent);
 
     }
 
 
+
+    void httpCallToBackendService(){
+        UtilisateurService service = RetrofitGenerator.getRetrofit().create(UtilisateurService.class);
+
+        Call<Medecin> call = service.logMedecinIn(new UtilisateurLogin("username1","password1"));
+
+        call.enqueue(new Callback<Medecin>() {
+            @Override
+            public void onResponse(Call<Medecin> call, Response<Medecin> response) {
+                int statusCode = response.code();
+                Medecin medecin = response.body();
+
+                System.out.println(medecin);
+            }
+
+            @Override
+            public void onFailure(Call<Medecin> call, Throwable t) {
+                // Log error here since request failed
+
+                System.out.println(t.getMessage());
+            }
+        });
+
+        Call<List<Medecin>> medecinsCall = service.getAll();
+
+        medecinsCall.enqueue(new Callback<List<Medecin>>() {
+            @Override
+            public void onResponse(Call<List<Medecin>> call, Response<List<Medecin>> response) {
+                List<Medecin> medecins = response.body();
+
+                medecins.forEach(p-> Log.e("REQUETE",String.valueOf(p)));
+            }
+
+            @Override
+            public void onFailure(Call<List<Medecin>> call, Throwable t) {
+                System.out.println(t.getMessage());
+            }
+        });
+    }
 }

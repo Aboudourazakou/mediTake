@@ -10,48 +10,23 @@ import androidx.room.PrimaryKey;
 public class  Rappel {
     @PrimaryKey
     private Long id;
-
-    private Long date;
-
-    private int nbrPillule;
-
-    private boolean active;
-
-    private int nbrDeFois;
-
-    private Long programmeId;
-
-    private boolean statut;
-
-
+    private int heure;
+    private int minutes;
+    private int  qtePilule;
     private String message;
-
+    private String lastTimeTaken;
     private long medicamentId;
+    private long programmeId;
 
-    public Rappel() {
-    }
-
-    public Rappel(Long date, int nbrPillule, boolean active, int nbrDeFois, Long programmeId, boolean statut, String message, long medicamentId) {
-        this.date = date;
-        this.nbrPillule = nbrPillule;
-        this.active = active;
-        this.nbrDeFois = nbrDeFois;
-        this.programmeId = programmeId;
-        this.statut = statut;
-        this.message = message;
-        this.medicamentId = medicamentId;
-    }
-
-    public Rappel(Long id, Long date, int nbrPillule, boolean active, int nbrDeFois, Long programmeId, boolean statut, String message, long medicamentId) {
+    public Rappel(long id,int heure, int minutes, int qtePilule, String message, String lastTimeTaken, long medicamentId,long programmeId) {
         this.id = id;
-        this.date = date;
-        this.nbrPillule = nbrPillule;
-        this.active = active;
-        this.nbrDeFois = nbrDeFois;
-        this.programmeId = programmeId;
-        this.statut = statut;
+        this.heure = heure;
+        this.minutes = minutes;
+        this.qtePilule = qtePilule;
         this.message = message;
+        this.lastTimeTaken = lastTimeTaken;
         this.medicamentId = medicamentId;
+        this.programmeId = programmeId;
     }
 
     public long getMedicamentId() {
@@ -70,20 +45,28 @@ public class  Rappel {
         this.id = id;
     }
 
-    public Long getDate() {
-        return date;
+    public int getHeure() {
+        return heure;
     }
 
-    public void setDate(Long date) {
-        this.date = date;
+    public void setHeure(int heure) {
+        this.heure = heure;
     }
 
-    public boolean isStatut() {
-        return statut;
+    public int getMinutes() {
+        return minutes;
     }
 
-    public void setStatut(boolean statut) {
-        this.statut = statut;
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
+    }
+
+    public int getQtePilule() {
+        return qtePilule;
+    }
+
+    public void setQtePilule(int qtePilule) {
+        this.qtePilule = qtePilule;
     }
 
     public String getMessage() {
@@ -94,50 +77,19 @@ public class  Rappel {
         this.message = message;
     }
 
-    public int getNbrPillule() {
-        return nbrPillule;
+    public String getLastTimeTaken() {
+        return lastTimeTaken;
     }
 
-    public void setNbrPillule(int nbrPillule) {
-        this.nbrPillule = nbrPillule;
+    public void setLastTimeTaken(String lastTimeTaken) {
+        this.lastTimeTaken = lastTimeTaken;
     }
 
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public int getNbrDeFois() {
-        return nbrDeFois;
-    }
-
-    public void setNbrDeFois(int nbrDeFois) {
-        this.nbrDeFois = nbrDeFois;
-    }
-
-    public Long getProgrammeId() {
+    public long getProgrammeId() {
         return programmeId;
     }
 
-    public void setProgrammeId(Long programmeId) {
+    public void setProgrammeId(long programmeId) {
         this.programmeId = programmeId;
-    }
-
-    @Override
-    public String toString() {
-        return "Rappel{" +
-                "id=" + id +
-                ", date=" + date +
-                ", nbrPillule=" + nbrPillule +
-                ", active=" + active +
-                ", nbrDeFois=" + nbrDeFois +
-                ", programmeId=" + programmeId +
-                ", statut=" + statut +
-                ", message='" + message + '\'' +
-                ", medicamentId=" + medicamentId +
-                '}';
     }
 }

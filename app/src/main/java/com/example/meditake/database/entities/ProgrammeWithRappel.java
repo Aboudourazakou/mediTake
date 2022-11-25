@@ -8,13 +8,24 @@ import java.util.List;
 public class ProgrammeWithRappel {
 
     @Embedded
-    Programme programme;
+    private Programme programme;
 
     @Relation(parentColumn = "id",entityColumn = "programmeId")
-    List<Rappel> rappels;
+    private List<Rappel> rappels;
 
-    public ProgrammeWithRappel(Programme programme, List<Rappel> rappels) {
+    public Programme getProgramme() {
+        return programme;
+    }
+
+    public void setProgramme(Programme programme) {
         this.programme = programme;
+    }
+
+    public List<Rappel> getRappels() {
+        return rappels;
+    }
+
+    public void setRappels(List<Rappel> rappels) {
         this.rappels = rappels;
     }
 
@@ -36,4 +47,6 @@ public class ProgrammeWithRappel {
 
         return programmeWithRappel;
     }
+
+
 }

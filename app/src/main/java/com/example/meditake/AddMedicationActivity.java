@@ -307,14 +307,14 @@ public class AddMedicationActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                SharedPreferences sharedPreferences = getSharedPreferences(activity_login.SHARED_PREF_NAME,MODE_PRIVATE);
+                SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREF_NAME,MODE_PRIVATE);
                 boolean hasLoggedIn = sharedPreferences.getBoolean("hasLoggedIn",false);
                 if(hasLoggedIn){
                     Intent intent = new Intent(AddMedicationActivity.this,HomeActivity.class);
                     startActivity(intent);
                     finish();
                 }else{
-                    Intent intent = new Intent(AddMedicationActivity.this,activity_login.class);
+                    Intent intent = new Intent(AddMedicationActivity.this,LoginActivity.class);
                     startActivity(intent);
                     finish();
                 }

@@ -4,20 +4,20 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class TypeMedicament {
+public class CategorieMedicament {
     @PrimaryKey
     private Long id;
 
     private  String libelle;
 
-    public TypeMedicament() {
+    public CategorieMedicament() {
     }
 
-    public TypeMedicament(String libelle) {
+    public CategorieMedicament(String libelle) {
         this.libelle = libelle;
     }
 
-    public TypeMedicament(Long id, String libelle) {
+    public CategorieMedicament(Long id, String libelle) {
         this.id = id;
         this.libelle = libelle;
     }
