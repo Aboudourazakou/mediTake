@@ -51,27 +51,12 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(MainActivity.this,AddMedicationActivity.class));
+                startActivity(new Intent(MainActivity.this,activity_login.class));
                 finish();
             }
-        },4000);
-        btn = findViewById(R.id.btn);
+        },1000);
 
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                httpCallToBackendService();
-/*
 
-                new Thread(new Runnable() {
-                    public void run() {
-
-                    }
-                }).start();
-*/
-
-            }
-        });
     }
 
 
