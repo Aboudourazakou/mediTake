@@ -12,10 +12,11 @@
 
  <LinearLayout
      android:layout_width="match_parent"
-     android:layout_height="70dp"
+     android:layout_height="80dp"
      android:orientation="vertical"
      android:background="@color/main_blue"
-     android:padding="12dp">
+     android:padding="12dp"
+  >
      <TextView
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
@@ -40,13 +41,36 @@
         android:layout_width="300dp"
         android:layout_height="320dp"
         android:id="@+id/calendar_id"
+        android:layout_marginBottom="16dp"
 
         />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/text_view"/>
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:padding="10dp"
+        android:layout_marginBottom="16dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cancel_click_calendar"
+            android:text="Annuler"
+            android:textColor="@color/main_blue"
+            android:textSize="14sp"
+            android:layout_marginHorizontal="14dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ok_click_calendar"
+            android:text="OK"
+            android:layout_marginHorizontal="14dp"
+            android:textColor="@color/main_blue"
+            android:textSize="14sp"/>
+
+    </LinearLayout>
 
 
 </LinearLayout>

@@ -13,13 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MediTake"
         tools:targetApi="31">
-        <activity
-            android:name=".CalendarActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+
         <activity
             android:name=".PotencyConfigActivity"
             android:exported="false">

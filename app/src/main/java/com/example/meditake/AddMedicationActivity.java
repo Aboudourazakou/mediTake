@@ -35,13 +35,15 @@ public class AddMedicationActivity extends AppCompatActivity {
 
 
 
-    LinearLayout partie2,buttons ,mDateBegin;
+    LinearLayout partie2,buttons ,linearLayoutDate , alertHourInfo , potencyInfo;
     Button btnNext , btnNext2 , btnBarSave,btnOtherOptions , btnSaveFirst , btnAEffacer;
+    TextView dateBegin;
     Spinner spnFrequence;
     EditText medName;
     ImageButton btnClose;
     LinearLayout addTitle , otherOptionView;
     CardView medIcons;
+    String date_chosen;
 
     @SuppressLint({"MissingInflatedId", "RestrictedApi"})
     @Override
@@ -62,8 +64,11 @@ public class AddMedicationActivity extends AppCompatActivity {
         btnOtherOptions = findViewById(R.id.other_option);
         btnSaveFirst = findViewById(R.id.btn_save_first);
         otherOptionView = findViewById(R.id.other_option_view);
+        alertHourInfo = findViewById(R.id.med_hour_and_number);
+        potencyInfo = findViewById(R.id.med_potency);
 
-        mDateBegin = findViewById(R.id.date_begin);
+        linearLayoutDate = findViewById(R.id.date_begin_llayout);
+        dateBegin = findViewById(R.id.date_begin);
         btnAEffacer = findViewById(R.id.login);
 
         btnClose.setOnClickListener(new View.OnClickListener() {
@@ -136,8 +141,7 @@ public class AddMedicationActivity extends AppCompatActivity {
 
             }
         });
-
-        mDateBegin.setOnClickListener(new View.OnClickListener() {
+        linearLayoutDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showCalendarAlertDialog();
@@ -163,6 +167,20 @@ public class AddMedicationActivity extends AppCompatActivity {
             }
         });
 
+        alertHourInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showAlertHourInfoDialog();
+            }
+        });
+
+        potencyInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                definePotencyConfig();
+            }
+        });
+
         btnAEffacer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -173,12 +191,15 @@ public class AddMedicationActivity extends AppCompatActivity {
 
 
    private void showCalendarAlertDialog() {
+
+
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddMedicationActivity.this);
         View customLayout = getLayoutInflater().inflate(R.layout.activity_calendar, null);
         CalendarView   mCalendarView = (CalendarView) customLayout.findViewById(R.id.calendar_id);
         TextView  myear = (TextView) customLayout.findViewById(R.id.txtview_year);
         TextView mdaysMonth = (TextView) customLayout.findViewById(R.id.days_month);
-        TextView  texte = (TextView) customLayout.findViewById(R.id.text_view);
+        TextView  cancel = (TextView) customLayout.findViewById(R.id.cancel_click_calendar);
+        TextView okClick = (TextView) customLayout.findViewById(R.id.ok_click_calendar);
 
 
        Date date = new Date();
@@ -204,22 +225,80 @@ public class AddMedicationActivity extends AppCompatActivity {
                String  date_choice = formatter.format(date);
 
                if(i2==days-1)
-                   texte.setText("Hier, "+date_choice);
+                   date_chosen = "Hier, "+date_choice;
                else if(i2==days)
-                   texte.setText("Aujourd'hui, "+date_choice);
+                   date_chosen = "Aujourd'hui, "+date_choice;
                else if(i2==days+1)
-                   texte.setText("Demain, "+date_choice);
+                   date_chosen = "Demain, "+date_choice;
                else
-                   texte.setText(date_choice);
+                   date_chosen=daysMonth;
 
 
            }
        });
-
        alertDialog.setView(customLayout);
        AlertDialog dialog = alertDialog.create();
+
+
+       okClick.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               dateBegin.setText(date_chosen);
+               dialog.dismiss();
+           }
+       });
+       cancel.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               dateBegin.setText("");
+                dialog.cancel();
+           }
+       });
+
+
+
+
        dialog.show();
 
+
+    }
+
+    private void showAlertHourInfoDialog(){
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddMedicationActivity.this);
+        View customLayout = getLayoutInflater().inflate(R.layout.activity_alert_hour_info, null);
+        EditText  medTakeNumber = (EditText) customLayout.findViewById(R.id.number);
+        Spinner type = (Spinner) customLayout.findViewById(R.id.spinner_type_med);
+        TextView  cancel = (TextView) customLayout.findViewById(R.id.cancel_hour_alert);
+        TextView define = (TextView) customLayout.findViewById(R.id.define_hour_alert);
+        ImageButton increment = (ImageButton) customLayout.findViewById(R.id.increment_number);
+        ImageButton decrement = (ImageButton) customLayout.findViewById(R.id.decrement_number);
+
+
+        alertDialog.setView(customLayout);
+        AlertDialog dialog = alertDialog.create();
+
+
+        dialog.show();
+
+
+    }
+    private void definePotencyConfig(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddMedicationActivity.this);
+        View customLayout = getLayoutInflater().inflate(R.layout.activity_potency_config, null);
+        EditText  medTakeNumber = (EditText) customLayout.findViewById(R.id.potency_value);
+        Spinner type = (Spinner) customLayout.findViewById(R.id.spinner_potency_unit);
+        TextView  cancel = (TextView) customLayout.findViewById(R.id.cancel_potency);
+        TextView define = (TextView) customLayout.findViewById(R.id.define_potency);
+        ImageButton increment = (ImageButton) customLayout.findViewById(R.id.increment_potency);
+        ImageButton decrement = (ImageButton) customLayout.findViewById(R.id.decrement_potency);
+
+
+        alertDialog.setView(customLayout);
+        AlertDialog dialog = alertDialog.create();
+
+
+        dialog.show();
 
     }
 

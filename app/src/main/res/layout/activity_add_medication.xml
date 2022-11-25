@@ -219,7 +219,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:orientation="horizontal"
-                    android:id="@+id/date_begin">
+                    android:id="@+id/date_begin_llayout">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -232,6 +232,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:id="@+id/date_begin"
                         android:text=""
                         android:textColor="@color/main_blue"
                         />

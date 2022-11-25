@@ -70,38 +70,33 @@ public class activity_login extends AppCompatActivity {
 
                     }
                     else{
-                      AlertDialog alertDialog = new AlertDialog.Builder(activity_login.this).create();
-                        alertDialog.setTitle("Connexion échouée");
-                        alertDialog.setMessage("Mot de passe Incorrecte");
-                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        dialogInterface.dismiss();
-                                    }
-                                });
-                        alertDialog.show();
-                        //Toast.makeText(activity_login.this, "Connexion non Reussie "+n, Toast.LENGTH_SHORT).show();
+
+                        dialog("Connexion échouée","Mot de passe Incorrecte");
 
                     }
 
                 } else{
-                    AlertDialog alertDialog = new AlertDialog.Builder(activity_login.this).create();
-                    alertDialog.setTitle("Connexion échouée");
-                    alertDialog.setMessage("numero de telephone incorrecte");
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    dialogInterface.dismiss();
-                                }
-                            });
-                    alertDialog.show();
+
+                    dialog("Connexion échouée","numero de telephone incorrecte");
                 }
             }
         });
 
 
+    }
+
+    private void dialog(String title,String msg){
+        AlertDialog alertDialog = new AlertDialog.Builder(activity_login.this).create();
+        alertDialog.setTitle(title);
+        alertDialog.setMessage(msg);
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+        alertDialog.show();
     }
 
     private void DoLogin(String phone , String psswrd){
@@ -114,10 +109,6 @@ public class activity_login extends AppCompatActivity {
         mCircularProgressIndicator.setVisibility(View.VISIBLE);
         Intent myIntent = new Intent(activity_login.this,HomeActivity.class);
         startActivity(myIntent);
-
-        String p = sharedPreferences.getString(KEY_PHONE,null);
-        String mdp = sharedPreferences.getString(KEY_PASSWORD,null);
-        Toast.makeText(activity_login.this, "phone : "+p+"  mdp: "+mdp+"", Toast.LENGTH_SHORT).show();
 
     }
 
