@@ -8,10 +8,13 @@ public abstract class Utilisateur {
 
     protected String motDePasse;
 
-    public Utilisateur(String prenom, String nom, String motDePasse) {
+    protected String login;
+
+    public Utilisateur(String prenom, String nom, String motDePasse, String login) {
         this.prenom = prenom;
         this.nom = nom;
         this.motDePasse = motDePasse;
+        this.login = login;
     }
 
     public Utilisateur() {
@@ -41,12 +44,21 @@ public abstract class Utilisateur {
         this.motDePasse = motDePasse;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
     @Override
     public String toString() {
         return "Utilisateur{" +
                 "prenom='" + prenom + '\'' +
                 ", nom='" + nom + '\'' +
                 ", motDePasse='" + motDePasse + '\'' +
+                ", login='" + login + '\'' +
                 '}';
     }
 }

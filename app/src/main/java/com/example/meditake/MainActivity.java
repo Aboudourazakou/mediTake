@@ -1,7 +1,6 @@
 package com.example.meditake;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -15,16 +14,23 @@ import com.example.meditake.database.dao.ProgrammeDao;
 import com.example.meditake.database.dao.ProgrammeWithRappelDao;
 import com.example.meditake.database.dao.RappelDao;
 import com.example.meditake.database.dao.TypeMedicamentDao;
+import com.example.meditake.database.dto.UtilisateurLogin;
 import com.example.meditake.database.entities.Medecin;
 import com.example.meditake.database.entities.Medicament;
 import com.example.meditake.database.entities.Programme;
 import com.example.meditake.database.entities.ProgrammeWithRappel;
 import com.example.meditake.database.entities.Rappel;
 import com.example.meditake.database.entities.TypeMedicament;
+import com.example.meditake.services.RetrofitGenerator;
+import com.example.meditake.services.UtilisateurService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,15 +46,61 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                httpCallToBackendService();
+/*
 
                 new Thread(new Runnable() {
                     public void run() {
-                        testDatabase();
+
                     }
                 }).start();
+*/
 
             }
         });
+    }
+
+
+    void httpCallToBackendService(){
+        UtilisateurService service = RetrofitGenerator.getRetrofit().create(UtilisateurService.class);
+
+        Call<Medecin> call = service.logMedecinIn(new UtilisateurLogin("username1","password1"));
+
+        call.enqueue(new Callback<Medecin>() {
+            @Override
+            public void onResponse(Call<Medecin> call, Response<Medecin> response) {
+                int statusCode = response.code();
+                Medecin medecin = response.body();
+
+                System.out.println(medecin);
+            }
+
+            @Override
+            public void onFailure(Call<Medecin> call, Throwable t) {
+                // Log error here since request failed
+
+                System.out.println(t.getMessage());
+            }
+        });
+
+     Call<List<Medecin>> medecinsCall = service.getAll();
+
+       medecinsCall.enqueue(new Callback<List<Medecin>>() {
+           @Override
+           public void onResponse(Call<List<Medecin>> call, Response<List<Medecin>> response) {
+               List<Medecin> medecins = response.body();
+
+               medecins.forEach(p-> Log.e("REQUETE",String.valueOf(p)));
+           }
+
+           @Override
+           public void onFailure(Call<List<Medecin>> call, Throwable t) {
+               System.out.println(t.getMessage());
+           }
+       });
+
+
+
     }
 
     void testDatabase(){
@@ -58,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
         /*MedecinDao medecinDao = db.medecinDao();
 
-        List<Medecin> medecins = new ArrayList<>(Arrays.asList(new Medecin(1L,"Kodjo","Godwin","1234"),new Medecin(2L,"Amavi","Adjo","1234")));
+        List<Medecin> medecins = new ArrayList<>(Arrays.asList(new Medecin(1L,"Kodjo","Godwin","1234","medecin2"),new Medecin(2L,"Amavi","Adjo","1234","medecin1")));
 
        medecins.stream().forEach(m->{
            if (medecinDao.getById(m.getId())==null){

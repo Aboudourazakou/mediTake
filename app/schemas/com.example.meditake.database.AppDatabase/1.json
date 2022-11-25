@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "59e38cf6efbabebfe362b32498c2fba8",
+    "identityHash": "c23f5775dd4c823aa42aad5308b131a2",
     "entities": [
       {
         "tableName": "Medecin",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `prenom` TEXT, `nom` TEXT, `motDePasse` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `prenom` TEXT, `nom` TEXT, `motDePasse` TEXT, `login` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -31,6 +31,12 @@
             "columnName": "motDePasse",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "login",
+            "columnName": "login",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -44,7 +50,7 @@
       },
       {
         "tableName": "Programme",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `heure` INTEGER NOT NULL, `minutes` INTEGER NOT NULL, `duree` INTEGER NOT NULL, `jours` TEXT, `medicamentId` INTEGER, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `heure` INTEGER NOT NULL, `minutes` INTEGER NOT NULL, `duree` INTEGER NOT NULL, `jours` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -75,12 +81,6 @@
             "columnName": "jours",
             "affinity": "TEXT",
             "notNull": false
-          },
-          {
-            "fieldPath": "medicamentId",
-            "columnName": "medicamentId",
-            "affinity": "INTEGER",
-            "notNull": false
           }
         ],
         "primaryKey": {
@@ -94,7 +94,7 @@
       },
       {
         "tableName": "Patient",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `prenom` TEXT, `nom` TEXT, `motDePasse` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `prenom` TEXT, `nom` TEXT, `motDePasse` TEXT, `login` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -117,6 +117,12 @@
           {
             "fieldPath": "motDePasse",
             "columnName": "motDePasse",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "login",
+            "columnName": "login",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -208,7 +214,7 @@
       },
       {
         "tableName": "Rappel",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `date` INTEGER, `nbrPillule` INTEGER NOT NULL, `active` INTEGER NOT NULL, `nbrDeFois` INTEGER NOT NULL, `programmeId` INTEGER, `statut` INTEGER NOT NULL, `message` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `date` INTEGER, `nbrPillule` INTEGER NOT NULL, `active` INTEGER NOT NULL, `nbrDeFois` INTEGER NOT NULL, `programmeId` INTEGER, `statut` INTEGER NOT NULL, `message` TEXT, `medicamentId` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -257,6 +263,12 @@
             "columnName": "message",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "medicamentId",
+            "columnName": "medicamentId",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -298,7 +310,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '59e38cf6efbabebfe362b32498c2fba8')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c23f5775dd4c823aa42aad5308b131a2')"
     ]
   }
 }
