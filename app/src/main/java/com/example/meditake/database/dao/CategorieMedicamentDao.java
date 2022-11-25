@@ -8,7 +8,7 @@ import androidx.room.Query;import com.example.meditake.database.entities.Categor
 import java.util.List;
 
 @Dao
-public interface TypeMedicamentDao {
+public interface CategorieMedicamentDao {
     @Query("Select * from CategorieMedicament")
     List<CategorieMedicament> getAll();
 

@@ -22,6 +22,7 @@
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/more_menu_item.xml" value="0.17864583333333334" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/rappel_click_dialog.xml" value="0.22" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/rappels_list_wrapper.xml" value="0.10208333333333333" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/reasons_radio_element.xml" value="0.10208333333333333" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/reschedule_reminder_dialog.xml" value="0.1" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/segment_medicament_home_list.xml" value="0.7333333333333334" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/menu/bottom_nav_menu.xml" value="0.103125" />
@@ -37,7 +38,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.22" />
+        <option name="scale" value="0.75" />
       </ProjectState>
     </option>
   </component>

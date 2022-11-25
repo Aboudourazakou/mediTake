@@ -13,6 +13,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -25,8 +26,11 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.RadioButton;
 
 import com.example.meditake.adapters.DaysAdapter;
+import com.example.meditake.adapters.IgnoreReasonAdapter;
+import com.example.meditake.adapters.MenuItemAdapter;
 import com.example.meditake.adapters.ProgrammeAdapter;
 import com.example.meditake.alarm.AlarmReceiver;
 import com.example.meditake.databinding.IgnoreMessageDialogBinding;
@@ -58,7 +62,9 @@ public class HomeActivity extends AppCompatActivity {
     PendingIntent pendingIntent;
     HomeActivityViewModel homeActivityViewModel;
     String today;
-    Dialog dialog;
+    Dialog dialog,dialog2;
+    Rappel rappel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -229,7 +235,7 @@ public class HomeActivity extends AppCompatActivity {
     }
     public  void showDialog(Rappel rappel){
 
-
+        this.rappel=rappel;
         LayoutInflater layoutInflater=LayoutInflater.from(getApplicationContext());
          RappelClickDialogBinding dialogBinding= DataBindingUtil.inflate(layoutInflater,R.layout.rappel_click_dialog,null,false);
          dialogBinding.setRappel(rappel);
@@ -254,6 +260,7 @@ public class HomeActivity extends AppCompatActivity {
                 rapport.setMessage("Medicament est termine");
                 rappel.getRapportList().add(rapport);
                 showDialogForIgnoreMessage(rappel);
+                updateDb(rappel);
             }
         });
         dialogBinding.takePillBtn.setOnClickListener(new View.OnClickListener() {
@@ -293,30 +300,40 @@ public class HomeActivity extends AppCompatActivity {
         LayoutInflater layoutInflater=LayoutInflater.from(getApplicationContext());
         IgnoreMessageDialogBinding dialogBinding= DataBindingUtil.inflate(layoutInflater,R.layout.ignore_message_dialog,null,false);
 
-        dialog = new Dialog(HomeActivity.this, android.R.style.Theme_DeviceDefault_Dialog_MinWidth);
+       Dialog dialog2 = new Dialog(HomeActivity.this, android.R.style.Theme_DeviceDefault_Dialog_MinWidth);
         //We have added a title in the custom layout. So let's disable the default title.
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        String[]items=getResources().getStringArray(R.array.reasons);
+
+        IgnoreReasonAdapter ignoreReasonAdapter=new IgnoreReasonAdapter(this,R.layout.reasons_radio_element,Arrays.asList(items));
+         dialogBinding.reasonListView.setAdapter(ignoreReasonAdapter);
+
+
         //The user will be able to cancel the dialog bu clicking anywhere outside the dialog.
-        dialog.setCancelable(true);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+        dialog2.setCancelable(true);
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog2.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
         //Mention the name of the layout of your custom dialog.
-        dialog.setContentView(dialogBinding.getRoot());
-        Window window = dialog.getWindow();
+        dialog2.setContentView(dialogBinding.getRoot());
+        Window window = dialog2.getWindow();
         WindowManager.LayoutParams wlp = window.getAttributes();
 
         wlp.gravity = Gravity.BOTTOM;
         wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         window.setAttributes(wlp);
-        dialog.show();
+        this.dialog2=dialog2;
+        dialog2.show();
 
-        dialogBinding.selectReasonIgnoreBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
+    }
 
+    public  void setReasonOfIgnore(String reason){
+        Rapport rapport=createRapport();
+        rappel.getRapportList().add(rapport);
+        rapport.setStatut("ignore");
+        rapport.setMessage(reason);
+        dialog2.cancel();
+        updateDb(this.rappel);
     }
     public  void   showDialogForReminderRescheduling(Rappel rappel){
         LayoutInflater layoutInflater=LayoutInflater.from(getApplicationContext());

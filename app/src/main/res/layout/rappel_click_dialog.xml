@@ -97,7 +97,7 @@
                             android:layout_marginLeft="20dp"
                             android:layout_marginBottom="20dp"
                             android:textColor="@color/cendre"
-                            android:text="Programme pour 18h25 aujourd hui">
+                            android:text='@{"Programme pour "+rappel.heure+" "+rappel.minutes}'>
 
                         </TextView>
 
@@ -120,7 +120,7 @@
                             android:layout_marginLeft="20dp"
                             android:layout_marginBottom="20dp"
                             android:textColor="@color/cendre"
-                            android:text="Prendre 9 pilules">
+                            android:text='@{"Prendre "+rappel.qtePilule +" pilules"}'>
 
                         </TextView>
 
@@ -143,7 +143,7 @@
                             android:layout_marginLeft="20dp"
                             android:layout_marginBottom="20dp"
                             android:textColor="@color/cendre"
-                            android:text=" 9 pilules restants">
+                            android:text='@{rappel.medicament.qte+" pilules restantes"}'>
 
                         </TextView>
 
@@ -166,7 +166,7 @@
                             android:layout_marginLeft="20dp"
                             android:layout_marginBottom="20dp"
                             android:textColor="@color/cendre"
-                            android:text="Derniere prise,a 18:25,lun. 21 nov">
+                            android:text='@{"Derniere prise "+rappel.lastTimeTaken}'>
 
                         </TextView>
 

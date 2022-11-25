@@ -19,7 +19,7 @@ public interface PatientDao {
     long insert(Patient p);
 
     @Query("Select * from Patient where id = :id")
-    Patient getById(int id);
+    Patient getById(long id);
 
     @Query("SELECT * FROM Patient WHERE id IN (:userIds)")
     List<Patient> loadAllByIds(int[] userIds);

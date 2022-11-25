@@ -11,8 +11,9 @@ public class Patient extends Utilisateur{
     private Long id;
 
     @Ignore
-    public Patient(String prenom, String nom, String motDePasse,String login) {
+    public Patient(long id,String prenom, String nom, String motDePasse,String login) {
         super(prenom, nom, motDePasse,login);
+        this.id = id;
     }
 
     public Patient() {

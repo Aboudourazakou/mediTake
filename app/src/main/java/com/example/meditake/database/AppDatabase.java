@@ -6,6 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.example.meditake.database.dao.CategorieMedicamentDao;
 import com.example.meditake.database.dao.JournalDao;
 import com.example.meditake.database.dao.MedecinDao;
 import com.example.meditake.database.dao.MedicamentDao;
@@ -13,7 +14,7 @@ import com.example.meditake.database.dao.PatientDao;
 import com.example.meditake.database.dao.ProgrammeDao;
 import com.example.meditake.database.dao.ProgrammeWithRappelDao;
 import com.example.meditake.database.dao.RappelDao;
-import com.example.meditake.database.dao.TypeMedicamentDao;
+import com.example.meditake.database.dao.RapportDao;
 import com.example.meditake.database.entities.CategorieMedicament;
 import com.example.meditake.database.entities.Journal;
 import com.example.meditake.database.entities.Medecin;
@@ -30,11 +31,12 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract MedecinDao medecinDao();
     public abstract PatientDao patientDao();
     public abstract MedicamentDao medicamentDao();
-    public abstract TypeMedicamentDao typeMedicamentDao();
+    public abstract CategorieMedicamentDao categorieMedicamentDao();
     public abstract ProgrammeDao programmeDao();
     public abstract RappelDao rappelDao();
     public abstract JournalDao journalDao();
     public abstract ProgrammeWithRappelDao programmeWithRappelDao();
+    public abstract RapportDao rapportDao();
 
     private static AppDatabase appDatabase;
 

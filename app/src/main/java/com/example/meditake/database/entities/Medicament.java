@@ -67,4 +67,15 @@ public class Medicament {
     public void setCategorieId(int categorieId) {
         this.categorieId = categorieId;
     }
+
+    @Override
+    public String toString() {
+        return "Medicament{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", img='" + img + '\'' +
+                ", qte=" + qte +
+                ", categorieId=" + categorieId +
+                '}';
+    }
 }

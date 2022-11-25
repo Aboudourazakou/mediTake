@@ -32,4 +32,13 @@
         <item>sam.</item>
         <item>dim.</item>
     </string-array>
+    <string-array name="reasons">
+        <item>Le medicament n est pas proche de moi</item>
+        <item>Oubli/occupation/sommeil</item>
+        <item>Medicament expire</item>
+        <item>Il n est pas necessaire que je prenne cette dose</item>
+        <item>Effets secondaires/autres problemes de sante</item>
+        <item>Preocupe par le cout</item>
+        <item>Autres</item>
+    </string-array>
 </resources>

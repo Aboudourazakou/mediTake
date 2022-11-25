@@ -1,28 +1,27 @@
 package com.example.meditake;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
-import com.example.meditake.database.AppDatabase;
-import com.example.meditake.database.dao.MedicamentDao;
-import com.example.meditake.database.dao.ProgrammeDao;
-import com.example.meditake.database.dao.ProgrammeWithRappelDao;
-import com.example.meditake.database.dao.RappelDao;
-import com.example.meditake.database.dao.TypeMedicamentDao;
 import com.example.meditake.database.dto.UtilisateurLogin;
-import com.example.meditake.database.entities.CategorieMedicament;
 import com.example.meditake.database.entities.Medecin;
-import com.example.meditake.database.entities.Medicament;
-import com.example.meditake.database.entities.Programme;
-import com.example.meditake.database.entities.ProgrammeWithRappel;
-import com.example.meditake.database.entities.Rappel;
 import com.example.meditake.services.RetrofitGenerator;
 import com.example.meditake.services.UtilisateurService;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,15 +29,97 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
+
+    EditText loginphone,loginpassword;
+    TextView loginButton;
+    Map<String,String> comptes;
+    CircularProgressIndicator mCircularProgressIndicator;
+
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    public static final  String SHARED_PREF_NAME = "mysharedpref";
+    private static final  String KEY_PHONE = "myphone";
+    private static final  String KEY_PASSWORD = "mypassword";
+
+
+    @SuppressLint({"WrongViewCast", "ResourceAsColor"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        new Thread(new Runnable() {
-            public void run() {
-                httpCallToBackendService();
+
+
+        loginphone =  findViewById(R.id.phoneEdit);
+        loginpassword = findViewById(R.id.passwordEdit);
+        loginButton = findViewById(R.id.loginButton);
+        mCircularProgressIndicator = findViewById(R.id.circular_indicator);
+
+        sharedPreferences = getSharedPreferences(this.SHARED_PREF_NAME,  MODE_PRIVATE);
+
+        comptes = new HashMap<String,String>(){{
+            put("06754","admin");
+            put("09876","user");
+        }};
+
+
+
+
+
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String phone = loginphone.getText().toString();
+                String password = loginpassword.getText().toString();
+
+                if(comptes.containsKey(phone)){
+
+                    if(password.equals(comptes.get(phone))){
+
+                        DoLogin(phone,password);
+
+                    }
+                    else{
+
+                        dialog("Connexion échouée","Mot de passe Incorrecte");
+
+                    }
+
+                } else{
+
+                    dialog("Connexion échouée","numero de telephone incorrecte");
+                }
             }
-        }).start();
+        });
+
+
+    }
+
+    private void dialog(String title,String msg){
+        AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
+        alertDialog.setTitle(title);
+        alertDialog.setMessage(msg);
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
+
+    private void DoLogin(String phone , String psswrd){
+        editor = sharedPreferences.edit();
+        editor.putString(KEY_PHONE,phone);
+        editor.putString(KEY_PASSWORD,psswrd);
+        editor.putBoolean("hasLoggedIn",true);
+        editor.commit();
+
+        mCircularProgressIndicator.setVisibility(View.VISIBLE);
+        Intent myIntent = new Intent(LoginActivity.this,HomeActivity.class);
+        startActivity(myIntent);
+
     }
 
 
@@ -80,55 +161,5 @@ public class LoginActivity extends AppCompatActivity {
                 System.out.println(t.getMessage());
             }
         });
-
-
-
     }
-
-    /*void testDatabase(){
-
-        AppDatabase db = AppDatabase.getDataBase(getApplicationContext());
-
-
-        *//*MedecinDao medecinDao = db.medecinDao();
-
-        List<Medecin> medecins = new ArrayList<>(Arrays.asList(new Medecin(1L,"Kodjo","Godwin","1234","medecin2"),new Medecin(2L,"Amavi","Adjo","1234","medecin1")));
-
-       medecins.stream().forEach(m->{
-           if (medecinDao.getById(m.getId())==null){
-               Log.e("INSERTION : ", String.valueOf(m));
-               medecinDao.insert(m);
-           }
-       });*//*
-
-        TypeMedicamentDao typeMedicamentDao = db.typeMedicamentDao();
-
-        typeMedicamentDao.insertAll(new CategorieMedicament(1L,"pillule"));
-
-        MedicamentDao medicamentDao = db.medicamentDao();
-
-        medicamentDao.insertAll(new Medicament(1L,"Paracetamol","para.jpg",20,1),
-                new Medicament(2L,"Peneciline","pene.jpg",20,1),
-                new Medicament(3L,"Acotsi","acotsi.jpg",20,1),
-                new Medicament(4L,"Jumbo","jumbo.jpg",20,1));
-
-        ProgrammeDao programmeDao = db.programmeDao();
-
-        programmeDao.insertAll(new Programme(1L,2,30,20,"Lundi Mardi Vendredi"),
-                new Programme(2L,2,30,20,"Lundi Samedi Vendredi"),
-                new Programme(14,30,20,"Lundi Mercredi Vendredi"),
-                new Programme(19,30,20,"Mardi Dimanche Jeudi"));
-
-
-        RappelDao rappelDao = db.rappelDao();
-        rappelDao.insertAll(new Rappel(1L,36000L,13,true,7,1L,true,"Prend on medicament",1),
-                new Rappel(2L,36000L,13,true,7,1L,true,"Prend medicament",1),
-                new Rappel(3L,36000L,13,true,7,1L,true,"medicament",1),
-                new Rappel(4L,36000L,13,true,7,1L,true,"Prend",1));
-
-        ProgrammeWithRappelDao programmeWithRappelDao = db.programmeWithRappelDao();
-        ProgrammeWithRappel programmeWithRappel = programmeWithRappelDao.getProgrammeWithRappels(1L);
-
-        Log.e("TAGGGG : ", "testDatabase: ¨ProgrammeWithRappel " + programmeWithRappel);
-    }*/
 }

@@ -17,6 +17,8 @@ public class Programme {
 
     private String jours;
 
+    private long idPatient;
+
 
     public Programme(Long id, int heure, int minutes, int duree, String jours) {
         this.id = id;
@@ -77,6 +79,13 @@ public class Programme {
         this.jours = jours;
     }
 
+    public long getIdPatient() {
+        return idPatient;
+    }
+
+    public void setIdPatient(long idPatient) {
+        this.idPatient = idPatient;
+    }
 
     @Override
     public String toString() {
