@@ -9,8 +9,8 @@ public class Patient extends Utilisateur{
     @PrimaryKey
     private Long id;
 
-    public Patient(String prenom, String nom, String motDePasse) {
-        super(prenom, nom, motDePasse);
+    public Patient(String prenom, String nom, String motDePasse,String login) {
+        super(prenom, nom, motDePasse,login);
     }
 
     public Patient() {

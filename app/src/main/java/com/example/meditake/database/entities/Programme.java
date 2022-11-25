@@ -17,26 +17,23 @@ public class Programme {
 
     private String jours;
 
-    private Long medicamentId;
 
-    public Programme(Long id, int heure, int minutes, int duree, String jours, int medicamentId) {
+    public Programme(Long id, int heure, int minutes, int duree, String jours) {
         this.id = id;
         this.heure = heure;
         this.minutes = minutes;
         this.duree = duree;
         this.jours = jours;
-
     }
 
     public Programme() {
     }
 
-    public Programme(int heure, int minutes, int duree, String jours, int medicamentId) {
+    public Programme(int heure, int minutes, int duree, String jours) {
         this.heure = heure;
         this.minutes = minutes;
         this.duree = duree;
         this.jours = jours;
-        this.medicamentId = (long) medicamentId;
     }
 
     public Long getId() {
@@ -80,14 +77,6 @@ public class Programme {
         this.jours = jours;
     }
 
-    public Long getMedicamentId() {
-        return medicamentId;
-    }
-
-    public void setMedicamentId(Long medicamentId) {
-        this.medicamentId = medicamentId;
-    }
-
 
     @Override
     public String toString() {
@@ -96,8 +85,7 @@ public class Programme {
                 ", heure=" + heure +
                 ", minutes=" + minutes +
                 ", duree=" + duree +
-                ", jours='" + jours + '\'' +
-                ", medicamentId=" + medicamentId +
+                ", jours='" + jours +
                 '}';
     }
 }

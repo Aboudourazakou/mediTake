@@ -8,8 +8,8 @@ public class Medecin extends Utilisateur{
     @PrimaryKey
     private Long id;
 
-    public Medecin( Long id,String prenom, String nom, String motDePasse) {
-        super(prenom, nom, motDePasse);
+    public Medecin(Long id,String prenom, String nom, String motDePasse, String login) {
+        super(prenom, nom, motDePasse, login);
         this.id = id;
     }
 
