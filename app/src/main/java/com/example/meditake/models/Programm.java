@@ -8,6 +8,7 @@ import java.util.List;
  */
 public class Programm {
     private  String jours;
+    private  Long idPatient;
     private List<Rappel> rappel;
     private int heure;
     private int minutes;

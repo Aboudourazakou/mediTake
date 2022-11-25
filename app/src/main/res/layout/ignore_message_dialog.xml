@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/selectReasonIgnoreBtn"
+        android:padding="20dp"
+        android:background="@color/white">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="30dp"
+            android:text="Pouvez-vous nous indiquer la raison pour laquelle vous sautez cette dose?">
+
+        </TextView>
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/medAbsent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:checked="true"
+                android:text="Le medicament n'est pas pret de moi">
+
+            </RadioButton>
+            <RadioButton
+                android:id="@+id/medForget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:text="Oubli/sommeil/occupation">
+
+            </RadioButton>
+            <RadioButton
+                android:id="@+id/medExpired"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:text="Le medicament est expire">
+
+            </RadioButton>
+            <RadioButton
+                android:id="@+id/medUncessary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:text="Il n'est pas necessaire que je prenne cette dose">
+
+            </RadioButton>
+            <RadioButton
+                android:id="@+id/medSecondEffet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:text="Effets secondaires/autres problemes de sante">
+
+            </RadioButton>
+            <RadioButton
+                android:id="@+id/medHightCost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:text="Preoccupe par le cout">
+
+            </RadioButton>
+            <RadioButton
+                android:id="@+id/Other"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:text="Autres">
+
+            </RadioButton>
+        </RadioGroup>
+
+    </LinearLayout>
+</layout>

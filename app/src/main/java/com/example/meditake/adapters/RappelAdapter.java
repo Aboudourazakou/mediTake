@@ -1,5 +1,6 @@
 package com.example.meditake.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,25 @@ public class RappelAdapter extends RecyclerView.Adapter<RappelAdapter.medicament
     public void onBindViewHolder(@NonNull medicamentViewHolder holder, int position) {
         Rappel rappel=rappelList.get(position);
         holder.binding.setRappel(rappel);
+
+        for (int i = 0; i <rappel.getRapportList().size() ; i++) {
+             if(rappel.getRapportList().get(i).getStatut().equals("pris")){
+                 holder.binding.takenText.setVisibility(View.VISIBLE);
+                 holder.binding.takenText.setText(rappel.getRapportList().get(i).getMessage());
+
+             }
+            if(rappel.getRapportList().get(i).getStatut().equals("reprogramme")){
+                holder.binding.rescheduledText.setVisibility(View.VISIBLE);
+                holder.binding.rescheduledText.setText(rappel.getRapportList().get(i).getMessage());
+
+            }
+            if(rappel.getRapportList().get(i).getStatut().equals("ignore")){
+                holder.binding.ignoredText.setVisibility(View.VISIBLE);
+                holder.binding.ignoredText.setText(rappel.getRapportList().get(i).getMessage());
+
+            }
+
+        }
 
     }
 
