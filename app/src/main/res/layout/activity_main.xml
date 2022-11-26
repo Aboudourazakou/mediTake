@@ -26,6 +26,11 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@drawable/logo"/>
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 6ffe842b7be06d229aff16535dadeaf06cdd5574
 
     <ImageView
         android:id="@+id/whitetwitter"

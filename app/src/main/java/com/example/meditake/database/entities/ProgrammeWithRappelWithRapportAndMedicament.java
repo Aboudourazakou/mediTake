@@ -5,7 +5,7 @@ import androidx.room.Relation;
 
 import java.util.List;
 
-public class ProgrammeWithRapportWithRappelAndMedicament {
+public class ProgrammeWithRappelWithRapportAndMedicament {
     @Embedded
     private Programme programme;
 
