@@ -3,12 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.meditake" >
 
-<<<<<<< HEAD
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-=======
-    <uses-permission android:name="android.permission.INTERNET" />
->>>>>>> 7c7a128ceb941affc3de1939f9897bd55925f08b
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -36,30 +32,22 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-<<<<<<< HEAD
         <activity android:name=".HomeActivity"
             android:theme="@style/AppTheme.fullscreen">
 
         </activity>
-        <activity
-            android:name=".activity_login"
-            android:theme="@style/AppTheme.fullscreen"
-            android:exported="false"
-            />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/AppTheme.fullscreen"
-            >
-=======
-        <activity android:name=".LoginActivity" />
+            />
+
         <activity
-            android:name=".TestActivity"
-            android:exported="true" >
->>>>>>> 7c7a128ceb941affc3de1939f9897bd55925f08b
+            android:name=".LoginActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 

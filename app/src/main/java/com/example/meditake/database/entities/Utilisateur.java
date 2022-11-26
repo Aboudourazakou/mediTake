@@ -1,6 +1,6 @@
 package com.example.meditake.database.entities;
 
-public abstract class Utilisateur {
+public class Utilisateur {
 
     protected String prenom;
 
