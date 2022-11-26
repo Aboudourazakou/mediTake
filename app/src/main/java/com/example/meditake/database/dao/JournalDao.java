@@ -15,7 +15,7 @@ public interface JournalDao {
     List<Journal> getAll();
 
     @Query("Select * from Journal where id = :id")
-    Journal getById(int id);
+    Journal getById(long id);
 
     @Query("SELECT * FROM Journal WHERE id IN (:userIds)")
     List<Journal> loadAllByIds(int[] userIds);
@@ -23,6 +23,9 @@ public interface JournalDao {
 
     @Insert
     void insertAll(Journal ...journals);
+
+    @Insert
+    void insert(Journal journal);
 
     @Delete
     void delete(Journal journal);

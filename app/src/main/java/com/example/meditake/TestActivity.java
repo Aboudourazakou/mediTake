@@ -17,9 +17,8 @@ import com.example.meditake.database.entities.CategorieMedicament;
 import com.example.meditake.database.entities.Medicament;
 import com.example.meditake.database.entities.Patient;
 import com.example.meditake.database.entities.Programme;
-import com.example.meditake.database.entities.ProgrammeWithRapportWithRappelAndMedicament;
+import com.example.meditake.database.entities.ProgrammeWithRappelWithRapportAndMedicament;
 import com.example.meditake.database.entities.Rappel;
-import com.example.meditake.database.entities.RappelWithRapportAndMedicament;
 import com.example.meditake.database.entities.Rapport;
 
 import java.util.ArrayList;
@@ -53,7 +52,7 @@ public class TestActivity extends AppCompatActivity {
 
 
         AppDatabase db = AppDatabase.getDataBase(getApplicationContext());
-/*
+
 
 
         PatientDao medecinDao = db.patientDao();
@@ -71,10 +70,10 @@ public class TestActivity extends AppCompatActivity {
 
         MedicamentDao medicamentDao = db.medicamentDao();
 
-        medicamentDao.insertAll(new Medicament(1L,"Paracetamol","para.jpg",20,1),
+      /*  medicamentDao.insertAll(new Medicament(1L,"Paracetamol","para.jpg",20,1),
                 new Medicament(2L,"Peneciline","pene.jpg",20,1),
                 new Medicament(3L,"Acotsi","acotsi.jpg",20,1),
-                new Medicament(4L,"Jumbo","jumbo.jpg",20,1));
+                new Medicament(4L,"Jumbo","jumbo.jpg",20,1));*/
 
         ProgrammeDao programmeDao = db.programmeDao();
 
@@ -92,13 +91,14 @@ public class TestActivity extends AppCompatActivity {
         RapportDao rapportDao = db.rapportDao();
 
         rapportDao.insertAll(new Rapport("Papa","Pas encore",2L,1L,1L),
-                new Rapport("Papamou","Pas",2L,1L,1L));*/
+                new Rapport("Papamou","Pas",2L,1L,1L));
 
 
-        ProgrammeDao programmeDao = db.programmeDao();
+        //ProgrammeDao programmeDao = db.programmeDao();
 
 
-        ProgrammeWithRapportWithRappelAndMedicament programme = programmeDao.getProgramme(1L);
+        ProgrammeWithRappelWithRapportAndMedicament programme = programmeDao.getProgramme(1L);
+
 
         programme.getRappels().forEach(r->r.getRapports().forEach(ra->Log.e("TAGGGG : ", "Rapport: "+ra )));
     }

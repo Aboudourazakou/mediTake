@@ -2,6 +2,7 @@ package com.example.meditake.services;
 
 import com.example.meditake.database.dto.UtilisateurLogin;
 import com.example.meditake.database.entities.Medecin;
+import com.example.meditake.database.entities.Utilisateur;
 
 import java.util.List;
 
@@ -17,6 +18,9 @@ public interface UtilisateurService {
 
     @POST("utilisateur/patient/login")
     Call<Medecin> logPatientIn(@Body UtilisateurLogin utilisateurLogin);
+
+    @POST("utilisateur/login")
+    Call<Utilisateur> login(@Body UtilisateurLogin utilisateurLogin);
 
     @GET("utilisateur/medecin/all")
     Call<List<Medecin>> getAll();

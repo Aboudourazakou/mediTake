@@ -8,7 +8,7 @@ import androidx.room.Transaction;
 
 import com.example.meditake.database.entities.Programme;
 import com.example.meditake.database.entities.ProgrammeWithRappel;
-import com.example.meditake.database.entities.ProgrammeWithRapportWithRappelAndMedicament;
+import com.example.meditake.database.entities.ProgrammeWithRappelWithRapportAndMedicament;
 
 import java.util.List;
 
@@ -42,10 +42,10 @@ public interface ProgrammeDao {
 
     @Transaction
     @Query("SELECT * FROM PROGRAMME")
-    List<ProgrammeWithRapportWithRappelAndMedicament> getProgrammes();
+    List<ProgrammeWithRappelWithRapportAndMedicament> getProgrammes();
 
     @Transaction
     @Query("select * from programme where id = :id")
-    ProgrammeWithRapportWithRappelAndMedicament getProgramme(Long id);
+    ProgrammeWithRappelWithRapportAndMedicament getProgramme(Long id);
 
 }

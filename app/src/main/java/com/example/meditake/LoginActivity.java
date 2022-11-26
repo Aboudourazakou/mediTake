@@ -31,6 +31,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.meditake.adapters.IgnoreReasonAdapter;
+import com.example.meditake.database.entities.Utilisateur;
 import com.example.meditake.databinding.IgnoreMessageDialogBinding;
 import com.example.meditake.databinding.InternetUnavalaibleDialogBinding;
 import com.example.meditake.internet.NetworkChangeListener;
@@ -42,8 +43,6 @@ import com.example.meditake.services.UtilisateurService;
 
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -89,12 +88,35 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                  if(phoneNumber.equals("yes") &&password.equals("yes")){
-                        showIsLoggingDialog();
+                System.out.println("qyoi?");
+                String username = phoneNumber.getText().toString();
+                String pwd = password.getText().toString();
 
-                  }else{
-                      showLogginIncorrectDialog();
-                  }
+                Call<Utilisateur> utilisateurCall = RetrofitGenerator
+                        .getRetrofit()
+                        .create(UtilisateurService.class)
+                        .login(new UtilisateurLogin(username,pwd));
+
+                utilisateurCall.enqueue(new Callback<Utilisateur>() {
+                    @Override
+                    public void onResponse(Call<Utilisateur> call, Response<Utilisateur> response) {
+                        Utilisateur user = response.body();
+                        if (user==null){
+                            showLogginIncorrectDialog();
+                        }else {
+
+                            sharedPreferences.edit().putString(KEY_PHONE,username).putString(KEY_PASSWORD,pwd).apply();
+                            showIsLoggingDialog();
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Utilisateur> call, Throwable t) {
+                        System.out.println("Erreur : "+t.getMessage());
+                    }
+                });
+
             }
         });
 
