@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
         new Handler().postDelayed(()->{
             SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREF_NAME,0);
-            boolean hasLoggedIn = sharedPreferences.getBoolean("hasLoggedIn",false);
+            boolean hasLoggedIn = sharedPreferences.getBoolean("hasLoggedIn",false)&&false;
 
             if(hasLoggedIn){
 
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        },2000);
+        },1000);
 
     }
 
