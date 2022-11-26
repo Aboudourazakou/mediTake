@@ -15,13 +15,16 @@ public interface MedicamentDao {
      List<Medicament> getAll();
 
     @Query("Select * from Medicament where id = :id")
-    Medicament getById(int id);
+    Medicament getById(long id);
 
     @Query("SELECT * FROM Medicament WHERE id IN (:userIds)")
     List<Medicament> loadAllByIds(int[] userIds);
 
     @Insert
     void insertAll(Medicament ...medicaments);
+
+    @Insert
+    long insert(Medicament medicament);
 
     @Delete
     void delete(Medicament medicament);

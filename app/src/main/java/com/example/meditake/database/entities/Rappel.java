@@ -12,13 +12,13 @@ public class  Rappel {
     private Long id;
     private int heure;
     private int minutes;
-    private int  qtePilule;
+    private double  qtePilule;
     private String message;
     private String lastTimeTaken;
     private long medicamentId;
     private long programmeId;
 
-    public Rappel(long id,int heure, int minutes, int qtePilule, String message, String lastTimeTaken, long medicamentId,long programmeId) {
+    public Rappel(long id,int heure, int minutes, double qtePilule, String message, String lastTimeTaken, long medicamentId,long programmeId) {
         this.id = id;
         this.heure = heure;
         this.minutes = minutes;
@@ -27,6 +27,9 @@ public class  Rappel {
         this.lastTimeTaken = lastTimeTaken;
         this.medicamentId = medicamentId;
         this.programmeId = programmeId;
+    }
+
+    public Rappel() {
     }
 
     public long getMedicamentId() {
@@ -61,11 +64,11 @@ public class  Rappel {
         this.minutes = minutes;
     }
 
-    public int getQtePilule() {
+    public double getQtePilule() {
         return qtePilule;
     }
 
-    public void setQtePilule(int qtePilule) {
+    public void setQtePilule(double qtePilule) {
         this.qtePilule = qtePilule;
     }
 
@@ -91,5 +94,19 @@ public class  Rappel {
 
     public void setProgrammeId(long programmeId) {
         this.programmeId = programmeId;
+    }
+
+    @Override
+    public String toString() {
+        return "Rappel{" +
+                "id=" + id +
+                ", heure=" + heure +
+                ", minutes=" + minutes +
+                ", qtePilule=" + qtePilule +
+                ", message='" + message + '\'' +
+                ", lastTimeTaken='" + lastTimeTaken + '\'' +
+                ", medicamentId=" + medicamentId +
+                ", programmeId=" + programmeId +
+                '}';
     }
 }

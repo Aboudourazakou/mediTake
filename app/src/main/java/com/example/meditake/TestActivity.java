@@ -97,6 +97,7 @@ public class TestActivity extends AppCompatActivity {
 
         ProgrammeDao programmeDao = db.programmeDao();
 
+
         ProgrammeWithRapportWithRappelAndMedicament programme = programmeDao.getProgramme(1L);
 
         programme.getRappels().forEach(r->r.getRapports().forEach(ra->Log.e("TAGGGG : ", "Rapport: "+ra )));

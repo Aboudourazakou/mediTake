@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "aa10abac1076721edc70c458d50c71cd",
+    "identityHash": "0e8d347a03d7c0d238026d86e049ed4e",
     "entities": [
       {
         "tableName": "Medecin",
@@ -50,7 +50,7 @@
       },
       {
         "tableName": "Programme",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `heure` INTEGER NOT NULL, `minutes` INTEGER NOT NULL, `duree` INTEGER NOT NULL, `jours` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `heure` INTEGER NOT NULL, `minutes` INTEGER NOT NULL, `duree` INTEGER NOT NULL, `jours` TEXT, `idPatient` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -81,6 +81,12 @@
             "columnName": "jours",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "idPatient",
+            "columnName": "idPatient",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -226,7 +232,7 @@
       },
       {
         "tableName": "Rappel",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `heure` INTEGER NOT NULL, `minutes` INTEGER NOT NULL, `qtePilule` INTEGER NOT NULL, `message` TEXT, `lastTimeTaken` TEXT, `medicamentId` INTEGER NOT NULL, `programmeId` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `heure` INTEGER NOT NULL, `minutes` INTEGER NOT NULL, `qtePilule` REAL NOT NULL, `message` TEXT, `lastTimeTaken` TEXT, `medicamentId` INTEGER NOT NULL, `programmeId` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -249,7 +255,7 @@
           {
             "fieldPath": "qtePilule",
             "columnName": "qtePilule",
-            "affinity": "INTEGER",
+            "affinity": "REAL",
             "notNull": true
           },
           {
@@ -389,7 +395,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'aa10abac1076721edc70c458d50c71cd')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0e8d347a03d7c0d238026d86e049ed4e')"
     ]
   }
 }

@@ -22,6 +22,42 @@
         android:textStyle="bold"
         android:layout_marginBottom="36dp"
         />
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:gravity="center"
+       android:layout_marginBottom="24dp">
+
+
+       <EditText
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:id="@+id/hour"
+           android:textColor="@color/black"
+           android:textSize="14sp"
+           android:layout_marginHorizontal="10dp"
+           />
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text=" : "
+           android:textColor="@color/black"
+           android:textSize="14sp"
+           />
+       <EditText
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:id="@+id/minute"
+           android:textColor="@color/black"
+           android:textSize="14sp"
+           android:layout_marginHorizontal="10dp"
+
+           />
+
+
+   </LinearLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -53,7 +89,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/number"
             android:inputType="numberDecimal"
-            android:text="1,00"
+            android:text="1.00"
             android:textColorHint="@color/black"
             android:backgroundTint="@color/granite"
             />

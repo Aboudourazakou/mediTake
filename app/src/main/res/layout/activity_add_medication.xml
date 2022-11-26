@@ -308,24 +308,17 @@
                         <RadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/all_days"
                             android:text="Tous les jours"
                             android:textSize="13sp"/>
                         <RadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="13sp"
+                            android:id="@+id/specific_days"
                             android:text="jours spécifiques de la semaine"/>
 
-                        <RadioButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="13sp"
-                            android:text="intervalle de jours"/>
-                        <RadioButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="13sp"
-                            android:text="Cycle récurrent"/>
+
 
                     </RadioGroup>
 

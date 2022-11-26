@@ -27,11 +27,15 @@
         android:id="@+id/bluetwitter"
         android:layout_width="100dp"
         android:layout_height="100dp"
-<<<<<<< HEAD
-        android:src="@drawable/logo"/>
-=======
-        android:src="@drawable/twitter"/>
->>>>>>> 7c7a128ceb941affc3de1939f9897bd55925f08b
+
+        android:src="@drawable/logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+
 
 
 

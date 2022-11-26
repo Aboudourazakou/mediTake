@@ -3,6 +3,7 @@ package com.example.meditake;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
@@ -22,20 +23,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startActivity(new Intent(MainActivity.this,LoginActivity.class));
+        new Handler().postDelayed(()->{
+            SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREF_NAME,0);
+            boolean hasLoggedIn = sharedPreferences.getBoolean("hasLoggedIn",false);
+
+            if(hasLoggedIn){
+
+                Intent intent = new Intent(MainActivity.this,HomeActivity.class);
+                startActivity(intent);
                 finish();
             }
-        },1000);
+            else{
 
-
-                startActivity(new Intent(MainActivity.this, AddMedicationActivity.class));
+                Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                startActivity(intent);
                 finish();
             }
-        }, 4000);
-
+        },2000);
     }
 
 }
