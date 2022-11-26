@@ -31,10 +31,9 @@ public class MainActivity extends AppCompatActivity {
         },1000);
 
 
-                startActivity(new Intent(MainActivity.this, AddMedicationActivity.class));
+              /*  startActivity(new Intent(MainActivity.this, AddMedicationActivity.class));
                 finish();
-            }
-        }, 4000);
+       */
 
     }
 

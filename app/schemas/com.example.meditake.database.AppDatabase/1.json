@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "aa10abac1076721edc70c458d50c71cd",
+    "identityHash": "867594ec3a435524d00b8127f9866f8d",
     "entities": [
       {
         "tableName": "Medecin",
@@ -50,7 +50,7 @@
       },
       {
         "tableName": "Programme",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `heure` INTEGER NOT NULL, `minutes` INTEGER NOT NULL, `duree` INTEGER NOT NULL, `jours` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `heure` INTEGER NOT NULL, `minutes` INTEGER NOT NULL, `duree` INTEGER NOT NULL, `jours` TEXT, `idPatient` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -81,6 +81,12 @@
             "columnName": "jours",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "idPatient",
+            "columnName": "idPatient",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -389,7 +395,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'aa10abac1076721edc70c458d50c71cd')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '867594ec3a435524d00b8127f9866f8d')"
     ]
   }
 }
