@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/motionLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     app:layoutDescription="@xml/activity_main_scene2"
     tools:context=".MainActivity"
     tools:ignore="MotionLayoutInvalidSceneFileReference">
@@ -28,8 +26,11 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@drawable/logo"/>
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> 6ffe842b7be06d229aff16535dadeaf06cdd5574
 
     <ImageView
         android:id="@+id/whitetwitter"
