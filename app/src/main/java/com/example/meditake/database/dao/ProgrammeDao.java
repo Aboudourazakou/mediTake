@@ -17,6 +17,9 @@ public interface ProgrammeDao {
     @Query("Select * from Programme")
     List<Programme> getAll();
 
+    @Query("select * from programme where idPatient = :id")
+    Programme findByIdPatient(long id);
+
     @Insert
     long insert(Programme p);
 

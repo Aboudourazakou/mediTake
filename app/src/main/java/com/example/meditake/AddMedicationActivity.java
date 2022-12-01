@@ -16,6 +16,7 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -23,13 +24,19 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+
+import com.example.meditake.adapters.MedicamentPropositionSpinnerAdapter;
+import com.example.meditake.utils.MedicamentProposition;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class AddMedicationActivity extends AppCompatActivity {
 
@@ -44,6 +51,8 @@ public class AddMedicationActivity extends AppCompatActivity {
     LinearLayout addTitle , otherOptionView;
     CardView medIcons;
     String date_chosen;
+
+    Spinner medicamentSpinner;
 
     @SuppressLint({"MissingInflatedId", "RestrictedApi"})
     @Override
@@ -70,6 +79,19 @@ public class AddMedicationActivity extends AppCompatActivity {
         linearLayoutDate = findViewById(R.id.date_begin_llayout);
         dateBegin = findViewById(R.id.date_begin);
         btnAEffacer = findViewById(R.id.login);
+
+
+        // Spinner pour l'affichage des propositions du médicament
+
+        medicamentSpinner = findViewById(R.id.medicamentSpinner);
+        MedicamentProposition.initMedicaments();
+        List<MedicamentProposition> medicamentPropositionList = null;
+        SpinnerAdapter medicamentPropositionSpinnerAdapter = new MedicamentPropositionSpinnerAdapter(this,R.layout.medicament_proposition_spinner, medicamentPropositionList);
+        medicamentSpinner.setAdapter(medicamentPropositionSpinnerAdapter);
+
+        // Fin configuration
+
+
 
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,8 +140,29 @@ public class AddMedicationActivity extends AppCompatActivity {
                 if(charSequence.toString().trim().length()==0){
                     btnNext.setEnabled(false);
                     btnNext.setBackgroundColor(Color.LTGRAY);
+
+                    medicamentSpinner.setVisibility(View.INVISIBLE);
+
                 }
                 else{
+
+                    medicamentSpinner.setVisibility(View.VISIBLE);
+
+                    medicamentSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            MedicamentProposition m = (MedicamentProposition) medicamentSpinner.getSelectedItem();
+                        }
+                    });
+
+                    medicamentPropositionList.clear();
+                    medicamentPropositionList.addAll(MedicamentProposition
+                            .getMedicaments().stream()
+                            .filter(m->m.getNom().contains(medName.getText().toString().trim()))
+                            .map(p -> (MedicamentProposition) p).collect(Collectors.toList()));
+
+                    medicamentPropositionSpinnerAdapter.notifyAll();
+
                     btnNext.setEnabled(true);
                 btnNext.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.round_element, null));}
 
