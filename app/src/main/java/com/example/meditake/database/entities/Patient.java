@@ -16,6 +16,10 @@ public class Patient extends Utilisateur{
         this.id = id;
     }
 
+    public Patient(String prenom, String nom, String motDePasse, String login) {
+        super(prenom, nom, motDePasse, login);
+    }
+
     public Patient() {
     }
 

@@ -31,12 +31,15 @@ public class Programme {
     public Programme() {
     }
 
-    public Programme(int heure, int minutes, int duree, String jours) {
+    public Programme(int heure, int minutes, int duree, String jours,long idPatient) {
         this.heure = heure;
         this.minutes = minutes;
         this.duree = duree;
         this.jours = jours;
+        this.idPatient = idPatient;
     }
+
+
 
     public Long getId() {
         return id;

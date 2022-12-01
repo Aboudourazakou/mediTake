@@ -70,10 +70,10 @@ public class TestActivity extends AppCompatActivity {
 
         MedicamentDao medicamentDao = db.medicamentDao();
 
-        medicamentDao.insertAll(new Medicament(1L,"Paracetamol","para.jpg",20,1),
+      /*  medicamentDao.insertAll(new Medicament(1L,"Paracetamol","para.jpg",20,1),
                 new Medicament(2L,"Peneciline","pene.jpg",20,1),
                 new Medicament(3L,"Acotsi","acotsi.jpg",20,1),
-                new Medicament(4L,"Jumbo","jumbo.jpg",20,1));
+                new Medicament(4L,"Jumbo","jumbo.jpg",20,1));*/
 
         ProgrammeDao programmeDao = db.programmeDao();
 
@@ -96,7 +96,9 @@ public class TestActivity extends AppCompatActivity {
 
         //ProgrammeDao programmeDao = db.programmeDao();
 
+
         ProgrammeWithRappelWithRapportAndMedicament programme = programmeDao.getProgramme(1L);
+
 
         programme.getRappels().forEach(r->r.getRapports().forEach(ra->Log.e("TAGGGG : ", "Rapport: "+ra )));
     }

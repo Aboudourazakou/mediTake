@@ -2,7 +2,10 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "867594ec3a435524d00b8127f9866f8d",
+
+    "identityHash": "0e8d347a03d7c0d238026d86e049ed4e",
+
+
     "entities": [
       {
         "tableName": "Medecin",
@@ -232,7 +235,7 @@
       },
       {
         "tableName": "Rappel",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `heure` INTEGER NOT NULL, `minutes` INTEGER NOT NULL, `qtePilule` INTEGER NOT NULL, `message` TEXT, `lastTimeTaken` TEXT, `medicamentId` INTEGER NOT NULL, `programmeId` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `heure` INTEGER NOT NULL, `minutes` INTEGER NOT NULL, `qtePilule` REAL NOT NULL, `message` TEXT, `lastTimeTaken` TEXT, `medicamentId` INTEGER NOT NULL, `programmeId` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -255,7 +258,7 @@
           {
             "fieldPath": "qtePilule",
             "columnName": "qtePilule",
-            "affinity": "INTEGER",
+            "affinity": "REAL",
             "notNull": true
           },
           {
@@ -395,7 +398,10 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '867594ec3a435524d00b8127f9866f8d')"
+
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0e8d347a03d7c0d238026d86e049ed4e')"
+
+
     ]
   }
 }

@@ -21,7 +21,7 @@ public interface RappelDao {
     long insert(Rappel p);
 
     @Query("Select * from Rappel where id = :id")
-    Rappel getById(int id);
+    Rappel getById(long id);
 
     @Query("SELECT * FROM Rappel WHERE id IN (:userIds)")
     List<Rappel> loadAllByIds(int[] userIds);

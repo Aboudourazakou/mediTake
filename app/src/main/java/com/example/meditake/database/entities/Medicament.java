@@ -20,8 +20,8 @@ public class Medicament {
     public Medicament() {
     }
 
-    public Medicament(Long id, String nom, String img, int qte, int categorieId) {
-        this.id = id;
+    public Medicament( String nom, String img, int qte, int categorieId) {
+
         this.nom = nom;
         this.img = img;
         this.qte = qte;

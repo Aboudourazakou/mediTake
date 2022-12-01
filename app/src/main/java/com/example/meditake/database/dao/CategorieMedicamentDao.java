@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;import com.example.meditake.database.entities.CategorieMedicament;
+import com.example.meditake.database.entities.Medicament;
 
 import java.util.List;
 
@@ -21,6 +22,9 @@ public interface CategorieMedicamentDao {
 
     @Insert
     void insertAll(CategorieMedicament... categorieMedicaments);
+
+    @Insert
+    long insert(CategorieMedicament catmedicament);
 
     @Delete
     void delete(CategorieMedicament categorieMedicament);

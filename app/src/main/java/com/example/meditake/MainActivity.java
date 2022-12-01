@@ -18,20 +18,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
         new Handler().postDelayed(()->{
             SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREF_NAME,0);
-            boolean hasLoggedIn = sharedPreferences.getBoolean("hasLoggedIn",true);
 
+            boolean hasLoggedIn = sharedPreferences.getBoolean("hasLoggedIn",false);
+
+ 
             if(hasLoggedIn){
+
 
                 Intent intent = new Intent(MainActivity.this,HomeActivity.class);
                 startActivity(intent);
                 finish();
             }
             else{
-
 
                 Intent intent = new Intent(MainActivity.this,LoginActivity.class);
                 startActivity(intent);

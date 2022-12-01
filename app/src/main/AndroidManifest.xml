@@ -5,6 +5,13 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+
+
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -15,6 +22,7 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:networkSecurityConfig="@xml/network_security_config"
+
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -32,8 +40,17 @@
         </activity>
         <activity
             android:name=".AddMedicationActivity"
-            android:exported="false"
+
+            android:exported="true"
             android:theme="@style/AppTheme.fullscreen" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            android:exported="false"
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -44,6 +61,20 @@
         </activity>
 
         <activity
+
+            android:name=".MainActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.fullscreen"
+            >
+
+
+        </activity>
+        <activity android:name=".LoginActivity" />
+        <activity
+            android:name=".TestActivity"
+            android:exported="false" >
+
+
             android:name=".LoginActivity"
             android:exported="true"
             android:theme="@style/AppTheme.fullscreen"
@@ -59,6 +90,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -66,4 +98,5 @@
 
         <receiver android:name=".alarm.AlarmReceiver" />
     </application>
+
 </manifest>
