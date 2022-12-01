@@ -518,7 +518,7 @@
                 <RadioGroup
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/food_istruction">
+                    android:id="@+id/food_instruction">
 
                     <RadioButton
                         android:layout_width="wrap_content"
@@ -529,7 +529,7 @@
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/while_food"
+                        android:id="@+id/during_food"
                         android:textSize="13sp"
                         android:text="Pendant que vous mangez"/>
 
@@ -539,6 +539,13 @@
                         android:id="@+id/after_food"
                         android:textSize="13sp"
                         android:text="Apres avoir mangé"/>
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/anyway"
+                        android:textSize="13sp"
+                        android:text="Peu importe"/>
                 </RadioGroup>
 
                 <View
