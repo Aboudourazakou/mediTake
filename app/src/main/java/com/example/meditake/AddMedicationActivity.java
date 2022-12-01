@@ -58,10 +58,10 @@ import java.util.List;
 public class AddMedicationActivity extends AppCompatActivity {
 
     LinearLayout partie2,buttons ,linearLayoutDate , alertHourInfo , potencyInfo;
-    Button btnNext , btnNext2 , btnBarSave,btnOtherOptions ,btnSaveFirst ,save, btnAEffacer;
+    Button btnNext , btnNext2 , btnBarSave,btnOtherOptions ,btnSaveFirst ,save;
     TextView dateBegin,medNumber,alertHour,potencyConfig ;
-    RadioButton specificDay , allDays, beforeMeal,afterMeal,duringMeal,anyway;
-    RadioGroup foodInstructions;
+    RadioButton daysNumber,specificDay , allDays, beforeMeal,afterMeal,duringMeal,anyway;
+    RadioGroup foodInstructions,rdGroupDuration;
 
     Spinner spnFrequence;
     EditText medName;
@@ -75,6 +75,7 @@ public class AddMedicationActivity extends AppCompatActivity {
     String daysChosen;
     double medPotency;
     String instructions;
+    int duration;
 
     @SuppressLint({"MissingInflatedId", "RestrictedApi"})
     @Override
@@ -98,6 +99,12 @@ public class AddMedicationActivity extends AppCompatActivity {
         alertHourInfo = findViewById(R.id.med_hour_and_number);
         alertHour = findViewById(R.id.alert_hour);
         potencyInfo = findViewById(R.id.med_potency);
+        rdGroupDuration = findViewById(R.id.rd_group_duration);
+        specificDay = findViewById(R.id.specific_days);
+        allDays = findViewById(R.id.all_days);
+        medNumber = findViewById(R.id.number_medication);
+        save = findViewById(R.id.btn_save_final);
+        daysNumber = findViewById(R.id.days_number);
         potencyConfig = findViewById(R.id.potencyconfig_click);
         foodInstructions = findViewById(R.id.food_instruction);
         afterMeal = findViewById(R.id.after_food);
@@ -109,6 +116,8 @@ public class AddMedicationActivity extends AppCompatActivity {
         minValue=0;
         daysChosen="";
         medicationTakeNumber=0.0;
+        duration = 0;
+        instructions="";
 
         linearLayoutDate = findViewById(R.id.date_begin_llayout);
         dateBegin = findViewById(R.id.date_begin);
@@ -187,6 +196,11 @@ public class AddMedicationActivity extends AppCompatActivity {
 
             }
         });
+
+        Date currentTime = Calendar.getInstance().getTime();
+        SimpleDateFormat formater = new SimpleDateFormat("d MMM.");
+        dateBegin.setText("Aujourd'hui, "+formater.format(currentTime));
+
         linearLayoutDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -204,19 +218,27 @@ public class AddMedicationActivity extends AppCompatActivity {
             }
         });
 
-        btnOtherOptions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                btnOtherOptions.setVisibility(View.GONE);
-                btnSaveFirst.setVisibility(View.GONE);
-                otherOptionView.setVisibility(View.VISIBLE);
-            }
-        });
+
 
         alertHourInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showAlertHourInfoDialog();
+            }
+        });
+
+      /*  switch(rdGroupDuration.getCheckedRadioButtonId()){
+            case R.id.duration_no_specified:
+                duration = 0;
+                break;
+            case R.id.days_number:
+
+                break;
+        }*/
+        daysNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                defineDuration();
             }
         });
 
@@ -267,12 +289,6 @@ public class AddMedicationActivity extends AppCompatActivity {
         });
 
 
-        btnAEffacer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                checkLogin();
-            }
-        });
 
 
 
@@ -289,7 +305,7 @@ public class AddMedicationActivity extends AppCompatActivity {
             }
         });
 
-        btnBarSave.setOnClickListener(new View.OnClickListener() {
+        btnSaveFirst.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new Thread(new Runnable() {
@@ -301,6 +317,16 @@ public class AddMedicationActivity extends AppCompatActivity {
                 }).start();
             }
         });
+        btnOtherOptions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnOtherOptions.setVisibility(View.GONE);
+                btnSaveFirst.setVisibility(View.GONE);
+                otherOptionView.setVisibility(View.VISIBLE);
+            }
+        });
+
+        foodInstructions();
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -335,6 +361,11 @@ public class AddMedicationActivity extends AppCompatActivity {
         Date date = new Date();
         Date current = Calendar.getInstance().getTime();
         int days = current.getDate();
+        SimpleDateFormat forme = new SimpleDateFormat("yyyy");
+        myear.setText(""+ forme.format(current));
+        SimpleDateFormat form = new SimpleDateFormat("EEE. dd MMM.");
+        String dm= form.format(current);
+        mdaysMonth.setText(dm);
 
 
         mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -411,7 +442,7 @@ public class AddMedicationActivity extends AppCompatActivity {
         myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         types.setAdapter(myAdapter);
 
-        String text = types.getSelectedItem().toString();
+        //String text = types.getSelectedItem().toString();
 
         medicationTakeNumber = Double.parseDouble(medTakeNumber.getText().toString());
         increment.setOnClickListener(new View.OnClickListener() {
@@ -443,12 +474,11 @@ public class AddMedicationActivity extends AppCompatActivity {
         AlertDialog dialog = alertDialog.create();
 
         define.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
 
 
-                medNumber.setText("Prendre "+medTakeNumber.getText().toString());
+                medNumber.setText("Prendre "+medTakeNumber.getText().toString()+" "+types.getSelectedItem().toString());
                 alertHour.setText(hour.getText().toString()+" : "+minute.getText().toString());
 
                 hourValue = Integer.parseInt(hour.getText().toString());
@@ -468,6 +498,58 @@ public class AddMedicationActivity extends AppCompatActivity {
 
         dialog.show();
 
+
+    }
+
+    private void defineDuration(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddMedicationActivity.this);
+        View customLayout = getLayoutInflater().inflate(R.layout.duration_layout, null);
+        EditText  durationValue = (EditText) customLayout.findViewById(R.id.duration_value);
+        Button  cancel =  customLayout.findViewById(R.id.cancel_potency);
+        Button define = (Button) customLayout.findViewById(R.id.define_potency);
+        ImageButton increment = (ImageButton) customLayout.findViewById(R.id.increment_duration);
+        ImageButton decrement = (ImageButton) customLayout.findViewById(R.id.decrement_duration);
+
+
+        duration = Integer.parseInt(durationValue.getText().toString());
+        increment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int d = Integer.parseInt(durationValue.getText().toString());
+                d=d+1;
+                durationValue.setText(String.valueOf(d));
+              //  duration = d;
+
+            }
+        });
+
+        decrement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int d = Integer.parseInt(durationValue.getText().toString());
+                d=d-1;
+                durationValue.setText(String.valueOf(d));
+              //  duration = d;
+            }
+        });
+        alertDialog.setView(customLayout);
+        AlertDialog dialog = alertDialog.create();
+
+        define.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                duration = Integer.parseInt(durationValue.getText().toString());
+                daysNumber.setText("nombre de jours : "+duration);
+                dialog.dismiss();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
+            }
+        });
+        dialog.show();
 
     }
 
@@ -528,8 +610,8 @@ public class AddMedicationActivity extends AppCompatActivity {
         View customLayout = getLayoutInflater().inflate(R.layout.activity_potency_config, null);
         EditText  potencyValue = (EditText) customLayout.findViewById(R.id.potency_value);
         Spinner units = (Spinner) customLayout.findViewById(R.id.spinner_potency_unit);
-        TextView  cancel = (TextView) customLayout.findViewById(R.id.cancel_potency);
-        TextView define = (TextView) customLayout.findViewById(R.id.define_potency);
+        Button  cancel =  customLayout.findViewById(R.id.cancel_potency);
+        Button define =  customLayout.findViewById(R.id.define_potency);
         ImageButton increment = (ImageButton) customLayout.findViewById(R.id.increment_potency);
         ImageButton decrement = (ImageButton) customLayout.findViewById(R.id.decrement_potency);
 
@@ -539,18 +621,19 @@ public class AddMedicationActivity extends AppCompatActivity {
         myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         units.setAdapter(myAdapter);
 
-
         medPotency = Double.parseDouble(potencyValue.getText().toString());
+
         increment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 double p = Double.parseDouble(potencyValue.getText().toString());
                 p=p+1;
                 potencyValue.setText(String.valueOf(p));
-                medPotency = p;
+              //  medPotency = p;
 
             }
         });
+
 
         decrement.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -558,7 +641,7 @@ public class AddMedicationActivity extends AppCompatActivity {
                 double p = Double.parseDouble(potencyValue.getText().toString());
                 p=p-1;
                 potencyValue.setText(String.valueOf(p));
-                medPotency = p;
+               // medPotency = p;
             }
         });
         alertDialog.setView(customLayout);
@@ -568,11 +651,13 @@ public class AddMedicationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                dialog.dismiss();
+                String s="";
                 String text = units.getSelectedItem().toString();
-
-                potencyConfig.setText(medPotency+""+text);
+                medPotency = Double.parseDouble(potencyValue.getText().toString());
+                s=medPotency+""+text;
+                potencyConfig.setText(s);
                 getMessageInstructions("de puissance "+potencyConfig.getText().toString());
+                dialog.dismiss();
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -587,18 +672,27 @@ public class AddMedicationActivity extends AppCompatActivity {
 
     }
 
-    public void foodInstructions(){
+    private void foodInstructions(){
         String msg="";
         switch(foodInstructions.getCheckedRadioButtonId()){
             case R.id.before_food:
                 msg = beforeMeal.getText().toString();
+                break;
             case R.id.during_food:
                 msg = duringMeal.getText().toString();
+                break;
             case R.id.after_food:
-                msg = duringMeal.getText().toString();
+                msg = afterMeal.getText().toString();
+                break;
             case R.id.anyway:
                 msg = anyway.getText().toString() + "le moment du repas";
+                break;
         }
+        EditText otherIns = findViewById(R.id.other_instruction);
+        String ins = "";
+        ins=otherIns.getText().toString();
+        msg = msg+" "+ins;
+
         getMessageInstructions(msg);
     }
 
@@ -623,7 +717,7 @@ public class AddMedicationActivity extends AppCompatActivity {
 
          long idPatient = 1;
         ProgrammeDao programmeDao = db.programmeDao();
-        Programme p = new Programme(heure,minutes,2,jours,1);
+        Programme p = new Programme(heure,minutes,duration,jours,1);
         long idPro = programmeDao.insert(p);
 
         List<Programme> list = new ArrayList<>();
@@ -654,6 +748,7 @@ public class AddMedicationActivity extends AppCompatActivity {
          rap.setMinutes(pro.getMinutes());
          rap.setQtePilule(medicationTakeNumber);
          rap.setMessage(instructions);
+
 
          rappelDao.insert(rap);
 

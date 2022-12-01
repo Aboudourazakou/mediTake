@@ -264,17 +264,19 @@
                     <RadioGroup
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/rd_group_duree">
+                        android:id="@+id/rd_group_duration">
 
                         <RadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Traitement en cours"
+                            android:id="@+id/duration_no_specified"
                             android:textSize="13sp"/>
                         <RadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="13sp"
+                            android:id="@+id/days_number"
                             android:text="nombre de jours"/>
                     </RadioGroup>
 
