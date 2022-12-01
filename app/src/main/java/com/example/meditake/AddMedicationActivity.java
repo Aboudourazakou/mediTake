@@ -57,9 +57,14 @@ import java.util.List;
 public class AddMedicationActivity extends AppCompatActivity {
 
     LinearLayout partie2,buttons ,linearLayoutDate , alertHourInfo , potencyInfo;
-    Button btnNext , btnNext2 , btnBarSave,btnOtherOptions , btnSaveFirst ,save, btnAEffacer;
+
+    Button btnNext , btnNext2 , btnBarSave,btnOtherOptions , btnSaveFirst ,save;
     TextView dateBegin,medNumber,alertHour ;
     RadioButton specificDay , allDays;
+
+    Button btnNext , btnNext2 , btnBarSave,btnOtherOptions , btnSaveFirst ;
+    TextView dateBegin;
+
     Spinner spnFrequence;
     EditText medName;
     ImageButton btnClose;
@@ -101,11 +106,7 @@ public class AddMedicationActivity extends AppCompatActivity {
 
         linearLayoutDate = findViewById(R.id.date_begin_llayout);
         dateBegin = findViewById(R.id.date_begin);
-        btnAEffacer = findViewById(R.id.login);
-        specificDay = findViewById(R.id.specific_days);
-        allDays = findViewById(R.id.all_days);
-        medNumber = findViewById(R.id.number_medication);
-        save = findViewById(R.id.btn_save_final);
+
 
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -248,6 +249,7 @@ public class AddMedicationActivity extends AppCompatActivity {
             }
         });
 
+
         btnAEffacer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -281,6 +283,7 @@ public class AddMedicationActivity extends AppCompatActivity {
                 }).start();
             }
         });
+
     }
 
 
