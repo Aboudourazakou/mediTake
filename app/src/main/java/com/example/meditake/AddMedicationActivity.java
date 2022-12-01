@@ -36,7 +36,7 @@ public class AddMedicationActivity extends AppCompatActivity {
 
 
     LinearLayout partie2,buttons ,linearLayoutDate , alertHourInfo , potencyInfo;
-    Button btnNext , btnNext2 , btnBarSave,btnOtherOptions , btnSaveFirst , btnAEffacer;
+    Button btnNext , btnNext2 , btnBarSave,btnOtherOptions , btnSaveFirst ;
     TextView dateBegin;
     Spinner spnFrequence;
     EditText medName;
@@ -69,7 +69,7 @@ public class AddMedicationActivity extends AppCompatActivity {
 
         linearLayoutDate = findViewById(R.id.date_begin_llayout);
         dateBegin = findViewById(R.id.date_begin);
-        btnAEffacer = findViewById(R.id.login);
+
 
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,12 +181,7 @@ public class AddMedicationActivity extends AppCompatActivity {
             }
         });
 
-        btnAEffacer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                checkLogin();
-            }
-        });
+      
     }
 
 

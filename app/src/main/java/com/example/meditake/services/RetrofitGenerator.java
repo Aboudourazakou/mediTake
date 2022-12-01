@@ -1,5 +1,5 @@
+package com.example.meditake.services;
 
-<<<<<<< HEAD
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
@@ -12,7 +12,7 @@ import com.example.meditake.utils.NullOnEmptyConverterFactory;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class gRetrofitGenerator {
+public class RetrofitGenerator {
 
     private static Retrofit instance;
 
@@ -24,7 +24,7 @@ public class gRetrofitGenerator {
     public static Retrofit getRetrofit(){
         if (instance==null){
             instance  = new Retrofit.Builder()
-                    .baseUrl("http://192.168.1.8:8080/api/")
+                    .baseUrl("http://192.168.1.9:8080/api/")
                     .addConverterFactory(new NullOnEmptyConverterFactory())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();

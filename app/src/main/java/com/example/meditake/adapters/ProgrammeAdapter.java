@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.meditake.HomeActivity;
+import com.example.meditake.HomeFragment;
 import com.example.meditake.databinding.RappelsListWrapperBinding;
 import com.example.meditake.models.Programm;
 
@@ -19,12 +20,12 @@ import java.util.List;
  */
 public class ProgrammeAdapter extends RecyclerView.Adapter<ProgrammeAdapter.programViewHolder> {
     List<Programm> programmeList;
-    HomeActivity context;
+    HomeFragment context;
 
 
-    public ProgrammeAdapter(List<Programm> programmeList, HomeActivity homeActivity) {
+    public ProgrammeAdapter(List<Programm> programmeList, HomeFragment homeFragment) {
         this.programmeList=programmeList;
-        context=homeActivity;
+        context=homeFragment;
     }
 
 
@@ -41,7 +42,7 @@ public class ProgrammeAdapter extends RecyclerView.Adapter<ProgrammeAdapter.prog
        // holder.binding.setRappel(rappelList.get(position));
         Programm programm=programmeList.get(position);
         holder.binding.time.setText(programm.getHeure()+":"+programm.getMinutes());
-        holder.binding.recyclerViewMedicament.setLayoutManager(new LinearLayoutManager(context));
+        holder.binding.recyclerViewMedicament.setLayoutManager(new LinearLayoutManager(context.getContext()));
         holder.binding.recyclerViewMedicament.setAdapter(new RappelAdapter(programmeList.get(position).getRappel(),context));
 
     }
