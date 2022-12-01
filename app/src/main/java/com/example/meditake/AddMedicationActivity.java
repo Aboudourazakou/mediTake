@@ -29,6 +29,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,13 +58,10 @@ import java.util.List;
 public class AddMedicationActivity extends AppCompatActivity {
 
     LinearLayout partie2,buttons ,linearLayoutDate , alertHourInfo , potencyInfo;
-
-    Button btnNext , btnNext2 , btnBarSave,btnOtherOptions , btnSaveFirst ,save;
-    TextView dateBegin,medNumber,alertHour ;
-    RadioButton specificDay , allDays;
-
-    Button btnNext , btnNext2 , btnBarSave,btnOtherOptions , btnSaveFirst ;
-    TextView dateBegin;
+    Button btnNext , btnNext2 , btnBarSave,btnOtherOptions ,btnSaveFirst ,save, btnAEffacer;
+    TextView dateBegin,medNumber,alertHour,potencyConfig ;
+    RadioButton specificDay , allDays, beforeMeal,afterMeal,duringMeal,anyway;
+    RadioGroup foodInstructions;
 
     Spinner spnFrequence;
     EditText medName;
@@ -75,6 +73,8 @@ public class AddMedicationActivity extends AppCompatActivity {
     int hourValue,minValue;
     double medicationTakeNumber;
     String daysChosen;
+    double medPotency;
+    String instructions;
 
     @SuppressLint({"MissingInflatedId", "RestrictedApi"})
     @Override
@@ -98,6 +98,12 @@ public class AddMedicationActivity extends AppCompatActivity {
         alertHourInfo = findViewById(R.id.med_hour_and_number);
         alertHour = findViewById(R.id.alert_hour);
         potencyInfo = findViewById(R.id.med_potency);
+        potencyConfig = findViewById(R.id.potencyconfig_click);
+        foodInstructions = findViewById(R.id.food_instruction);
+        afterMeal = findViewById(R.id.after_food);
+        beforeMeal = findViewById(R.id.before_food);
+        duringMeal = findViewById(R.id.during_food);
+        anyway = findViewById(R.id.anyway);
 
         hourValue=0;
         minValue=0;
@@ -141,6 +147,9 @@ public class AddMedicationActivity extends AppCompatActivity {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spnFrequence.setAdapter(dataAdapter);
+
+
+
 
         btnNext.setEnabled(false);
         btnNext.setBackgroundColor(ResourcesCompat.getColor(getResources(),R.color.granite,null));
@@ -250,6 +259,14 @@ public class AddMedicationActivity extends AppCompatActivity {
         });
 
 
+        potencyConfig.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                definePotencyConfig();
+            }
+        });
+
+
         btnAEffacer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -257,6 +274,20 @@ public class AddMedicationActivity extends AppCompatActivity {
             }
         });
 
+
+
+        btnBarSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Thread(new Runnable() {
+                    public void run() {
+                        saveData();
+
+                    }
+
+                }).start();
+            }
+        });
 
         btnBarSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -380,7 +411,9 @@ public class AddMedicationActivity extends AppCompatActivity {
         myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         types.setAdapter(myAdapter);
 
+        String text = types.getSelectedItem().toString();
 
+        medicationTakeNumber = Double.parseDouble(medTakeNumber.getText().toString());
         increment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -399,7 +432,7 @@ public class AddMedicationActivity extends AppCompatActivity {
                 double n = Double.parseDouble(medTakeNumber.getText().toString());
                 n-=0.25;
                 medTakeNumber.setText(String.valueOf(n));
-
+                medicationTakeNumber = n;
                 if(n==0.25){
                     decrement.setEnabled(false);
                 }
@@ -420,7 +453,15 @@ public class AddMedicationActivity extends AppCompatActivity {
 
                 hourValue = Integer.parseInt(hour.getText().toString());
                 minValue = Integer.parseInt(minute.getText().toString());
+
+                getMessageInstructions(medNumber.getText().toString() + ", "+spnFrequence.getSelectedItem().toString()+", ");
                 dialog.dismiss();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
             }
         });
 
@@ -449,7 +490,7 @@ public class AddMedicationActivity extends AppCompatActivity {
         alertDialog.setView(customLayout);
         AlertDialog dialog = alertDialog.create();
 
-        String oldmsg = specificDay.getText().toString();
+      //  String oldmsg = specificDay.getText().toString();
 
        define.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -460,6 +501,13 @@ public class AddMedicationActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+       cancel.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               specificDay.setText("jours spécifiques de la semaine ");
+               dialog.cancel();
+           }
+       });
 
 
         dialog.show();
@@ -486,20 +534,78 @@ public class AddMedicationActivity extends AppCompatActivity {
         ImageButton decrement = (ImageButton) customLayout.findViewById(R.id.decrement_potency);
 
         ArrayList<String> listUnité = new ArrayList<String>();
-        listUnité.addAll(Arrays.asList(new String[]{"mg", "g"}));
+        listUnité.addAll(Arrays.asList(new String[]{"mg", "g","mL","mg/g","mcg","Ul"}));
         ArrayAdapter<String> myAdapter = new ArrayAdapter<>(AddMedicationActivity.this, android.R.layout.simple_spinner_item,listUnité);
         myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         units.setAdapter(myAdapter);
 
 
+        medPotency = Double.parseDouble(potencyValue.getText().toString());
+        increment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                double p = Double.parseDouble(potencyValue.getText().toString());
+                p=p+1;
+                potencyValue.setText(String.valueOf(p));
+                medPotency = p;
+
+            }
+        });
+
+        decrement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                double p = Double.parseDouble(potencyValue.getText().toString());
+                p=p-1;
+                potencyValue.setText(String.valueOf(p));
+                medPotency = p;
+            }
+        });
         alertDialog.setView(customLayout);
         AlertDialog dialog = alertDialog.create();
+
+        define.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                dialog.dismiss();
+                String text = units.getSelectedItem().toString();
+
+                potencyConfig.setText(medPotency+""+text);
+                getMessageInstructions("de puissance "+potencyConfig.getText().toString());
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
+            }
+        });
 
 
         dialog.show();
 
     }
 
+    public void foodInstructions(){
+        String msg="";
+        switch(foodInstructions.getCheckedRadioButtonId()){
+            case R.id.before_food:
+                msg = beforeMeal.getText().toString();
+            case R.id.during_food:
+                msg = duringMeal.getText().toString();
+            case R.id.after_food:
+                msg = duringMeal.getText().toString();
+            case R.id.anyway:
+                msg = anyway.getText().toString() + "le moment du repas";
+        }
+        getMessageInstructions(msg);
+    }
+
+    public String getMessageInstructions(String msg){
+        instructions = instructions +" "+msg;
+        return instructions;
+    }
 
     private void saveData() {
         AppDatabase db = AppDatabase.getDataBase(getApplicationContext());
@@ -547,7 +653,7 @@ public class AddMedicationActivity extends AppCompatActivity {
          rap.setHeure(pro.getHeure());
          rap.setMinutes(pro.getMinutes());
          rap.setQtePilule(medicationTakeNumber);
-         rap.setMessage("Prendre "+rap.getQtePilule()+med.getCategorieId());
+         rap.setMessage(instructions);
 
          rappelDao.insert(rap);
 
