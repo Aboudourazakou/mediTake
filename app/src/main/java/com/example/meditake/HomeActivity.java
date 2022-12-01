@@ -305,7 +305,7 @@ public class HomeActivity extends AppCompatActivity {
         dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
         String[]items=getResources().getStringArray(R.array.reasons);
 
-        IgnoreReasonAdapter ignoreReasonAdapter=new IgnoreReasonAdapter(this,R.layout.reasons_radio_element,Arrays.asList(items));
+         IgnoreReasonAdapter ignoreReasonAdapter=new IgnoreReasonAdapter(this,R.layout.reasons_radio_element,Arrays.asList(items));
          dialogBinding.reasonListView.setAdapter(ignoreReasonAdapter);
 
 

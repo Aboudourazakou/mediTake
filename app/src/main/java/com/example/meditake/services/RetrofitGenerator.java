@@ -6,10 +6,9 @@ import java.lang.reflect.Type;
 
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
-=======
+
 import com.example.meditake.utils.NullOnEmptyConverterFactory;
 
->>>>>>> 6476e6dc546fbda91ac84a972c7753f12fc9b0a6
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
