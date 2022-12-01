@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.meditake.HomeActivity;
+import com.example.meditake.HomeFragment;
 import com.example.meditake.databinding.SegmentMedicamentHomeListBinding;
 import com.example.meditake.models.Rappel;
 
@@ -22,10 +23,10 @@ import java.util.List;
 public class RappelAdapter extends RecyclerView.Adapter<RappelAdapter.medicamentViewHolder> {
 
     List<Rappel>rappelList=new ArrayList<>();
-    HomeActivity context;
-    public RappelAdapter(List<Rappel> rappel,HomeActivity homeActivity) {
+    HomeFragment context;
+    public RappelAdapter(List<Rappel> rappel,HomeFragment homeFragment) {
         this.rappelList=rappel;
-        context=homeActivity;
+        context=homeFragment;
     }
 
     @NonNull

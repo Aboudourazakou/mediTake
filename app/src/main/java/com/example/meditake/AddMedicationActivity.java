@@ -62,6 +62,7 @@ public class AddMedicationActivity extends AppCompatActivity {
     TextView dateBegin,medNumber,alertHour,potencyConfig ;
     RadioButton specificDay , allDays, beforeMeal,afterMeal,duringMeal,anyway;
     RadioGroup foodInstructions;
+
     Spinner spnFrequence;
     EditText medName;
     ImageButton btnClose;
@@ -111,11 +112,7 @@ public class AddMedicationActivity extends AppCompatActivity {
 
         linearLayoutDate = findViewById(R.id.date_begin_llayout);
         dateBegin = findViewById(R.id.date_begin);
-        btnAEffacer = findViewById(R.id.login);
-        specificDay = findViewById(R.id.specific_days);
-        allDays = findViewById(R.id.all_days);
-        medNumber = findViewById(R.id.number_medication);
-        save = findViewById(R.id.btn_save_final);
+
 
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -261,12 +258,14 @@ public class AddMedicationActivity extends AppCompatActivity {
             }
         });
 
+
         potencyConfig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 definePotencyConfig();
             }
         });
+
 
         btnAEffacer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -315,6 +314,7 @@ public class AddMedicationActivity extends AppCompatActivity {
                 }).start();
             }
         });
+
     }
 
 

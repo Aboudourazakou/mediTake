@@ -88,6 +88,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+              //  showIsLoggingDialog();
                 System.out.println("qyoi?");
                 String username = phoneNumber.getText().toString();
                 String pwd = password.getText().toString();
@@ -101,12 +102,16 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Utilisateur> call, Response<Utilisateur> response) {
                         Utilisateur user = response.body();
+                        System.out.println();
                         if (user==null){
                             showLogginIncorrectDialog();
                         }else {
 
-                            sharedPreferences.edit().putString(KEY_PHONE,username).putString(KEY_PASSWORD,pwd).apply();
-                            showIsLoggingDialog();
+                            sharedPreferences.edit().putString(KEY_PHONE,username).putString(KEY_PASSWORD,pwd).putBoolean("hasLoggedIn",true);
+                            Intent myIntent = new Intent(LoginActivity.this,HomeActivity.class);
+                            startActivity(myIntent);
+                            finish();
+
 
                         }
                     }
@@ -201,8 +206,7 @@ public class LoginActivity extends AppCompatActivity {
         internetDialog=dialog;
 
         mCircularProgressIndicator.setVisibility(View.VISIBLE);
-        Intent myIntent = new Intent(LoginActivity.this,HomeActivity.class);
-        startActivity(myIntent);
+
 
 
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));

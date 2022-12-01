@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.meditake.HomeActivity;
+import com.example.meditake.HomeFragment;
 import com.example.meditake.R;
 import com.example.meditake.models.MenuItem;
 
@@ -25,11 +26,11 @@ import java.util.List;
  */
 public class IgnoreReasonAdapter  extends ArrayAdapter<String>{
    List<String> stringList;
-   HomeActivity context;
+   HomeFragment context;
 
-    public IgnoreReasonAdapter(HomeActivity activity, int resources, List<String> reasons) {
-        super(activity,resources);
-        context=activity;
+    public IgnoreReasonAdapter(HomeFragment homeFragment, int resources, List<String> reasons) {
+        super(homeFragment.getActivity(),resources);
+        context=homeFragment;
         stringList=reasons;
     }
 
@@ -38,7 +39,7 @@ public class IgnoreReasonAdapter  extends ArrayAdapter<String>{
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         Log.e("i","Affichage list");
         if(convertView==null){
-            LayoutInflater i=(LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater i=(LayoutInflater)context.getActivity().getSystemService(context.getActivity().LAYOUT_INFLATER_SERVICE);
             convertView=i.inflate(R.layout.reasons_radio_element,null);
 
         }
