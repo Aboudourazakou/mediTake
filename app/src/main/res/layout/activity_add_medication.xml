@@ -468,7 +468,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:id="@+id/potency_click"
+                android:id="@+id/potencyconfig_click"
                 android:text="cliquer pour configurer"
                 android:textSize="13sp"
                 android:textColor="@color/main_blue"
