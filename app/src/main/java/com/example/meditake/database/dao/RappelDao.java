@@ -18,7 +18,7 @@ public interface RappelDao {
     List<Rappel> getAll();
 
     @Query("select * from rappel where programmeId = :id")
-    Rappel findByIdProgramme(long id);
+    List<Rappel> findRappelByIdProgram(long id);
 
     @Insert
     long insert(Rappel p);

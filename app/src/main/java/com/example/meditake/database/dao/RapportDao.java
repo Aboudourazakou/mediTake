@@ -18,7 +18,7 @@ public interface RapportDao {
     List<Rapport> getAll();
 
     @Query("select * from rapport where idRappel = :id")
-    Rapport findByIdPatient(long id);
+    List<Rapport> findRapportByIdRappel(long id);
 
     @Insert
     long insert(Rapport p);
