@@ -1,12 +1,15 @@
+/*
 package com.example.meditake.models;
 
 import java.util.ArrayList;
 import java.util.List;
 
+*/
 /***
  "Created by  TETEREOU Aboudourazakou on "11/21/2022
  "Project name "MediTake
- */
+ *//*
+
 public class Rappel {
     private  long id;
     private  int heure;
@@ -87,3 +90,4 @@ public class Rappel {
 
 
 }
+*/

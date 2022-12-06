@@ -7,21 +7,34 @@
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/drawable/ic_baseline_notifications_blue.xml" value="0.1" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.1" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/drawable/ignore_pill_background.xml" value="0.1" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/drawable/not_take_pill_background.xml" value="0.1" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/drawable/pill_is_ignored.xml" value="0.1" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/drawable/pill_is_missed.xml" value="0.1" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/drawable/pill_is_rescheduled.xml" value="0.1" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/drawable/pill_is_taken.xml" value="0.1" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/drawable/reschedule_pill_background.xml" value="0.1" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/drawable/round_element.xml" value="0.1" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/drawable/take_pill_background.xml" value="0.1" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/drawable/transparent_background.xml" value="0.1" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/activity_add_medication.xml" value="0.1" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/activity_home.xml" value="0.22" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/activity_login.xml" value="0.1796875" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/activity_main.xml" value="0.103125" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/activity_more_menu.xml" value="0.165625" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/activity_test.xml" value="0.1" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/credentials_verification_dialog.xml" value="0.1" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/days_item.xml" value="0.22" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/fragment_add_medicament.xml" value="0.1" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/fragment_dashboard.xml" value="0.103125" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/fragment_fullscreen.xml" value="0.1" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/fragment_home.xml" value="0.103125" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/ignore_message.xml" value="0.1" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/ignore_message_dialog.xml" value="0.22" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/incorrect_credentials_dialog.xml" value="0.1" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/internet_unavalaible_dialog.xml" value="0.22" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/medicament_item.xml" value="0.22" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/medicament_proposition_listview.xml" value="0.16983695652173914" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/medicament_proposition_spinner.xml" value="0.1" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/more_menu_item.xml" value="0.17864583333333334" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/rappel_click_dialog.xml" value="0.22" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/rappels_list_wrapper.xml" value="0.10208333333333333" />

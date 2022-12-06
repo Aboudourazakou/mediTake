@@ -3,7 +3,7 @@
     <data>
         <variable
             name="rappel"
-            type="com.example.meditake.models.Rappel" />
+            type="com.example.meditake.database.entities.Rappel" />
     </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -183,12 +183,13 @@
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
                     android:background="@color/main_background">
+                   <!--Ignore -->
                     <ImageView
                         android:id="@+id/ignorePillBtn"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
 
-                        android:background="@drawable/take_pill_background">
+                        android:background="@drawable/ignore_pill_background">
                     </ImageView>
                     <TextView
                         android:id="@+id/ignoreText"
@@ -200,12 +201,34 @@
                         android:text="IGNORER">
 
                     </TextView>
+                    <!--End ignore -->
+                    <!-- not Ignore -->
+                    <ImageView
+                        android:visibility="gone"
+                        android:id="@+id/notIgnorePillBtn"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/not_take_pill_background">
+                    </ImageView>
+                    <TextView
+                        android:visibility="gone"
+                        android:id="@+id/notIgnoreText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/main_blue"
+                        android:layout_below="@+id/notIgnorePillBtn"
+                        android:layout_marginTop="10dp"
+                        android:text="NE PAS SAUTER">
+
+                    </TextView>
+                    <!-- End not ignore -->
+                  <!-- Prendre medicament -->
                     <ImageView
                         android:id="@+id/takePillBtn"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_centerHorizontal="true"
-                        android:background="@drawable/ignore_pill_background">
+                        android:background="@drawable/take_pill_background">
                     </ImageView>
                     <TextView
                         android:id="@+id/takePillText"
@@ -218,6 +241,29 @@
                         android:text="PRENDRE">
 
                     </TextView>
+                    <!--End prendre -->
+                    <!-- Prendre medicament -->
+                    <ImageView
+                        android:visibility="gone"
+                        android:id="@+id/nottakePillBtn"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/not_take_pill_background">
+                    </ImageView>
+                    <TextView
+                        android:visibility="gone"
+                        android:id="@+id/nottakePillText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="@color/main_blue"
+                        android:layout_below="@+id/nottakePillBtn"
+                        android:layout_marginTop="10dp"
+                        android:text="NE PAS PRENDRE">
+
+                    </TextView>
+                    <!--End prendre -->
                     <ImageView
                         android:id="@+id/reschedulePillBtn"
                         android:layout_width="50dp"

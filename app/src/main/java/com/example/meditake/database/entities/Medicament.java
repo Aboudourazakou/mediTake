@@ -1,5 +1,6 @@
 package com.example.meditake.database.entities;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
@@ -11,16 +12,29 @@ public class Medicament {
 
     private String nom;
 
-    private String img;
+    private byte[] img;
 
     private int qte;
 
     private int categorieId;
 
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
+    private byte[] image;
+
+
+
     public Medicament() {
     }
 
-    public Medicament(Long id, String nom, String img, int qte, int categorieId) {
+    public Medicament( String nom, byte[] img, int qte, int categorieId) {
+
+        this.nom = nom;
+        this.img = img;
+        this.qte = qte;
+        this.categorieId = categorieId;
+    }
+
+    public Medicament(Long id, String nom, byte[] img, int qte, int categorieId) {
         this.id = id;
         this.nom = nom;
         this.img = img;
@@ -44,11 +58,11 @@ public class Medicament {
         this.nom = nom;
     }
 
-    public String getImg() {
+    public byte[] getImg() {
         return img;
     }
 
-    public void setImg(String img) {
+    public void setImg(byte[] img) {
         this.img = img;
     }
 
@@ -66,6 +80,14 @@ public class Medicament {
 
     public void setCategorieId(int categorieId) {
         this.categorieId = categorieId;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     @Override

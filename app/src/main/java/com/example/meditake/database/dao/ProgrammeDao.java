@@ -24,7 +24,7 @@ public interface ProgrammeDao {
     long insert(Programme p);
 
     @Query("Select * from Programme where id = :id")
-    Programme getById(int id);
+    Programme getById(long id);
 
     @Query("SELECT * FROM Programme WHERE id IN (:userIds)")
     List<Programme> loadAllByIds(int[] userIds);
@@ -50,5 +50,8 @@ public interface ProgrammeDao {
     @Transaction
     @Query("select * from programme where id = :id")
     ProgrammeWithRappelWithRapportAndMedicament getProgramme(Long id);
+    @Query("select * from programme where idPatient = :id")
+    List<Programme> findProgrammByIdPatient(long id);
+
 
 }

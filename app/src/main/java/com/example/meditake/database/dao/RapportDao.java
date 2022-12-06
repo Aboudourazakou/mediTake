@@ -24,7 +24,7 @@ public interface RapportDao {
     long insert(Rapport p);
 
     @Query("Select * from Rapport where id = :id")
-    Rapport getById(int id);
+    Rapport getById(long id);
 
     @Query("SELECT * FROM Rapport WHERE id IN (:userIds)")
     List<Rapport> loadAllByIds(int[] userIds);
@@ -35,4 +35,6 @@ public interface RapportDao {
 
     @Delete
     void delete(Rapport rapport);
+    @Query("select * from rapport where idRappel = :id")
+    List<Rapport> findRapportByIdRappel(long id);
 }

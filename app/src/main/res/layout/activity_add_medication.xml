@@ -90,15 +90,15 @@
 
                 />
 
-
-            <Spinner
-                android:id="@+id/medicamentSpinner"
-                android:visibility="invisible"
-                android:layout_width="match_parent"
+   <ListView
                 android:layout_height="wrap_content"
-                android:spinnerMode="dropdown"
+                android:minHeight="100dp"
+                android:id="@+id/medicamentListview"
+                android:visibility="invisible"
+                android:scrollbars="none"
+                android:layout_width="match_parent"
+                android:divider="@null"
                 />
-
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
@@ -315,24 +315,17 @@
                         <RadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/all_days"
                             android:text="Tous les jours"
                             android:textSize="13sp"/>
                         <RadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="13sp"
+                            android:id="@+id/specific_days"
                             android:text="jours spécifiques de la semaine"/>
 
-                        <RadioButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="13sp"
-                            android:text="intervalle de jours"/>
-                        <RadioButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="13sp"
-                            android:text="Cycle récurrent"/>
+
 
                     </RadioGroup>
 
@@ -482,7 +475,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:id="@+id/potency_click"
+                android:id="@+id/potencyconfig_click"
                 android:text="cliquer pour configurer"
                 android:textSize="13sp"
                 android:textColor="@color/main_blue"
@@ -532,7 +525,7 @@
                 <RadioGroup
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/food_istruction">
+                    android:id="@+id/food_instruction">
 
                     <RadioButton
                         android:layout_width="wrap_content"
@@ -543,7 +536,7 @@
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/while_food"
+                        android:id="@+id/during_food"
                         android:textSize="13sp"
                         android:text="Pendant que vous mangez"/>
 
@@ -553,6 +546,13 @@
                         android:id="@+id/after_food"
                         android:textSize="13sp"
                         android:text="Apres avoir mangé"/>
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/anyway"
+                        android:textSize="13sp"
+                        android:text="Peu importe"/>
                 </RadioGroup>
 
                 <View
@@ -682,13 +682,7 @@
 
 </LinearLayout>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/login"
-        android:text="Se connecter"
 
-        />
 
 </LinearLayout>
 </ScrollView>

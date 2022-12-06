@@ -5,15 +5,13 @@ import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 
-@Entity(foreignKeys = {@ForeignKey(entity = Patient.class, parentColumns = "id", childColumns = "idPatient"),
-        @ForeignKey(entity = Rappel.class, parentColumns = "id", childColumns = "idRappel")})
+@Entity(foreignKeys = {@ForeignKey(entity = Rappel.class, parentColumns = "id", childColumns = "idRappel")})
 public class Rapport {
     @PrimaryKey
     private  Long id;
     private  String message;
     private  String statut;
     private  long date;
-    private  long idPatient;
     private long idRappel;
 
 
@@ -34,7 +32,7 @@ public class Rapport {
         this.message = message;
         this.statut = statut;
         this.date = date;
-        this.idPatient = idPatient;
+
         this.idRappel = idRappel;
     }
 
@@ -70,14 +68,6 @@ public class Rapport {
         this.date = date;
     }
 
-    public long getIdPatient() {
-        return idPatient;
-    }
-
-    public void setIdPatient(long idPatient) {
-        this.idPatient = idPatient;
-    }
-
     @Override
     public String toString() {
         return "Rapport{" +
@@ -85,7 +75,7 @@ public class Rapport {
                 ", message='" + message + '\'' +
                 ", statut='" + statut + '\'' +
                 ", date=" + date +
-                ", idPatient=" + idPatient +
+
                 ", idRappel=" + idRappel +
                 '}';
     }

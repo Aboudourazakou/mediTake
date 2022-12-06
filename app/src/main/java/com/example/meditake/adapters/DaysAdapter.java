@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.meditake.HomeActivity;
+import com.example.meditake.HomeFragment;
 import com.example.meditake.R;
 import com.example.meditake.databinding.DaysItemBinding;
 
@@ -25,14 +26,14 @@ import java.util.List;
 public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.daysViewHolder>{
     List<String>dayList;
     Boolean isWeekDays;
-    HomeActivity activity;
+    HomeFragment homeFragment;
     int activeDay=RecyclerView.NO_POSITION;
 
 
-    public DaysAdapter(List<String> daysList, HomeActivity homeActivity, Boolean isWeekDays) {
+    public DaysAdapter(List<String> daysList, HomeFragment homeFragment, Boolean isWeekDays) {
         this.dayList=daysList;
         this.isWeekDays=isWeekDays;
-        activity=homeActivity;
+        this.homeFragment=homeFragment;
     }
 
     @NonNull
@@ -52,12 +53,12 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.daysViewHolder
 
             holder.qbinding.setDay(getDay(day,1));
            if(activeDay==position) {
-                    holder.qbinding.idDay.setBackgroundDrawable(ContextCompat.getDrawable(activity, R.drawable.round_element));
-                    holder.qbinding.idDay.setTextColor(ContextCompat.getColor(activity, R.color.white));
+                    holder.qbinding.idDay.setBackgroundDrawable(ContextCompat.getDrawable(homeFragment.getActivity(), R.drawable.round_element));
+                    holder.qbinding.idDay.setTextColor(ContextCompat.getColor(homeFragment.getActivity(), R.color.white));
            }
            else {
-               holder.qbinding.idDay.setTextColor(ContextCompat.getColor(activity, R.color.black));
-               holder.qbinding.idDay.setBackgroundDrawable(ContextCompat.getDrawable(activity, R.drawable.transparent_background));
+               holder.qbinding.idDay.setTextColor(ContextCompat.getColor(homeFragment.getActivity(), R.color.black));
+               holder.qbinding.idDay.setBackgroundDrawable(ContextCompat.getDrawable(homeFragment.getActivity(), R.drawable.transparent_background));
 
            }
         }
@@ -82,10 +83,15 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.daysViewHolder
                   public void onClick(View view) {
                     int previous=activeDay;
                     activeDay=getAdapterPosition();
-                    activity.getBinding().day.setText(dayList.get(activeDay));
+                    homeFragment.getBinding().day.setText(dayList.get(activeDay));
                     notifyItemChanged(previous);
                     notifyItemChanged(activeDay);
-                    activity.simulateDb(getDay(dayList.get(activeDay),0));
+                  // homeFragment.getProgrammes(dayList.get(activeDay));
+                      String []day=dayList.get(activeDay).split(" ");
+                      homeFragment.setFullSelectedDay(dayList.get(activeDay));
+                      homeFragment.setSelectedDay(day[0].substring(0,3));
+                      System.out.println("LE JOUR ACTIF "+day[0].substring(0,3));
+                      //System.out.println(dayLis);
 
                   }
               });
