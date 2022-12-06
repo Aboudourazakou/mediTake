@@ -44,10 +44,9 @@ import com.example.meditake.databinding.RappelClickDialogBinding;
 import com.example.meditake.databinding.RappelsListWrapperBinding;
 import com.example.meditake.databinding.RescheduleReminderDialogBinding;
 import com.example.meditake.models.Medicament;
-import com.example.meditake.models.Programm;
+
 import com.example.meditake.databinding.ActivityHomeBinding;
-import com.example.meditake.models.Rappel;
-import com.example.meditake.models.Rapport;
+
 import com.example.meditake.viewmodels.HomeActivityViewModel;
 import com.google.android.material.navigation.NavigationBarView;
 

@@ -1,9 +1,10 @@
 package com.example.meditake.database.entities;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-
+import java.util.List;
 
 
 @Entity
@@ -17,6 +18,11 @@ public class  Rappel {
     private String lastTimeTaken;
     private long medicamentId;
     private long programmeId;
+    @Ignore
+    private  Medicament medicament;
+
+    @Ignore
+    List<Rapport> rapportList;
 
     public Rappel(long id,int heure, int minutes, double qtePilule, String message, String lastTimeTaken, long medicamentId,long programmeId) {
         this.id = id;
@@ -30,6 +36,22 @@ public class  Rappel {
     }
 
     public Rappel() {
+    }
+
+    public List<Rapport> getRapportList() {
+        return rapportList;
+    }
+
+    public void setRapportList(List<Rapport> rapportList) {
+        this.rapportList = rapportList;
+    }
+
+    public Medicament getMedicament() {
+        return medicament;
+    }
+
+    public void setMedicament(Medicament medicament) {
+        this.medicament = medicament;
     }
 
     public long getMedicamentId() {
@@ -107,6 +129,8 @@ public class  Rappel {
                 ", lastTimeTaken='" + lastTimeTaken + '\'' +
                 ", medicamentId=" + medicamentId +
                 ", programmeId=" + programmeId +
+                ", medicament=" + medicament +
+                ", rapportList=" + rapportList +
                 '}';
     }
 }

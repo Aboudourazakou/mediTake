@@ -32,4 +32,6 @@ public interface RapportDao {
 
     @Delete
     void delete(Rapport rapport);
+    @Query("select * from rapport where idRappel = :id")
+    List<Rapport> findRapportByIdRappel(long id);
 }

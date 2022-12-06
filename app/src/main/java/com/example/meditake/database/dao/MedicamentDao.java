@@ -4,9 +4,13 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.meditake.database.entities.Medicament;
+import com.example.meditake.database.entities.Rappel;
+import com.example.meditake.utils.MedicamentProposition;
 
+import java.util.Collection;
 import java.util.List;
 
 @Dao
@@ -28,4 +32,10 @@ public interface MedicamentDao {
 
     @Delete
     void delete(Medicament medicament);
+
+    @Update
+    void update(Medicament medicament);
+
+    @Query("select * from medicament")
+    List<MedicamentProposition> getMedicaments();
 }

@@ -7,7 +7,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.res.ResourcesCompat;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
@@ -20,10 +19,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -35,7 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.meditake.adapters.DaysSelectionAdapter;
-import com.example.meditake.adapters.IgnoreReasonAdapter;
+import com.example.meditake.adapters.MedicamentPropositionListviewAdapter;
 import com.example.meditake.database.AppDatabase;
 import com.example.meditake.database.dao.CategorieMedicamentDao;
 import com.example.meditake.database.dao.MedicamentDao;
@@ -47,7 +46,8 @@ import com.example.meditake.database.entities.Medicament;
 import com.example.meditake.database.entities.Patient;
 import com.example.meditake.database.entities.Programme;
 import com.example.meditake.database.entities.Rappel;
-import com.example.meditake.models.Programm;
+import com.example.meditake.utils.MedicamentProposition;
+
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -55,10 +55,11 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 public class AddMedicationActivity extends AppCompatActivity {
 
     LinearLayout partie2,buttons ,linearLayoutDate , alertHourInfo , potencyInfo;
-    Button btnNext , btnNext2 , btnBarSave,btnOtherOptions ,btnSaveFirst ,save, btnAEffacer;
+    Button btnNext , btnNext2 , btnBarSave,btnOtherOptions ,btnSaveFirst ,save;
     TextView dateBegin,medNumber,alertHour,potencyConfig ;
     RadioButton specificDay , allDays, beforeMeal,afterMeal,duringMeal,anyway;
     RadioGroup foodInstructions;
@@ -76,12 +77,20 @@ public class AddMedicationActivity extends AppCompatActivity {
     double medPotency;
     String instructions;
 
+
+    /* Configuration de la recherche de medicament */
+    ListView medicamentListview;
+    AppDatabase db = null;
+    // Fin config
+
     @SuppressLint({"MissingInflatedId", "RestrictedApi"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_medication);
         setTitle("");
+
+        db = AppDatabase.getDataBase(getApplicationContext());
 
         partie2 = findViewById(R.id.page2);
         buttons = findViewById(R.id.buttons);
@@ -98,6 +107,11 @@ public class AddMedicationActivity extends AppCompatActivity {
         alertHourInfo = findViewById(R.id.med_hour_and_number);
         alertHour = findViewById(R.id.alert_hour);
         potencyInfo = findViewById(R.id.med_potency);
+
+        specificDay = findViewById(R.id.specific_days);
+        allDays = findViewById(R.id.all_days);
+        medNumber = findViewById(R.id.number_medication);
+        save = findViewById(R.id.btn_save_final);
         potencyConfig = findViewById(R.id.potencyconfig_click);
         foodInstructions = findViewById(R.id.food_instruction);
         afterMeal = findViewById(R.id.after_food);
@@ -112,6 +126,19 @@ public class AddMedicationActivity extends AppCompatActivity {
 
         linearLayoutDate = findViewById(R.id.date_begin_llayout);
         dateBegin = findViewById(R.id.date_begin);
+
+
+
+        // Listview pour l'affichage des propositions du médicament
+
+        medicamentListview = findViewById(R.id.medicamentListview);
+        MedicamentProposition.initMedicaments(db);
+        List<MedicamentProposition> medicamentPropositionList = new ArrayList<>();
+
+        MedicamentPropositionListviewAdapter medicamentPropositionListviewAdapter = new MedicamentPropositionListviewAdapter(this,R.layout.medicament_proposition_listview, medicamentPropositionList);
+        medicamentListview.setAdapter(medicamentPropositionListviewAdapter);
+
+        // Fin configuration
 
 
         btnClose.setOnClickListener(new View.OnClickListener() {
@@ -164,8 +191,31 @@ public class AddMedicationActivity extends AppCompatActivity {
                 if(charSequence.toString().trim().length()==0){
                     btnNext.setEnabled(false);
                     btnNext.setBackgroundColor(Color.LTGRAY);
+
+                    medicamentListview.setVisibility(View.INVISIBLE);
+
                 }
                 else{
+
+                    medicamentListview.setVisibility(View.VISIBLE);
+
+                    medicamentPropositionList.clear();
+                    medicamentPropositionList.addAll(MedicamentProposition.getBySearchValue(medName.getText().toString()));
+
+                    medicamentPropositionListviewAdapter.notifyDataSetChanged();
+
+
+                    medicamentListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            MedicamentProposition m = (MedicamentProposition) medicamentPropositionListviewAdapter.getItem(i);
+                            medName.setText(m.getNom());
+
+                            medicamentListview.setVisibility(View.INVISIBLE);
+                        }
+                    });
+
+
                     btnNext.setEnabled(true);
                     btnNext.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.round_element, null));}
 
@@ -239,14 +289,14 @@ public class AddMedicationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                    String[] items = getResources().getStringArray(R.array.days);
-                    daysChosen="";
-                    for (String item : items) {
-                        daysChosen = daysChosen + item;
-                    }
-                    specificDay.setText("jours spécifiques de la semaine ");
-                    Toast.makeText(AddMedicationActivity.this, daysChosen, Toast.LENGTH_SHORT).show();
+                String[] items = getResources().getStringArray(R.array.days);
+                daysChosen="";
+                for (String item : items) {
+                    daysChosen = daysChosen + item;
                 }
+                specificDay.setText("jours spécifiques de la semaine ");
+                Toast.makeText(AddMedicationActivity.this, daysChosen, Toast.LENGTH_SHORT).show();
+            }
 
 
         });
@@ -267,12 +317,6 @@ public class AddMedicationActivity extends AppCompatActivity {
         });
 
 
-        btnAEffacer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                checkLogin();
-            }
-        });
 
 
 
@@ -448,7 +492,7 @@ public class AddMedicationActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                medNumber.setText("Prendre "+medTakeNumber.getText().toString());
+                medNumber.setText("Prendre "+medTakeNumber.getText().toString()+" "+text);
                 alertHour.setText(hour.getText().toString()+" : "+minute.getText().toString());
 
                 hourValue = Integer.parseInt(hour.getText().toString());
@@ -490,9 +534,9 @@ public class AddMedicationActivity extends AppCompatActivity {
         alertDialog.setView(customLayout);
         AlertDialog dialog = alertDialog.create();
 
-      //  String oldmsg = specificDay.getText().toString();
+        //  String oldmsg = specificDay.getText().toString();
 
-       define.setOnClickListener(new View.OnClickListener() {
+        define.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -501,13 +545,13 @@ public class AddMedicationActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-       cancel.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               specificDay.setText("jours spécifiques de la semaine ");
-               dialog.cancel();
-           }
-       });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                specificDay.setText("jours spécifiques de la semaine ");
+                dialog.cancel();
+            }
+        });
 
 
         dialog.show();
@@ -599,6 +643,7 @@ public class AddMedicationActivity extends AppCompatActivity {
             case R.id.anyway:
                 msg = anyway.getText().toString() + "le moment du repas";
         }
+
         getMessageInstructions(msg);
     }
 
@@ -613,15 +658,15 @@ public class AddMedicationActivity extends AppCompatActivity {
         PatientDao patientDao = db.patientDao();
         Patient pat = new Patient("prenom","nom","admin","monmdp");
         patientDao.insert(pat);
-         int heure = hourValue;
+        int heure = hourValue;
 
-         int minutes = minValue;
+        int minutes = minValue;
 
-         int duree = 2;
+        int duree = 2;
 
-         String jours = daysChosen;
+        String jours = daysChosen;
 
-         long idPatient = 1;
+        long idPatient = 1;
         ProgrammeDao programmeDao = db.programmeDao();
         Programme p = new Programme(heure,minutes,2,jours,1);
         long idPro = programmeDao.insert(p);
@@ -645,19 +690,19 @@ public class AddMedicationActivity extends AppCompatActivity {
 
 
 
-         rap.setMedicamentId(idmed);
-         rap.setProgrammeId(idPro);
-         Programme pro = programmeDao.getById(idPro);
-         Medicament med = medicament.getById(idmed);
+        rap.setMedicamentId(idmed);
+        rap.setProgrammeId(idPro);
+        Programme pro = programmeDao.getById(idPro);
+        Medicament med = medicament.getById(idmed);
 
-         rap.setHeure(pro.getHeure());
-         rap.setMinutes(pro.getMinutes());
-         rap.setQtePilule(medicationTakeNumber);
-         rap.setMessage(instructions);
+        rap.setHeure(pro.getHeure());
+        rap.setMinutes(pro.getMinutes());
+        rap.setQtePilule(medicationTakeNumber);
+        rap.setMessage(instructions);
 
-         rappelDao.insert(rap);
+        rappelDao.insert(rap);
 
-         List<Rappel> rappels = rappelDao.getAll();
+        List<Rappel> rappels = rappelDao.getAll();
 
         Log.d(TAG,"run:"+list.toString());
         Log.d(TAG,"run:"+rappels.toString());

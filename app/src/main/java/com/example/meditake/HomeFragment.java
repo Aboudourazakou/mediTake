@@ -14,11 +14,15 @@ import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,16 +35,23 @@ import com.example.meditake.adapters.DaysAdapter;
 import com.example.meditake.adapters.IgnoreReasonAdapter;
 import com.example.meditake.adapters.ProgrammeAdapter;
 import com.example.meditake.alarm.AlarmReceiver;
+import com.example.meditake.database.AppDatabase;
+import com.example.meditake.database.dao.ProgrammeDao;
+import com.example.meditake.database.entities.Medicament;
+import com.example.meditake.database.entities.Programme;
+import com.example.meditake.database.entities.ProgrammeWithRappel;
+import com.example.meditake.database.entities.ProgrammeWithRappelWithRapportAndMedicament;
+import com.example.meditake.database.entities.Rappel;
+import com.example.meditake.database.entities.RappelWithRapportAndMedicament;
+import com.example.meditake.database.entities.Rapport;
 import com.example.meditake.databinding.ActivityHomeBinding;
 import com.example.meditake.databinding.FragmentHomeBinding;
 import com.example.meditake.databinding.IgnoreMessageDialogBinding;
 import com.example.meditake.databinding.RappelClickDialogBinding;
 import com.example.meditake.databinding.RescheduleReminderDialogBinding;
-import com.example.meditake.models.Medicament;
-import com.example.meditake.models.Programm;
-import com.example.meditake.models.Rappel;
-import com.example.meditake.models.Rapport;
+
 import com.example.meditake.viewmodels.HomeActivityViewModel;
+import com.example.meditake.viewmodels.HomeFragmentViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -68,7 +79,7 @@ public class HomeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     List<String> daysList=new ArrayList<>();
-    List<Programm> programmList =new ArrayList<>();
+    List<Programme> programmList =new ArrayList<>();
     AlarmManager alarmManager;
     PendingIntent pendingIntent;
     HomeActivityViewModel homeActivityViewModel;
@@ -77,6 +88,11 @@ public class HomeFragment extends Fragment {
     Rappel rappel;
     FragmentHomeBinding binding;
     HomeActivity activity;
+    HomeFragmentViewModel homeFragmentViewModel;
+    String selectedDay;
+    String fullSelectedDay;
+    ArrayList<PendingIntent> intentArray = new ArrayList<PendingIntent>();
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -117,20 +133,52 @@ public class HomeFragment extends Fragment {
         binding=DataBindingUtil.inflate(
                 inflater, R.layout.fragment_home, container, false);
         View view=binding.getRoot();
+        cancelAlarm();
         init();
+        homeFragmentViewModel= new ViewModelProvider(this).get(HomeFragmentViewModel.class);
+       homeFragmentViewModel.setHomeFragment(this);
+       homeFragmentViewModel.getUpdateMissedPills();
+
+       homeFragmentViewModel.getAllPrograms().observe(getViewLifecycleOwner(), new Observer<List<Programme>>() {
+            @Override
+            public void onChanged(List<Programme> programmeList) {
+                System.out.println("LISTE FINALE DE VIEW MODEL");
+                System.out.println(programmeList);
+                programmList=programmeList;
+                setPrograms();
+
+
+            }
+        });
+
+
         return view;
     }
-    private void createAlarm() {
+    public void createAlarm(int hour,int minutes,int requestCode) {
 
         alarmManager=(AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
         Intent intent=new Intent(getContext(), AlarmReceiver.class);
-        pendingIntent= PendingIntent.getBroadcast(getContext(),0,intent,0);
+        // context variable contains your `Context`
+        AlarmManager mgrAlarm = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+
+        pendingIntent= PendingIntent.getBroadcast(getContext(),requestCode,intent,0);
         Calendar calendar=Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY,00);
-        calendar.set(Calendar.MINUTE,14);
+        calendar.set(Calendar.HOUR_OF_DAY,hour);
+        calendar.set(Calendar.MINUTE,minutes);
         calendar.set(Calendar.SECOND,0);
         calendar.set(Calendar.MILLISECOND,0);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
+        //alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
+
+            // Loop counter `i` is used as a `requestCode`
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), requestCode, intent, 0);
+            // Single alarms in 1, 2, ..., 10 minutes (in `i` minutes)
+            mgrAlarm.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,
+                    calendar.getTimeInMillis(),
+                    pendingIntent);
+
+            intentArray.add(pendingIntent);
+
+
 
 
     }
@@ -164,51 +212,7 @@ public class HomeFragment extends Fragment {
     }
 
 
-    public  void simulateDb(String day){
-        programmList.clear();
-        Programm programm =new Programm();
-        programm.setHeure(6);
-        programm.setJours("lun. mar. mer. jeu. ven.");
-        programm.setMinutes(45);
-        Rappel rappel=new Rappel();
-        rappel.setId(1);
-        rappel.setQtePilule(8);
-        rappel.setMessage("Prendre "+rappel.getQtePilule()+" pilulles");
-        rappel.setHeure(13);
-        rappel.setMinutes(12);
-        Rappel rappel1=new Rappel();
-        rappel1.setId(2);
-        rappel1.setQtePilule(9);
-        rappel1.setMessage("Prendre "+rappel.getQtePilule()+" pilulles");
-        rappel1.setHeure(13);
-        rappel1.setMinutes(12);
-        Medicament medicament=new Medicament();
-        medicament.setNom("Peniciline");
-        medicament.setQte(67);
-        Medicament medicament1=new Medicament();
-        medicament1.setNom("Paracetamol");
-        medicament1.setQte(9);
-        rappel1.setMedicament(medicament1);
-        rappel.setMedicament(medicament);
-        List<Rappel> rappels=new ArrayList<>();
-        rappels.add(rappel);
-        rappels.add(rappel1);
-        programm.setRappel(rappels);
-        this.programmList.add(programm);
 
-
-        //Remove previous list
-        binding.rappelsList.setAdapter(new ProgrammeAdapter(new ArrayList<>(),this));
-        binding.dayNumberListView.smoothScrollToPosition(35);
-        //Set new list
-        if(programm.getJours().contains(day)){
-
-            binding.rappelsList.setAdapter(new ProgrammeAdapter(programmList,this));
-            binding.dayNumberListView.smoothScrollToPosition(35);
-        }
-
-
-    }
 
     public  void prendreMedicament(Rappel rappel){
         showDialog(rappel);
@@ -230,6 +234,28 @@ public class HomeFragment extends Fragment {
         this.dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
         //Mention the name of the layout of your custom dialog.
         this.dialog.setContentView(dialogBinding.getRoot());
+
+           if(rappel.getRapportList().size()>0) {
+               Rapport dernierRapport=rappel.getRapportList().get(rappel.getRapportList().size()-1);
+               if (dernierRapport != null && dernierRapport.getStatut().equals("pris")) {
+
+                   dialogBinding.takePillBtn.setVisibility(View.GONE);
+                   dialogBinding.takePillText.setVisibility(View.GONE);
+                   dialogBinding.nottakePillBtn.setVisibility(View.VISIBLE);
+                   dialogBinding.nottakePillText.setVisibility(View.VISIBLE);
+               } else if (dernierRapport != null && dernierRapport.getStatut().equals("ignore")) {
+                   dialogBinding.ignorePillBtn.setVisibility(View.GONE);
+                   dialogBinding.ignoreText.setVisibility(View.GONE);
+                   dialogBinding.notIgnorePillBtn.setVisibility(View.VISIBLE);
+                   dialogBinding.notIgnoreText.setVisibility(View.VISIBLE);
+               } else if (dernierRapport != null && dernierRapport.getStatut().equals("pris")) {
+
+               }
+           }
+
+
+
+
         dialogBinding.ignorePillBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -237,12 +263,14 @@ public class HomeFragment extends Fragment {
                 Rapport rapport=new Rapport();
                 rapport.setDate(new Date().getTime());
                 rapport.setStatut("ignore");
-                rapport.setMessage("Medicament est termine");
-                rappel.getRapportList().add(rapport);
+                rapport.setIdRappel(rappel.getId());
                 showDialogForIgnoreMessage(rappel);
-                updateDb(rappel);
+
+
             }
         });
+
+
         dialogBinding.takePillBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -250,11 +278,17 @@ public class HomeFragment extends Fragment {
                 rapport.setDate(new Date().getTime());
                 rapport.setStatut("pris");
                 rapport.setMessage("Le pilule a ete pris le "+new SimpleDateFormat("EEE d MMM h:mm a", Locale.FRANCE).format(Calendar.getInstance().getTime()));
-                rappel.getRapportList().add(rapport);
-                updateDb(rappel);
+                rapport.setIdRappel(rappel.getId());
+                rappel.setLastTimeTaken(new SimpleDateFormat("EEE d MMM h:mm a", Locale.FRANCE).format(Calendar.getInstance().getTime()));
+                homeFragmentViewModel.saveRapport(rapport);
+                Medicament medicament=rappel.getMedicament();
+                medicament.setQte((int) (medicament.getQte()-rappel.getQtePilule()));
+                homeFragmentViewModel.updateMedicament(medicament);
+                homeFragmentViewModel.updateRappel(rappel);
                 dialog.cancel();
             }
         });
+
         dialogBinding.reschedulePillBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -263,17 +297,19 @@ public class HomeFragment extends Fragment {
 
             }
         });
+        dialogBinding.deleteIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                homeFragmentViewModel.deleteProgramme(rappel.getProgrammeId());
+                homeFragmentViewModel.getProgramsFromRoomDb();
+                dialog.cancel();
+            }
+        });
 
         dialog.show();
     }
 
-    public  void updateDb(Rappel rappel){
 
-        binding.rappelsList.setAdapter(new ProgrammeAdapter(programmList,this));
-        binding.dayNumberListView.smoothScrollToPosition(35);
-        this.dialog.cancel();
-
-    }
 
 
     public  void  showDialogForIgnoreMessage(Rappel rappel){
@@ -312,8 +348,10 @@ public class HomeFragment extends Fragment {
         rappel.getRapportList().add(rapport);
         rapport.setStatut("ignore");
         rapport.setMessage(reason);
+        rapport.setIdRappel(rappel.getId());
+        homeFragmentViewModel.saveRapport(rapport);
         dialog2.cancel();
-        updateDb(this.rappel);
+
     }
     public  void   showDialogForReminderRescheduling(Rappel rappel){
         LayoutInflater layoutInflater=LayoutInflater.from(getContext());
@@ -458,12 +496,16 @@ public class HomeFragment extends Fragment {
 
                 Rapport rapport=createRapport();
                 rappel.setHeure(h1*10+h2);
+                rapport.setIdRappel(rappel.getId());
+
                 rappel.setMinutes(m1*10+m2);
-                rappel.getRapportList().add(rapport);
+                createAlarm(rappel.getHeure(),rappel.getMinutes(),3+ rappel.getMinutes());
                 rapport.setStatut("reprogramme");
                 rapport.setMessage("La pilule a ete reprogramme pour " +rappel.getHeure()+":"+rappel.getMinutes());
+                homeFragmentViewModel.saveRapport(rapport);
+                homeFragmentViewModel.updateRappel(rappel);
+
                 dialog2.cancel();
-                updateDb(rappel);
 
 
             }
@@ -479,7 +521,9 @@ public class HomeFragment extends Fragment {
     }
 
     public  void init(){
-      ;
+
+
+
 
         String[]days=getResources().getStringArray(R.array.days);
         LinkedHashMap<String,String> daysAfter=new LinkedHashMap();
@@ -490,7 +534,15 @@ public class HomeFragment extends Fragment {
             calendar.add(Calendar.DATE,i);
             String d= new SimpleDateFormat("EEE d MMM", Locale.FRANCE).format(calendar.getTime());
             daysAfter.put(d,"ici");
-            if(i==0)today=d;
+
+
+
+            if(i==0) {
+                fullSelectedDay=d;
+                String[] arr = d.split(" ");
+                selectedDay = arr[0].substring(0,3);
+
+            }
 
             calendar.add(Calendar.DATE,-1*i);
 
@@ -521,7 +573,7 @@ public class HomeFragment extends Fragment {
         List<String>totalDays=new ArrayList<>(daysBefore.keySet());
         Collections.reverse(totalDays);
         totalDays.addAll(daysAfter.keySet());
-        simulateDb(daysAfter.get(today));
+       // getProgrammes(daysAfter.get(today));
         Boolean isWeekDays=true;
         binding.daysListView.setLayoutManager(new GridLayoutManager(getContext(),7));
         binding.daysListView.setAdapter(new DaysAdapter(daysList,this,isWeekDays));
@@ -536,6 +588,26 @@ public class HomeFragment extends Fragment {
         createNotificationChannel();
 
     }
+
+
+
+    public  void  setPrograms(){
+        binding.rappelsList.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rappelsList.setAdapter(new ProgrammeAdapter(programmList,this));
+
+    }
+
+    public  String getSelectedDay(){
+        return  selectedDay;
+    }
+    public  void setSelectedDay(String day){
+        this.selectedDay=day;
+        homeFragmentViewModel.getProgramsFromRoomDb();
+    }
+    public  void setFullSelectedDay(String d){
+        fullSelectedDay=d;
+    }
+    public  String getFullSelectedDay(){return  fullSelectedDay;}
 
 
 }

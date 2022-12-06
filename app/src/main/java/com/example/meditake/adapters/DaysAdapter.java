@@ -86,7 +86,12 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.daysViewHolder
                     homeFragment.getBinding().day.setText(dayList.get(activeDay));
                     notifyItemChanged(previous);
                     notifyItemChanged(activeDay);
-                    homeFragment.simulateDb(getDay(dayList.get(activeDay),0));
+                  // homeFragment.getProgrammes(dayList.get(activeDay));
+                      String []day=dayList.get(activeDay).split(" ");
+                      homeFragment.setFullSelectedDay(dayList.get(activeDay));
+                      homeFragment.setSelectedDay(day[0].substring(0,3));
+                      System.out.println("LE JOUR ACTIF "+day[0].substring(0,3));
+                      //System.out.println(dayLis);
 
                   }
               });

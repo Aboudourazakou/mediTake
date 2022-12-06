@@ -8,13 +8,17 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.meditake.HomeActivity;
 import com.example.meditake.HomeFragment;
+import com.example.meditake.database.entities.Rappel;
+import com.example.meditake.database.entities.Rapport;
 import com.example.meditake.databinding.SegmentMedicamentHomeListBinding;
-import com.example.meditake.models.Rappel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /***
  "Created by  TETEREOU Aboudourazakou on "11/21/2022
@@ -24,9 +28,11 @@ public class RappelAdapter extends RecyclerView.Adapter<RappelAdapter.medicament
 
     List<Rappel>rappelList=new ArrayList<>();
     HomeFragment context;
+
     public RappelAdapter(List<Rappel> rappel,HomeFragment homeFragment) {
         this.rappelList=rappel;
         context=homeFragment;
+
     }
 
     @NonNull
@@ -41,23 +47,41 @@ public class RappelAdapter extends RecyclerView.Adapter<RappelAdapter.medicament
     public void onBindViewHolder(@NonNull medicamentViewHolder holder, int position) {
         Rappel rappel=rappelList.get(position);
         holder.binding.setRappel(rappel);
-
+       if(rappel.getRapportList().size()>0){
+           Rapport dernierRapport=rappel.getRapportList().get(rappel.getRapportList().size()-1);
         for (int i = 0; i <rappel.getRapportList().size() ; i++) {
-             if(rappel.getRapportList().get(i).getStatut().equals("pris")){
-                 holder.binding.takenText.setVisibility(View.VISIBLE);
-                 holder.binding.takenText.setText(rappel.getRapportList().get(i).getMessage());
+            Rapport rapport=rappel.getRapportList().get(i);
+            holder.binding.pillIsIgnored.setVisibility(View.GONE);
+            holder.binding.pillIsTakenIndicator.setVisibility(View.GONE);
+            holder.binding.pillIsMissed.setVisibility(View.GONE);
+            holder.binding.pillIsRescheduledIndicator.setVisibility(View.GONE);
+            System.out.println(context.getFullSelectedDay() +"Time de day");
+            boolean isDisplayable=getTime(rapport.getDate()).equals(context.getFullSelectedDay());
+            if (rapport.getStatut().equals("pris") && rapport.getId()==dernierRapport.getId() && isDisplayable ) {
+                holder.binding.takenText.setVisibility(View.VISIBLE);
+                holder.binding.takenText.setText(rappel.getRapportList().get(i).getMessage());
+                holder.binding.pillIsTakenIndicator.setVisibility(View.VISIBLE);
 
-             }
-            if(rappel.getRapportList().get(i).getStatut().equals("reprogramme")){
+            }
+            if (rapport.getStatut().equals("reprogramme") && rapport.getId()==dernierRapport.getId()&& isDisplayable ) {
                 holder.binding.rescheduledText.setVisibility(View.VISIBLE);
                 holder.binding.rescheduledText.setText(rappel.getRapportList().get(i).getMessage());
+                holder.binding.pillIsRescheduledIndicator.setVisibility(View.VISIBLE);
 
             }
-            if(rappel.getRapportList().get(i).getStatut().equals("ignore")){
+            if (rappel.getRapportList().get(i).getStatut().equals("ignore")&& isDisplayable ) {
                 holder.binding.ignoredText.setVisibility(View.VISIBLE);
                 holder.binding.ignoredText.setText(rappel.getRapportList().get(i).getMessage());
+                holder.binding.pillIsIgnored.setVisibility(View.VISIBLE);
 
             }
+            if (rappel.getRapportList().get(i).getStatut().equals("manque")&& rapport.getId()==dernierRapport.getId()&& isDisplayable  ) {
+                holder.binding.isMissedText.setVisibility(View.VISIBLE);
+                holder.binding.isMissedText.setText(rappel.getRapportList().get(i).getMessage());
+                holder.binding.pillIsMissed.setVisibility(View.VISIBLE);
+
+            }
+        }
 
         }
 
@@ -82,5 +106,10 @@ public class RappelAdapter extends RecyclerView.Adapter<RappelAdapter.medicament
 
 
         }
+    }
+
+    public  String getTime(long time){
+        System.out.println(new SimpleDateFormat("EEE d MMM", Locale.FRANCE).format(time)+"Time du jour");
+      return   new SimpleDateFormat("EEE d MMM", Locale.FRANCE).format(time);
     }
 }

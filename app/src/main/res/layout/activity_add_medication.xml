@@ -92,6 +92,16 @@
                 android:backgroundTint="@color/main_blue"
 
                 />
+
+            <ListView
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
+                android:id="@+id/medicamentListview"
+                android:visibility="invisible"
+                android:scrollbars="none"
+                android:layout_width="match_parent"
+                android:divider="@null"
+                />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

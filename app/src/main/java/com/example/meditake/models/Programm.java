@@ -1,11 +1,14 @@
+/*
 package com.example.meditake.models;
 
 import java.util.List;
 
+*/
 /***
  "Created by  TETEREOU Aboudourazakou on "11/23/2022
  "Project name "MediTake
- */
+ *//*
+
 public class Programm {
     private  String jours;
     private  Long idPatient;
@@ -54,3 +57,4 @@ public class Programm {
         return minutes;
     }
 }
+*/

@@ -1,9 +1,12 @@
+/*
 package com.example.meditake.models;
 
+*/
 /***
  "Created by  TETEREOU Aboudourazakou on "11/24/2022
  "Project name "MediTake
- */
+ *//*
+
 public class Rapport {
     private  Long id;
     private  String message;
@@ -51,3 +54,4 @@ public class Rapport {
         this.date = date;
     }
 }
+*/

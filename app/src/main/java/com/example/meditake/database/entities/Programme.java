@@ -1,7 +1,12 @@
 package com.example.meditake.database.entities;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+
+import java.util.List;
+
+import kotlin.jvm.Transient;
 
 
 @Entity
@@ -16,6 +21,11 @@ public class Programme {
     private int duree;
 
     private String jours;
+    @Ignore
+    List<Rappel> rappelList;
+
+
+
 
     private long idPatient;
 
@@ -40,6 +50,14 @@ public class Programme {
     }
 
 
+
+    public List<Rappel> getRappelList() {
+        return rappelList;
+    }
+
+    public void setRappelList(List<Rappel> rappelList) {
+        this.rappelList = rappelList;
+    }
 
     public Long getId() {
         return id;
@@ -97,7 +115,9 @@ public class Programme {
                 ", heure=" + heure +
                 ", minutes=" + minutes +
                 ", duree=" + duree +
-                ", jours='" + jours +
+                ", jours='" + jours + '\'' +
+                ", rappelList=" + rappelList +
+                ", idPatient=" + idPatient +
                 '}';
     }
 }

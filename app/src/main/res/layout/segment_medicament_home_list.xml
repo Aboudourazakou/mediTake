@@ -3,7 +3,7 @@
    <data>
        <variable
            name="rappel"
-           type="com.example.meditake.models.Rappel" />
+           type="com.example.meditake.database.entities.Rappel" />
    </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/rappel_card_wrapper"
@@ -20,26 +20,65 @@
               android:layout_height="wrap_content"
               android:orientation="horizontal"
               android:gravity="center_vertical"
-              android:paddingLeft="10dp">
-              <ImageView
-                  android:layout_width="24dp"
-                  android:layout_height="24dp"
-                  android:src="@drawable/ic_baseline_watch_later_blue">
+              android:paddingLeft="10dp"
+              >
+              <RelativeLayout
+                  android:layout_width="50dp"
+                  android:layout_height="50dp"
+                  android:layout_marginRight="5dp">
+                  <ImageView
+                      android:visibility="gone"
+                      android:id="@+id/pillIsTakenIndicator"
+                      android:layout_width="14dp"
+                      android:layout_height="14dp"
+                      android:layout_alignParentRight="true"
+                      android:src="@drawable/pill_is_taken">
 
-              </ImageView>
+                  </ImageView>
+                  <ImageView
+                      android:visibility="gone"
+                      android:id="@+id/pillIsRescheduledIndicator"
+                      android:layout_width="14dp"
+                      android:layout_height="14dp"
+                      android:layout_alignParentRight="true"
+                      android:src="@drawable/pill_is_rescheduled">
 
-              <ImageView
-                  android:id="@+id/medi_picture"
-                  android:layout_width="30dp"
-                  android:layout_height="30dp"
-                  android:src="@drawable/pill_icon"
-                  android:layout_centerVertical="true"
-                  android:layout_marginRight="10dp">
-              </ImageView>
+                  </ImageView>
+                  <ImageView
+                      android:visibility="gone"
+                      android:id="@+id/pillIsIgnored"
+                      android:layout_width="14dp"
+                      android:layout_height="14dp"
+                      android:layout_alignParentRight="true"
+                      android:src="@drawable/pill_is_ignored">
+
+                  </ImageView>
+                  <ImageView
+                      android:visibility="gone"
+                      android:id="@+id/pillIsMissed"
+                      android:layout_width="14dp"
+                      android:layout_height="14dp"
+                      android:layout_alignParentRight="true"
+                      android:src="@drawable/pill_is_missed">
+
+                  </ImageView>
+
+                  <ImageView
+                      android:id="@+id/medi_picture"
+                      android:layout_width="30dp"
+                      android:layout_height="30dp"
+                      android:layout_centerInParent="true"
+                      android:src="@drawable/pill_icon"
+                      android:layout_centerVertical="true"
+                      android:layout_marginRight="10dp">
+                  </ImageView>
+              </RelativeLayout>
               <com.google.android.material.divider.MaterialDivider
                   android:id="@+id/divider"
                   android:layout_width="1dp"
-                  android:layout_height="40dp"
+                  android:layout_height="match_parent"
+                  android:layout_marginBottom="5dp"
+                  android:layout_marginTop="5dp"
 
                   android:background="@color/main_background">
 
@@ -82,7 +121,7 @@
                       android:layout_height="wrap_content"
                       android:textSize="14dp"
 
-                      android:textColor="@color/green"
+                      android:textColor="@color/green_medi"
                       >
                   </TextView>
                   <TextView
@@ -92,6 +131,15 @@
                       android:layout_height="wrap_content"
                       android:textSize="14dp"
                       android:textColor="@color/main_blue"
+                      >
+                  </TextView>
+                  <TextView
+                      android:visibility="gone"
+                      android:id="@+id/isMissedText"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="14dp"
+                      android:textColor="@color/app_red_color"
                       >
                   </TextView>
 

@@ -2,10 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-
-    "identityHash": "0e8d347a03d7c0d238026d86e049ed4e",
-
-
+    "identityHash": "c243aff050d3145ced70ae24d9de34b0",
     "entities": [
       {
         "tableName": "Medecin",
@@ -323,7 +320,7 @@
       },
       {
         "tableName": "Rapport",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `message` TEXT, `statut` TEXT, `date` INTEGER NOT NULL, `idPatient` INTEGER NOT NULL, `idRappel` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`idPatient`) REFERENCES `Patient`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`idRappel`) REFERENCES `Rappel`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `message` TEXT, `statut` TEXT, `date` INTEGER NOT NULL, `idRappel` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`idRappel`) REFERENCES `Rappel`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -350,12 +347,6 @@
             "notNull": true
           },
           {
-            "fieldPath": "idPatient",
-            "columnName": "idPatient",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
             "fieldPath": "idRappel",
             "columnName": "idRappel",
             "affinity": "INTEGER",
@@ -370,17 +361,6 @@
         },
         "indices": [],
         "foreignKeys": [
-          {
-            "table": "Patient",
-            "onDelete": "NO ACTION",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "idPatient"
-            ],
-            "referencedColumns": [
-              "id"
-            ]
-          },
           {
             "table": "Rappel",
             "onDelete": "NO ACTION",
@@ -398,10 +378,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0e8d347a03d7c0d238026d86e049ed4e')"
-
-
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c243aff050d3145ced70ae24d9de34b0')"
     ]
   }
 }
