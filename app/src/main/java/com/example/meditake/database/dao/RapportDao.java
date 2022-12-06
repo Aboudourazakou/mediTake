@@ -6,6 +6,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Transaction;
 
+import com.example.meditake.database.entities.Programme;
 import com.example.meditake.database.entities.RappelWithRapportAndMedicament;
 import com.example.meditake.database.entities.Rapport;
 
@@ -16,6 +17,8 @@ public interface RapportDao {
     @Query("Select * from Rapport")
     List<Rapport> getAll();
 
+    @Query("select * from rapport where idRappel = :id")
+    List<Rapport> findRapportByIdRappel(long id);
 
     @Insert
     long insert(Rapport p);

@@ -15,9 +15,6 @@
     android:background="@color/coton"
 
     >
-
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -93,7 +90,7 @@
 
                 />
 
-            <ListView
+   <ListView
                 android:layout_height="wrap_content"
                 android:minHeight="100dp"
                 android:id="@+id/medicamentListview"

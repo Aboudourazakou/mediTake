@@ -12,15 +12,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.meditake.R;
-import com.example.meditake.utils.MedicamentProposition;
+import com.example.meditake.database.entities.Medicament;
+
 
 import java.util.List;
 
-public class MedicamentPropositionListviewAdapter extends ArrayAdapter<MedicamentProposition> {
+public class MedicamentPropositionListviewAdapter extends ArrayAdapter<Medicament> {
 
     LayoutInflater layoutInflater;
 
-    public MedicamentPropositionListviewAdapter(@NonNull Context context, int resource, @NonNull List<MedicamentProposition> medicaments) {
+    public MedicamentPropositionListviewAdapter(@NonNull Context context, int resource, @NonNull List<Medicament> medicaments) {
         super(context, resource, medicaments);
         layoutInflater = LayoutInflater.from(context);
     }
@@ -29,7 +30,7 @@ public class MedicamentPropositionListviewAdapter extends ArrayAdapter<Medicamen
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View rowView = layoutInflater.inflate(R.layout.medicament_proposition_listview,null,true);
-        MedicamentProposition medicamentProposition  = getItem(position);
+        Medicament medicamentProposition  = getItem(position);
 
         TextView nom = rowView.findViewById(R.id.medicament_nom);
         ImageView img = rowView.findViewById(R.id.medicament_image);
@@ -46,7 +47,7 @@ public class MedicamentPropositionListviewAdapter extends ArrayAdapter<Medicamen
         if (convertView==null)
             convertView = layoutInflater.inflate(R.layout.medicament_proposition_listview,parent,false);
 
-        MedicamentProposition medicamentProposition  = getItem(position);
+        Medicament medicamentProposition  = getItem(position);
 
         TextView nom = convertView.findViewById(R.id.medicament_nom);
         ImageView img = convertView.findViewById(R.id.medicament_image);

@@ -46,7 +46,8 @@ import com.example.meditake.database.entities.Medicament;
 import com.example.meditake.database.entities.Patient;
 import com.example.meditake.database.entities.Programme;
 import com.example.meditake.database.entities.Rappel;
-import com.example.meditake.utils.MedicamentProposition;
+
+
 
 
 import java.text.SimpleDateFormat;
@@ -55,6 +56,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 
 public class AddMedicationActivity extends AppCompatActivity {
 
@@ -130,15 +132,19 @@ public class AddMedicationActivity extends AppCompatActivity {
 
 
         // Listview pour l'affichage des propositions du médicament
+        MedicamentDao medicamentDao = AppDatabase.getDataBase(AddMedicationActivity.this).medicamentDao();
 
         medicamentListview = findViewById(R.id.medicamentListview);
-        MedicamentProposition.initMedicaments(db);
-        List<MedicamentProposition> medicamentPropositionList = new ArrayList<>();
+        List<Medicament> medicamentPropositionList = new ArrayList<>();
 
         MedicamentPropositionListviewAdapter medicamentPropositionListviewAdapter = new MedicamentPropositionListviewAdapter(this,R.layout.medicament_proposition_listview, medicamentPropositionList);
         medicamentListview.setAdapter(medicamentPropositionListviewAdapter);
 
         // Fin configuration
+
+
+
+
 
 
         btnClose.setOnClickListener(new View.OnClickListener() {
@@ -194,13 +200,14 @@ public class AddMedicationActivity extends AppCompatActivity {
 
                     medicamentListview.setVisibility(View.INVISIBLE);
 
+
                 }
                 else{
 
                     medicamentListview.setVisibility(View.VISIBLE);
 
                     medicamentPropositionList.clear();
-                    medicamentPropositionList.addAll(MedicamentProposition.getBySearchValue(medName.getText().toString()));
+                    medicamentPropositionList.addAll(medicamentDao.getByNom(medName.getText().toString()));
 
                     medicamentPropositionListviewAdapter.notifyDataSetChanged();
 
@@ -208,13 +215,12 @@ public class AddMedicationActivity extends AppCompatActivity {
                     medicamentListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            MedicamentProposition m = (MedicamentProposition) medicamentPropositionListviewAdapter.getItem(i);
+                            Medicament m = (Medicament) medicamentPropositionListviewAdapter.getItem(i);
                             medName.setText(m.getNom());
 
                             medicamentListview.setVisibility(View.INVISIBLE);
                         }
                     });
-
 
                     btnNext.setEnabled(true);
                     btnNext.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.round_element, null));}
@@ -681,7 +687,7 @@ public class AddMedicationActivity extends AppCompatActivity {
         cat.insert(c);
 
         MedicamentDao medicament = db.medicamentDao();
-        Medicament m = new Medicament(nom,"",10,1);
+        com.example.meditake.database.entities.Medicament m = new Medicament(nom, null,10,1);
         long idmed = medicament.insert(m);
 
 
@@ -693,7 +699,7 @@ public class AddMedicationActivity extends AppCompatActivity {
         rap.setMedicamentId(idmed);
         rap.setProgrammeId(idPro);
         Programme pro = programmeDao.getById(idPro);
-        Medicament med = medicament.getById(idmed);
+        com.example.meditake.database.entities.Medicament med = medicament.getById(idmed);
 
         rap.setHeure(pro.getHeure());
         rap.setMinutes(pro.getMinutes());
