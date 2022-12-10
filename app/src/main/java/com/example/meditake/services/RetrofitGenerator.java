@@ -24,7 +24,7 @@ public class RetrofitGenerator {
     public static Retrofit getRetrofit(){
         if (instance==null){
             instance  = new Retrofit.Builder()
-                    .baseUrl("http://192.168.1.9:8080/api/")
+                    .baseUrl("http://192.168.1.4:8080/api/")
                     .addConverterFactory(new NullOnEmptyConverterFactory())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();

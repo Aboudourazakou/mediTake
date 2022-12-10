@@ -37,6 +37,7 @@
            android:id="@+id/hour"
            android:textColor="@color/black"
            android:textSize="14sp"
+           android:text="08"
            android:layout_marginHorizontal="10dp"
            />
        <TextView
@@ -50,6 +51,7 @@
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:id="@+id/minute"
+           android:text="00"
            android:textColor="@color/black"
            android:textSize="14sp"
            android:layout_marginHorizontal="10dp"

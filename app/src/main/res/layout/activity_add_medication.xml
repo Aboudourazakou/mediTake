@@ -633,22 +633,6 @@
                         />
 
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-
-                            android:text="Doit-il etre pris avec la nourriture?"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            />
-
-
-
 
                         <EditText
                             android:layout_width="match_parent"
@@ -660,32 +644,62 @@
 
                             />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Rappel de renouvellement"
-                                android:layout_marginBottom="10dp"
-                                />
 
                             <Switch
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/switch_update_alert"
+                                android:id="@+id/switch_renouvellement_alert"
                                 android:layout_gravity="end"
+                                android:checked="false"
                                 android:theme="@style/SwitchCompatTheme"
+                                android:text="Rappel de renouvellement"
+                                android:textSize="13sp"
+
                                 />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/renewal_info"
+                                android:orientation="vertical"
+                                android:visibility="gone"
+                                >
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/txtview_med_number_renewal"
+                                    android:text="Lorsqu'il me reste 20 médicaments"
+                                    android:textColor="@color/main_blue"
+                                    android:textSize="13sp"
+                                    android:layout_marginBottom="10dp"
+                                    />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="A quelle heure?"
+                                    android:textSize="13sp"
+                                    android:textColor="@color/black"
+                                    android:layout_marginBottom="10dp"
+                                    />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/hourmin_renewal"
+                                    android:textColor="@color/main_blue"
+                                    android:text="11:00"
+                                    android:textSize="13sp"
+                                    />
 
 
-                        </LinearLayout>
+                            </LinearLayout>
+
+
+
 
                     </LinearLayout>
 
-                </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <Button

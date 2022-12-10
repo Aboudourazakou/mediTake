@@ -53,8 +53,8 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
 
 
-    EditText phoneNumber,password;
-    TextView loginButton;
+    EditText mail,password;
+    TextView loginButton , forgetPassword;
     Map<String,String> comptes;
     Dialog dialog;
     Dialog internetDialog;
@@ -76,9 +76,10 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         INSTANCE=this;
 
-        phoneNumber = findViewById(R.id.phoneEdit);
+        mail = findViewById(R.id.mailEdit);
         password = findViewById(R.id.passwordEdit);
         loginButton = findViewById(R.id.loginButton);
+        forgetPassword = findViewById(R.id.forgetPasswordBtn);
         mCircularProgressIndicator = findViewById(R.id.circular_indicator);
 
         sharedPreferences = getSharedPreferences(this.SHARED_PREF_NAME, MODE_PRIVATE);
@@ -90,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
               //  showIsLoggingDialog();
                 System.out.println("qyoi?");
-                String username = phoneNumber.getText().toString();
+                String username = mail.getText().toString();
                 String pwd = password.getText().toString();
 
                 Call<Utilisateur> utilisateurCall = RetrofitGenerator
@@ -122,6 +123,15 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
 
+            }
+        });
+
+        forgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this,ChangePasswordActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
