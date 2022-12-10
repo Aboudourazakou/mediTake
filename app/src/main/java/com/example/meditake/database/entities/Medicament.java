@@ -13,7 +13,7 @@ public class Medicament {
     private String nom;
     private int qte;
 
-    private int categorieId;
+    private long categorieId;
 
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
     private byte[] image;
@@ -63,11 +63,11 @@ public class Medicament {
         this.qte = qte;
     }
 
-    public int getCategorieId() {
+    public long getCategorieId() {
         return categorieId;
     }
 
-    public void setCategorieId(int categorieId) {
+    public void setCategorieId(long categorieId) {
         this.categorieId = categorieId;
     }
 
