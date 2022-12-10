@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 3,
-    "identityHash": "bcf173a87454d886201a6a5cddd28265",
+    "version": 4,
+    "identityHash": "00dc1b29b99f71ab03ec8e1bdc7eac12",
     "entities": [
       {
         "tableName": "Medecin",
@@ -176,7 +176,7 @@
       },
       {
         "tableName": "Medicament",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `nom` TEXT, `img` BLOB, `qte` INTEGER NOT NULL, `categorieId` INTEGER NOT NULL, `image` BLOB, PRIMARY KEY(`id`), FOREIGN KEY(`categorieId`) REFERENCES `CategorieMedicament`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `nom` TEXT, `qte` INTEGER NOT NULL, `categorieId` INTEGER NOT NULL, `image` BLOB, PRIMARY KEY(`id`), FOREIGN KEY(`categorieId`) REFERENCES `CategorieMedicament`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -188,12 +188,6 @@
             "fieldPath": "nom",
             "columnName": "nom",
             "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "img",
-            "columnName": "img",
-            "affinity": "BLOB",
             "notNull": false
           },
           {
@@ -384,7 +378,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'bcf173a87454d886201a6a5cddd28265')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '00dc1b29b99f71ab03ec8e1bdc7eac12')"
     ]
   }
 }

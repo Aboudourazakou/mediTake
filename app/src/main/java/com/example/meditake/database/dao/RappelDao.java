@@ -40,8 +40,6 @@ public interface RappelDao {
 
     @Delete
     void delete(Rappel rappel);
-    @Query("select * from rappel where programmeId = :id")
-    List<Rappel> findRappelByIdProgram(long id);
 
     @Update
     void update(Rappel rappel);

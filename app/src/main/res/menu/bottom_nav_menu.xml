@@ -12,12 +12,12 @@
         android:title="@string/title_medicaments" />
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_alarme_set"
         android:icon="@drawable/ic_baseline_notifications_blue"
-        android:title="@string/title_notifications" />
+        android:title="Alarmes" />
     <item
-        android:id="@+id/navigation_more"
-        android:icon="@drawable/ic_baseline_more_horiz_blue"
-        android:title="@string/title_more" />
+        android:id="@+id/navigation_journal"
+        android:icon="@drawable/ic_baseline_info_24"
+        android:title="journal" />
 
 </menu>

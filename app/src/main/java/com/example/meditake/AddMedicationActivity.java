@@ -56,6 +56,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 
 public class AddMedicationActivity extends AppCompatActivity {
@@ -199,15 +201,16 @@ public class AddMedicationActivity extends AppCompatActivity {
                     btnNext.setBackgroundColor(Color.LTGRAY);
 
                     medicamentListview.setVisibility(View.INVISIBLE);
-
-
                 }
                 else{
 
                     medicamentListview.setVisibility(View.VISIBLE);
 
                     medicamentPropositionList.clear();
-                    medicamentPropositionList.addAll(medicamentDao.getByNom(medName.getText().toString()));
+                    List<Medicament> medicaments = medicamentDao.getAll();
+                    medicamentPropositionList.addAll(medicaments.stream()
+                            .filter(m->m.getNom().toLowerCase().contains(medName.getText().toString().trim().toLowerCase()))
+                            .collect(Collectors.toList()));
 
                     medicamentPropositionListviewAdapter.notifyDataSetChanged();
 
@@ -687,7 +690,7 @@ public class AddMedicationActivity extends AppCompatActivity {
         cat.insert(c);
 
         MedicamentDao medicament = db.medicamentDao();
-        com.example.meditake.database.entities.Medicament m = new Medicament(nom, null,10,1);
+        com.example.meditake.database.entities.Medicament m = new Medicament(nom, new byte[]{},10,1);
         long idmed = medicament.insert(m);
 
 

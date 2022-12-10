@@ -2,6 +2,7 @@ package com.example.meditake.database.entities;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 
@@ -13,12 +14,20 @@ public class Rapport {
     private  String statut;
     private  long date;
     private long idRappel;
-
+    @Ignore
+    Rappel rappel;
 
 
     public Rapport() {
     }
 
+    public Rappel getRappel() {
+        return rappel;
+    }
+
+    public void setRappel(Rappel rappel) {
+        this.rappel = rappel;
+    }
 
     public long getIdRappel() {
         return idRappel;

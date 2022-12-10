@@ -50,8 +50,6 @@ public interface ProgrammeDao {
     @Transaction
     @Query("select * from programme where id = :id")
     ProgrammeWithRappelWithRapportAndMedicament getProgramme(Long id);
-    @Query("select * from programme where idPatient = :id")
-    List<Programme> findProgrammByIdPatient(long id);
 
 
 }

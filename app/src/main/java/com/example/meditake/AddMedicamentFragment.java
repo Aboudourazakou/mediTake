@@ -5,12 +5,21 @@ import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.meditake.adapters.MedicamentAdapter;
+import com.example.meditake.adapters.ProgrammeAdapter;
+import com.example.meditake.database.entities.Medicament;
 import com.example.meditake.databinding.FragmentAddMedicamentBinding;
+
+import java.sql.SQLOutput;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +33,8 @@ public class AddMedicamentFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     FragmentAddMedicamentBinding binding;
+    List<Medicament> medicamentList=new ArrayList<>();
+    RecyclerView actifMedicamentRecyclerView;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -63,8 +74,21 @@ public class AddMedicamentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
-       binding=DataBindingUtil.inflate(inflater,R.layout.fragment_add_medicament, container, false);
+        binding=DataBindingUtil.inflate(inflater,R.layout.fragment_add_medicament, container, false);
+
+
+        for (int i = 0; i <7 ; i++) {
+              Medicament medicament=new Medicament();
+              medicament.setNom("Abufene");
+              medicamentList.add(medicament);
+
+        }
+        binding.actifMedRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.actifMedRecyclerView.setAdapter(new MedicamentAdapter(medicamentList,this));
+
+
        binding.addMedicament.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {

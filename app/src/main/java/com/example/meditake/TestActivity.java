@@ -38,7 +38,7 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         db = AppDatabase.getDataBase(getApplicationContext());
-       // test();
+       test();
     }
 
 
@@ -53,12 +53,6 @@ public class TestActivity extends AppCompatActivity {
 
         typeMedicamentDao.insertAll(new CategorieMedicament(1L,"pillule"));
         addMedicaments();
-
-
-
-
-
-
 
     }
 
@@ -79,7 +73,7 @@ public class TestActivity extends AppCompatActivity {
         medicament.setImage(imageInByte);
 
         medicamentDao.insertAll(
-                medicament);
+                medicament,medicament);
 
     }
 }

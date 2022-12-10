@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-    <data>
-        <variable
-            name="Medicament"
-            type="com.example.meditake.database.entities.Medicament" />
-    </data>
-    <RelativeLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/rappel_card_wrapper"
         android:layout_width="match_parent"
@@ -17,7 +11,7 @@
         >
 
         <ImageView
-            android:id="@+id/icon_pill"
+            android:id="@+id/medicament_img"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/pill_icon">
@@ -27,29 +21,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@+id/icon_pill"
+            android:layout_toRightOf="@+id/medicament_img"
             android:orientation="vertical">
             <TextView
-                android:id="@+id/medName"
+                android:id="@+id/med__nom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:text="Abufene"
+                android:text=""
                 android:textColor="@color/black">
-
             </TextView>
-
             <TextView
-                android:id="@+id/medInfo"
+                android:id="@+id/med__info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Prendre 20 pilules chaque ation et attendre votre tour"
-               >
-
+                >
             </TextView>
 
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/main_blue"
+                />
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
         </LinearLayout>
-
-
     </RelativeLayout>
-</layout>

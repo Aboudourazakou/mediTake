@@ -142,6 +142,7 @@ public class HomeFragmentViewModel  extends  HomeActivityViewModel{
                         break;
                     }
 
+
                 }
                 if(!isTaken){
                     Rapport rapport=new Rapport();

@@ -1,6 +1,8 @@
 package com.example.meditake.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,8 @@ import com.example.meditake.R;
 import com.example.meditake.database.entities.Medicament;
 
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.List;
 
 public class MedicamentPropositionListviewAdapter extends ArrayAdapter<Medicament> {
@@ -36,7 +40,10 @@ public class MedicamentPropositionListviewAdapter extends ArrayAdapter<Medicamen
         ImageView img = rowView.findViewById(R.id.medicament_image);
 
         nom.setText(medicamentProposition.getNom());
-        img.setImageResource(medicamentProposition.getImg());
+        InputStream is = new ByteArrayInputStream(medicamentProposition.getImage());
+        Bitmap bmp = BitmapFactory.decodeStream(is);
+
+        img.setImageBitmap(bmp);
 
         return rowView;
     }

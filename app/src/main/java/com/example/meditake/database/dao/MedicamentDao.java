@@ -6,6 +6,8 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.example.meditake.database.entities.Medicament;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -33,5 +35,5 @@ public interface MedicamentDao {
     void update(com.example.meditake.database.entities.Medicament medicament);
 
     @Query("select * from medicament where nom LIKE '%'+:nom+'%'")
-    Collection<? extends com.example.meditake.database.entities.Medicament> getByNom(String nom);
+    List<Medicament> getByNom(String nom);
 }

@@ -4,10 +4,6 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.Transaction;
-
-import com.example.meditake.database.entities.Programme;
-import com.example.meditake.database.entities.RappelWithRapportAndMedicament;
 import com.example.meditake.database.entities.Rapport;
 
 import java.util.List;
@@ -35,6 +31,4 @@ public interface RapportDao {
 
     @Delete
     void delete(Rapport rapport);
-    @Query("select * from rapport where idRappel = :id")
-    List<Rapport> findRapportByIdRappel(long id);
 }

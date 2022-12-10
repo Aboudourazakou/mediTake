@@ -11,9 +11,6 @@ public class Medicament {
     private Long id;
 
     private String nom;
-
-    private byte[] img;
-
     private int qte;
 
     private int categorieId;
@@ -29,7 +26,7 @@ public class Medicament {
     public Medicament( String nom, byte[] img, int qte, int categorieId) {
 
         this.nom = nom;
-        this.img = img;
+        this.image = img;
         this.qte = qte;
         this.categorieId = categorieId;
     }
@@ -37,7 +34,7 @@ public class Medicament {
     public Medicament(Long id, String nom, byte[] img, int qte, int categorieId) {
         this.id = id;
         this.nom = nom;
-        this.img = img;
+        this.image = img;
         this.qte = qte;
         this.categorieId = categorieId;
     }
@@ -56,14 +53,6 @@ public class Medicament {
 
     public void setNom(String nom) {
         this.nom = nom;
-    }
-
-    public byte[] getImg() {
-        return img;
-    }
-
-    public void setImg(byte[] img) {
-        this.img = img;
     }
 
     public int getQte() {
@@ -95,7 +84,6 @@ public class Medicament {
         return "Medicament{" +
                 "id=" + id +
                 ", nom='" + nom + '\'' +
-                ", img='" + img + '\'' +
                 ", qte=" + qte +
                 ", categorieId=" + categorieId +
                 '}';

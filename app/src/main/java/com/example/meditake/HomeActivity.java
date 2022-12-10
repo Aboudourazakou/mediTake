@@ -75,8 +75,12 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.navigation_home:
                         replaceFragment(new HomeFragment());
                         break;
-                    case R.id.navigation_medicament:replaceFragment(new AddMedicamentFragment());
+                    case R.id.navigation_medicament:replaceFragment(new AddPill());
                     break;
+                    case R.id.navigation_alarme_set:replaceFragment(new AddMedicamentFragment());
+                    break;
+                    case R.id.navigation_journal:replaceFragment(new JournalFragment());
+                        break;
                 }
                 return  true;
             }

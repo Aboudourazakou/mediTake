@@ -38,6 +38,8 @@ public class  Rappel {
     public Rappel() {
     }
 
+
+
     public List<Rapport> getRapportList() {
         return rapportList;
     }
