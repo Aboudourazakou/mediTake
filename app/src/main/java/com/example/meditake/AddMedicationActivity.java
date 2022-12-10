@@ -62,12 +62,12 @@ import java.util.Date;
 import java.util.List;
 public class AddMedicationActivity extends AppCompatActivity {
 
-    LinearLayout partie2,buttons ,linearLayoutDate , alertHourInfo , potencyInfo , medWithAlert , medWithoutAlert;
+    LinearLayout partie2,buttons ,linearLayoutDate , alertHourInfo , potencyInfo , medWithAlert , medWithoutAlert , renewalInfo;
     Button btnNext , btnNext2 , btnBarSave,btnOtherOptions ,btnSaveFirst ,save;
-    TextView dateBegin,medNumber,alertHour,potencyConfig ;
+    TextView dateBegin,medNumber,alertHour,potencyConfig ,hourminRenewal,timeTorenewal;
     RadioButton daysNumber,specificDay , allDays, beforeMeal,afterMeal,duringMeal,anyway;
     RadioGroup foodInstructions,rdGroupDuration;
-    Switch switchAlert;
+    Switch switchAlert , renewalAlert;
     CardView programForm;
 
     Spinner spnFrequence;
@@ -78,7 +78,7 @@ public class AddMedicationActivity extends AppCompatActivity {
     CardView medIcons;
     String date_chosen;
     Medicament medicamentSelectione = null;
-    int hourValue,minValue;
+    int hourValue,minValue , hourRenewal,minuteRenewal ,medNumber_forrenewaltime;
     double medicationTakeNumber;
     String daysChosen;
     double medPotency;
@@ -132,6 +132,11 @@ public class AddMedicationActivity extends AppCompatActivity {
         beforeMeal = findViewById(R.id.before_food);
         duringMeal = findViewById(R.id.during_food);
         anyway = findViewById(R.id.anyway);
+
+        renewalAlert = findViewById(R.id.switch_renouvellement_alert);
+        renewalInfo = findViewById(R.id.renewal_info);
+        hourminRenewal = findViewById(R.id.hourmin_renewal);
+        timeTorenewal = findViewById(R.id.txtview_med_number_renewal);
 
         hourValue=0;
         minValue=0;
@@ -387,6 +392,33 @@ public class AddMedicationActivity extends AppCompatActivity {
                 btnOtherOptions.setVisibility(View.GONE);
                 btnSaveFirst.setVisibility(View.GONE);
                 otherOptionView.setVisibility(View.VISIBLE);
+            }
+        });
+
+        renewalAlert.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+
+                    renewalInfo.setVisibility(View.VISIBLE);
+                } else{
+
+                    renewalInfo.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        timeTorenewal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getNumbermedForRenewaltime();
+            }
+        });
+
+        hourminRenewal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                defineHourRenewal();
             }
         });
 
@@ -759,6 +791,81 @@ public class AddMedicationActivity extends AppCompatActivity {
     public String getMessageInstructions(String msg){
         instructions = instructions +" "+msg;
         return instructions;
+    }
+
+
+    private void defineHourRenewal(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddMedicationActivity.this);
+        View customLayout = getLayoutInflater().inflate(R.layout.renewal_hourmin_med_layout, null);
+        TextView  cancel = (TextView) customLayout.findViewById(R.id.cancel_renewal);
+        TextView define = (TextView) customLayout.findViewById(R.id.define_renewal);
+
+        EditText hour = (EditText) customLayout.findViewById(R.id.hour_renewal);
+        EditText minute = (EditText) customLayout.findViewById(R.id.minute_renewal);
+
+
+
+        alertDialog.setView(customLayout);
+        AlertDialog dialog = alertDialog.create();
+
+        define.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                hourminRenewal.setText(hour.getText().toString()+" : "+minute.getText().toString());
+
+                hourRenewal = Integer.parseInt(hour.getText().toString());
+                minuteRenewal= Integer.parseInt(minute.getText().toString());
+
+                dialog.dismiss();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
+            }
+        });
+
+
+        dialog.show();
+
+    }
+    private void getNumbermedForRenewaltime(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddMedicationActivity.this);
+        View customLayout = getLayoutInflater().inflate(R.layout.renewal_mednumber_time_layout, null);
+        TextView  cancel = (TextView) customLayout.findViewById(R.id.cancel_btn);
+        TextView define = (TextView) customLayout.findViewById(R.id.define_btn);
+
+        EditText number = (EditText) customLayout.findViewById(R.id.number_for_renewal);
+
+
+
+        alertDialog.setView(customLayout);
+        AlertDialog dialog = alertDialog.create();
+
+        define.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+
+                medNumber_forrenewaltime = Integer.parseInt(number.getText().toString());
+                timeTorenewal.setText("Lorsqu'il me reste "+ medNumber_forrenewaltime +" médicaments");
+                dialog.dismiss();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
+            }
+        });
+
+
+        dialog.show();
+
     }
 
 
