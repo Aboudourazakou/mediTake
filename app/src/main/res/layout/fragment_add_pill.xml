@@ -87,11 +87,15 @@
                 android:text="Categorie">
 
             </TextView>
-            <EditText
-                android:id="@+id/categoriePill"
+
+            <Spinner
                 android:layout_width="0dp"
+                android:layout_height="60dp"
                 android:layout_weight="1"
-                android:layout_height="60dp"/>
+                android:id="@+id/categoriePill"
+
+                />
+
 
         </LinearLayout>
         <LinearLayout
