@@ -1,5 +1,6 @@
 package com.example.meditake.adapters;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -8,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.meditake.JournalFragment;
+import com.example.meditake.R;
 import com.example.meditake.database.entities.Medicament;
 import com.example.meditake.database.entities.Rapport;
 import com.example.meditake.databinding.RapportItemViewBinding;
@@ -29,9 +32,11 @@ import java.util.Locale;
  */
 public class RapportAdapter extends RecyclerView.Adapter<RapportAdapter.rapportHolder> {
     List<Rapport> rapportList =new ArrayList<>();
+    Context context = null;
 
     public RapportAdapter(List<Rapport> rapports, JournalFragment journalFragment){
         rapportList = rapports;
+        context = journalFragment.getContext();
     }
 
     @NonNull
@@ -57,6 +62,17 @@ public class RapportAdapter extends RecyclerView.Adapter<RapportAdapter.rapportH
 
         holder.binding.date.setText(new SimpleDateFormat("EEE d MMM", Locale.FRANCE).format(rapport.getDate()));
 
+        int color = 0;
+        String status = rapport.getStatut();
+
+        if (status.equals("pris")){
+            color = ContextCompat.getColor(context,R.color.green_medi);
+
+        }else if (status.equals("manque")){
+            color = ContextCompat.getColor(context,R.color.app_red_color);
+        }
+
+        holder.binding.status.setTextColor(color);
         holder.binding.status.setText("Status : "+rapport.getStatut());
     }
 
