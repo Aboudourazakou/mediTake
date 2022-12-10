@@ -1,5 +1,7 @@
 package com.example.meditake;
 
+import static android.content.ContentValues.TAG;
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
@@ -14,18 +16,27 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.meditake.database.AppDatabase;
+import com.example.meditake.database.dao.CategorieMedicamentDao;
 import com.example.meditake.database.dao.MedicamentDao;
+import com.example.meditake.database.entities.CategorieMedicament;
 import com.example.meditake.database.entities.Medicament;
 import com.example.meditake.databinding.FragmentAddPillBinding;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,6 +58,8 @@ public class AddPill extends Fragment {
     private String mParam1;
     private String mParam2;
     FragmentAddPillBinding binding;
+    AppDatabase db;
+    Long idCategorie;
     public AddPill() {
         // Required empty public constructor
     }
@@ -76,6 +89,8 @@ public class AddPill extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
@@ -99,18 +114,48 @@ public class AddPill extends Fragment {
             }
         });
 
+        db=AppDatabase.getDataBase(getContext().getApplicationContext());
+        CategorieMedicamentDao categorieMedicamentDao = db.categorieMedicamentDao();
 
+        List<CategorieMedicament> list = categorieMedicamentDao.getAll();
+
+        Log.e("tag",list.toString());
+        Toast.makeText(getContext(), list.toString(), Toast.LENGTH_SHORT).show();
+        ArrayList<String> categoriesName = new ArrayList<>();
+        for (CategorieMedicament c:list
+        ) {
+            categoriesName.add(c.getLibelle());
+        }
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,categoriesName);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        binding.categoriePill.setAdapter(dataAdapter);
 
 
         binding.savePill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppDatabase db=AppDatabase.getDataBase(getContext().getApplicationContext());
+               // AppDatabase db=AppDatabase.getDataBase(getContext().getApplicationContext());
                 MedicamentDao medicamentDao = db.medicamentDao();
+
                 Medicament medicament=new Medicament();
                 int qte=Integer.valueOf(binding.qtePill.getText().toString());
                 medicament.setQte(qte);
-                medicament.setCategorieId(1);
+
+                binding.categoriePill.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                        idCategorie = list.get(i).getId();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+                medicament.setCategorieId(idCategorie);
 
                 medicament.setNom(binding.nommMed.getText().toString());
 
