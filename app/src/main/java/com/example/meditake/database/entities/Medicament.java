@@ -19,7 +19,6 @@ public class Medicament {
     private byte[] image;
 
 
-
     public Medicament() {
     }
 

@@ -42,9 +42,14 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
             android:name=".HomeActivity"
             android:exported="false"
+
+
+        <activity android:name=".HomeActivity"
+            android:exported="true"
             android:theme="@style/AppTheme.fullscreen">
 
 

@@ -1,5 +1,6 @@
 package com.example.meditake.services;
 
+import com.example.meditake.database.dto.MailObject;
 import com.example.meditake.database.dto.RapportDto;
 
 import java.util.List;
@@ -15,6 +16,6 @@ import retrofit2.http.POST;
 public interface RapportService {
 
     @POST("rapport/sendMail")
-    Call<Void> sendReportToMail(@Body List<RapportDto> rapports);
+    Call<Void> sendReportToMail(@Body MailObject mail);
 
 }

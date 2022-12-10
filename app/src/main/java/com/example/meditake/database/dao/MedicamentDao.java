@@ -8,31 +8,30 @@ import androidx.room.Update;
 
 import com.example.meditake.database.entities.Medicament;
 
-import java.util.Collection;
 import java.util.List;
 
 @Dao
 public interface MedicamentDao {
      @Query("Select * from Medicament")
-     List<com.example.meditake.database.entities.Medicament> getAll();
+     List<Medicament> getAll();
 
     @Query("Select * from Medicament where id = :id")
-    com.example.meditake.database.entities.Medicament getById(long id);
+    Medicament getById(long id);
 
     @Query("SELECT * FROM Medicament WHERE id IN (:userIds)")
-    List<com.example.meditake.database.entities.Medicament> loadAllByIds(int[] userIds);
+    List<Medicament> loadAllByIds(int[] userIds);
 
     @Insert
-    void insertAll(com.example.meditake.database.entities.Medicament...medicaments);
+    void insertAll(Medicament...medicaments);
 
     @Insert
-    long insert(com.example.meditake.database.entities.Medicament medicament);
+    long insert(Medicament medicament);
 
     @Delete
-    void delete(com.example.meditake.database.entities.Medicament medicament);
+    void delete(Medicament medicament);
 
     @Update
-    void update(com.example.meditake.database.entities.Medicament medicament);
+    void update(Medicament medicament);
 
     @Query("select * from medicament where nom LIKE '%'+:nom+'%'")
     List<Medicament> getByNom(String nom);

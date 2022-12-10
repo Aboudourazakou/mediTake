@@ -86,6 +86,11 @@ public class AddMedicationActivity extends AppCompatActivity {
     int duration;
 
 
+    /* Configuration de la recherche de medicament */
+    ListView medicamentListview;
+    AppDatabase db = null;
+    Medicament medicamentSelectione = null;
+    // Fin config
 
     @SuppressLint({"MissingInflatedId", "RestrictedApi"})
     @Override
@@ -196,6 +201,28 @@ public class AddMedicationActivity extends AppCompatActivity {
                     btnNext.setBackgroundColor(Color.LTGRAY);
                 }
                 else{
+
+                    medicamentListview.setVisibility(View.VISIBLE);
+
+                    medicamentPropositionList.clear();
+                    List<Medicament> medicaments = medicamentDao.getAll();
+                    medicamentPropositionList.addAll(medicaments.stream()
+                            .filter(m->m.getNom().toLowerCase().contains(medName.getText().toString().trim().toLowerCase()))
+                            .collect(Collectors.toList()));
+
+                    medicamentPropositionListviewAdapter.notifyDataSetChanged();
+
+
+                    medicamentListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            medicamentSelectione = (Medicament) medicamentPropositionListviewAdapter.getItem(i);
+                            medName.setText(medicamentSelectione.getNom());
+
+                            medicamentListview.setVisibility(View.INVISIBLE);
+                        }
+                    });
+
                     btnNext.setEnabled(true);
                     btnNext.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.round_element, null));}
 
@@ -500,8 +527,6 @@ public class AddMedicationActivity extends AppCompatActivity {
         ImageButton decrement = (ImageButton) customLayout.findViewById(R.id.decrement_number);
         EditText hour = (EditText) customLayout.findViewById(R.id.hour);
         EditText minute = (EditText) customLayout.findViewById(R.id.minute);
-
-
 
         ArrayList<String> listTypeMed = new ArrayList<String>();
         listTypeMed.addAll(Arrays.asList(new String[]{"Pillule(s)", "Ampoule(s)", "Flacon(s)","mL","cartouches"}));
@@ -847,7 +872,6 @@ public class AddMedicationActivity extends AppCompatActivity {
     private void saveData() {
         AppDatabase db = AppDatabase.getDataBase(getApplicationContext());
 
-
         int heure = hourValue;
 
         int minutes = minValue;
@@ -856,19 +880,15 @@ public class AddMedicationActivity extends AppCompatActivity {
 
         String jours = daysChosen;
 
-
         ProgrammeDao programmeDao = db.programmeDao();
         Programme p = new Programme(heure,minutes,duree,jours,1);
         long idPro = programmeDao.insert(p);
 
-        List<Programme> list = new ArrayList<>();
-        list = programmeDao.getAll();
+        List<Programme> list = programmeDao.getAll();
 
-        String nom = medName.getText().toString();
 
         RappelDao rappelDao = db.rappelDao();
         Rappel rap = new Rappel();
-
 
         rap.setMedicamentId(medicamentSelectione.getId());
         rap.setProgrammeId(idPro);
