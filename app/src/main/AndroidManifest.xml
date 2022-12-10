@@ -35,10 +35,9 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".HomeActivity"
-            android:theme="@style/AppTheme.fullscreen"/>
+
         <activity
-            android:name=".MainActivity"
+            android:name=".HomeActivity"
 
             android:exported="true"
             android:theme="@style/AppTheme.fullscreen" >

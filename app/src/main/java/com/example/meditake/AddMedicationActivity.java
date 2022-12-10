@@ -85,6 +85,7 @@ public class AddMedicationActivity extends AppCompatActivity {
     /* Configuration de la recherche de medicament */
     ListView medicamentListview;
     AppDatabase db = null;
+    Medicament medicamentSelectione = null;
     // Fin config
 
     @SuppressLint({"MissingInflatedId", "RestrictedApi"})
@@ -218,8 +219,8 @@ public class AddMedicationActivity extends AppCompatActivity {
                     medicamentListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            Medicament m = (Medicament) medicamentPropositionListviewAdapter.getItem(i);
-                            medName.setText(m.getNom());
+                            medicamentSelectione = (Medicament) medicamentPropositionListviewAdapter.getItem(i);
+                            medName.setText(medicamentSelectione.getNom());
 
                             medicamentListview.setVisibility(View.INVISIBLE);
                         }
@@ -456,8 +457,6 @@ public class AddMedicationActivity extends AppCompatActivity {
         EditText hour = (EditText) customLayout.findViewById(R.id.hour);
         EditText minute = (EditText) customLayout.findViewById(R.id.minute);
 
-
-
         ArrayList<String> listTypeMed = new ArrayList<String>();
         listTypeMed.addAll(Arrays.asList(new String[]{"Pillule(s)", "Ampoule(s)", "Flacon(s)","mL","cartouches"}));
         ArrayAdapter<String> myAdapter = new ArrayAdapter<>(AddMedicationActivity.this, android.R.layout.simple_spinner_item,listTypeMed);
@@ -664,9 +663,6 @@ public class AddMedicationActivity extends AppCompatActivity {
     private void saveData() {
         AppDatabase db = AppDatabase.getDataBase(getApplicationContext());
 
-        PatientDao patientDao = db.patientDao();
-        Patient pat = new Patient("prenom","nom","admin","monmdp");
-        patientDao.insert(pat);
         int heure = hourValue;
 
         int minutes = minValue;
@@ -675,34 +671,18 @@ public class AddMedicationActivity extends AppCompatActivity {
 
         String jours = daysChosen;
 
-        long idPatient = 1;
         ProgrammeDao programmeDao = db.programmeDao();
         Programme p = new Programme(heure,minutes,2,jours,1);
         long idPro = programmeDao.insert(p);
 
-        List<Programme> list = new ArrayList<>();
-        list = programmeDao.getAll();
-
-        String nom = medName.getText().toString();
-
-        CategorieMedicamentDao cat = db.categorieMedicamentDao();
-        CategorieMedicament c = new CategorieMedicament("Pillule");
-        cat.insert(c);
-
-        MedicamentDao medicament = db.medicamentDao();
-        com.example.meditake.database.entities.Medicament m = new Medicament(nom, new byte[]{},10,1);
-        long idmed = medicament.insert(m);
-
+        List<Programme> list = programmeDao.getAll();
 
         RappelDao rappelDao = db.rappelDao();
         Rappel rap = new Rappel();
 
-
-
-        rap.setMedicamentId(idmed);
+        rap.setMedicamentId(medicamentSelectione.getId());
         rap.setProgrammeId(idPro);
         Programme pro = programmeDao.getById(idPro);
-        com.example.meditake.database.entities.Medicament med = medicament.getById(idmed);
 
         rap.setHeure(pro.getHeure());
         rap.setMinutes(pro.getMinutes());
@@ -719,26 +699,5 @@ public class AddMedicationActivity extends AppCompatActivity {
 
 
     }
-
-    private void checkLogin(){
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREF_NAME,MODE_PRIVATE);
-                boolean hasLoggedIn = sharedPreferences.getBoolean("hasLoggedIn",false);
-                if(hasLoggedIn){
-                    Intent intent = new Intent(AddMedicationActivity.this,HomeActivity.class);
-                    startActivity(intent);
-                    finish();
-                }else{
-                    Intent intent = new Intent(AddMedicationActivity.this,LoginActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-            }
-        },1000);
-    }
-
 
 }
