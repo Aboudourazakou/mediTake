@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.meditake.adapters.RapportAdapter;
 import com.example.meditake.database.AppDatabase;
+import com.example.meditake.database.dto.MailObject;
 import com.example.meditake.database.dto.RapportDto;
 import com.example.meditake.database.entities.Medicament;
 import com.example.meditake.database.entities.Rappel;
@@ -63,6 +64,9 @@ public class JournalFragment extends Fragment {
             Medicament medicament = db.medicamentDao().getById(rappel.getMedicamentId());
             rappel.setMedicament(medicament);
 
+            Log.e("Rappel", "Rappel "+rappel);
+            Log.e("Medicament", "Medicament "+medicament);
+
             r.setRappel(rappel);
         });
 
@@ -87,7 +91,12 @@ public class JournalFragment extends Fragment {
                     rapportDto.setNomMedicament(r.getRappel().getMedicament().getNom());
                     rapportDtos.add(rapportDto);
                 });
-                rapportService.sendReportToMail(rapportDtos);
+
+                MailObject mail  = new MailObject();
+                mail.setToEmail("godwinkvg@gmail.com");
+                mail.setSubject("Rapport sur la prise de medicament");
+                mail.setRapports(rapportDtos);
+                rapportService.sendReportToMail(mail);
             }
         });
 

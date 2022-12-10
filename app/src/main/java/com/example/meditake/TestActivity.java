@@ -45,10 +45,6 @@ public class TestActivity extends AppCompatActivity {
 
     void test(){
 
-
-
-
-
         CategorieMedicamentDao typeMedicamentDao = db.categorieMedicamentDao();
 
         typeMedicamentDao.insertAll(new CategorieMedicament(1L,"pillule"));
@@ -72,8 +68,7 @@ public class TestActivity extends AppCompatActivity {
         byte[] imageInByte = stream.toByteArray();
         medicament.setImage(imageInByte);
 
-        medicamentDao.insertAll(
-                medicament,medicament);
+        medicamentDao.insertAll(medicament);
 
     }
 }
