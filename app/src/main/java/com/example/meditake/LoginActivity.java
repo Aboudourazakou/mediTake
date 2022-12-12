@@ -14,7 +14,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 
@@ -33,6 +36,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.meditake.adapters.IgnoreReasonAdapter;
+import com.example.meditake.database.AppDatabase;
+import com.example.meditake.database.dao.CategorieMedicamentDao;
+import com.example.meditake.database.dao.MedicamentDao;
+import com.example.meditake.database.entities.CategorieMedicament;
+import com.example.meditake.database.entities.Medicament;
 import com.example.meditake.database.entities.Programme;
 import com.example.meditake.database.entities.Utilisateur;
 import com.example.meditake.databinding.IgnoreMessageDialogBinding;
@@ -46,6 +54,7 @@ import com.example.meditake.services.UtilisateurService;
 
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -56,6 +65,7 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
 
 
+    AppDatabase db = null;
     EditText mail,password;
     TextView loginButton , forgetPassword;
     Map<String,String> comptes;
@@ -88,6 +98,7 @@ public class LoginActivity extends AppCompatActivity {
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
+        db = AppDatabase.getDataBase(LoginActivity.this);
 
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -135,6 +146,8 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("password",user.getMotDePasse());
                             editor.apply();
 
+                            addCategorieAndMedicamentToDB();
+
                             System.out.println("Apres connexion on la ceci est un mail "+user.getLogin() +" haha");
                             Intent myIntent = new Intent(LoginActivity.this,HomeActivity.class);
                             startActivity(myIntent);
@@ -143,6 +156,8 @@ public class LoginActivity extends AppCompatActivity {
 
                         }
                     }
+
+
 
                     @Override
                     public void onFailure(Call<Utilisateur> call, Throwable t) {
@@ -226,43 +241,35 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-    void httpCallToBackendService(){
-        UtilisateurService service = RetrofitGenerator.getRetrofit().create(UtilisateurService.class);
 
-        Call<Medecin> call = service.logMedecinIn(new UtilisateurLogin("username1","password1"));
+    void addCategorieAndMedicamentToDB(){
 
-        call.enqueue(new Callback<Medecin>() {
-            @Override
-            public void onResponse(Call<Medecin> call, Response<Medecin> response) {
-                int statusCode = response.code();
-                Medecin medecin = response.body();
+        CategorieMedicamentDao typeMedicamentDao = db.categorieMedicamentDao();
+        typeMedicamentDao.insertAll(new CategorieMedicament(1L,"pillule"), new CategorieMedicament(2L,"Goutes ophtalmiques"), new CategorieMedicament(3L,"injections"));
+        addMedicaments();
 
-                System.out.println(medecin);
-            }
-
-            @Override
-            public void onFailure(Call<Medecin> call, Throwable t) {
-                // Log error here since request failed
-
-                System.out.println(t.getMessage());
-            }
-        });
-
-        Call<List<Medecin>> medecinsCall = service.getAll();
-
-        medecinsCall.enqueue(new Callback<List<Medecin>>() {
-            @Override
-            public void onResponse(Call<List<Medecin>> call, Response<List<Medecin>> response) {
-                List<Medecin> medecins = response.body();
-
-                medecins.forEach(p-> Log.e("REQUETE",String.valueOf(p)));
-            }
-
-            @Override
-            public void onFailure(Call<List<Medecin>> call, Throwable t) {
-                System.out.println(t.getMessage());
-            }
-        });
     }
+
+    void addMedicaments(){
+
+        MedicamentDao medicamentDao = db.medicamentDao();
+        Medicament medicament=new Medicament();
+        medicament.setQte(34);
+        medicament.setCategorieId(1);
+        medicament.setNom("Paracetamol");
+
+        Drawable drawable=getResources().getDrawable(R.drawable.logo);
+        BitmapDrawable bitDw = ((BitmapDrawable) drawable);
+        Bitmap bitmap = bitDw.getBitmap();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] imageInByte = stream.toByteArray();
+        medicament.setImage(imageInByte);
+
+        medicamentDao.insertAll(medicament);
+
+    }
+
+
 }
 

@@ -8,6 +8,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -47,6 +49,8 @@ import com.example.meditake.databinding.RescheduleReminderDialogBinding;
 import com.example.meditake.viewmodels.HomeActivityViewModel;
 import com.example.meditake.viewmodels.HomeFragmentViewModel;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -234,6 +238,13 @@ public class HomeFragment extends Fragment {
         this.dialog.setContentView(dialogBinding.getRoot());
 
            if(rappel.getRapportList().size()>0) {
+
+               InputStream is = new ByteArrayInputStream(rappel.getMedicament().getImage());
+               Bitmap bmp = BitmapFactory.decodeStream(is);
+
+               dialogBinding.mediPicture.setImageBitmap(bmp);
+
+
                Rapport dernierRapport=rappel.getRapportList().get(rappel.getRapportList().size()-1);
                if (dernierRapport != null && dernierRapport.getStatut().equals("pris")) {
 
