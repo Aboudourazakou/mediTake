@@ -1,5 +1,7 @@
 package com.example.meditake.viewmodels;
 
+import android.app.PendingIntent;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -27,9 +29,11 @@ import java.util.concurrent.TimeUnit;
  */
 public class HomeFragmentViewModel  extends  HomeActivityViewModel{
     AppDatabase db;
+
     private List<Programme> programmeList=new ArrayList<>();
     HomeFragment homeFragment;
     private MutableLiveData<List<Programme>> programLiveData;
+
 
     public LiveData<List<Programme>> getAllPrograms(){
         if(programLiveData==null)programLiveData=new MutableLiveData<>();
@@ -37,8 +41,15 @@ public class HomeFragmentViewModel  extends  HomeActivityViewModel{
         return  programLiveData;
     }
     public void getProgramsFromRoomDb() {
+        //Cancel all intents
+        List<PendingIntent> pendingIntents= homeFragment.getPendingIntents();
+        for (PendingIntent intent:pendingIntents) {
+            intent.cancel();
+        }
 
         AppDatabase db = AppDatabase.getDataBase(homeFragment.getActivity().getApplicationContext());
+        //RapportDao rapportDao1=db.rapportDao();
+        //rapportDao1.deleteAll();
         ProgrammeDao programmeDao=db.programmeDao();
         List<Programme>programmes=programmeDao.getAll();
 
@@ -55,21 +66,31 @@ public class HomeFragmentViewModel  extends  HomeActivityViewModel{
 
                     RapportDao rapportDao=db.rapportDao();
                     Rappel rappel=rappelList.get(j);
+
                     MedicamentDao medicamentDao=db.medicamentDao();
                     rappel.setMedicament(medicamentDao.getById(rappel.getMedicamentId()));
                     List< Rapport >rapports=rapportDao.findRapportByIdRappel(rappel.getId());
                     rappel.setRapportList(rapports);
-
-                  if(!isAlarmExpired(rappel.getHeure(),rappel.getMinutes())){
-                      homeFragment.createAlarm(rappel.getHeure(),rappel.getMinutes(),j+1);
-                  }
+                    Rapport dernierRapport=rapports.get(rapports.size()-1);
+                    if(dernierRapport!=null ){
+                          if(!dernierRapport.getStatut().equals("ignore")){
+                              if (!isAlarmExpired(rappel.getHeure(), rappel.getMinutes())) {
+                                  homeFragment.createAlarm(rappel.getHeure(), rappel.getMinutes(), Math.toIntExact(rappel.getId() + rappel.getMinutes() + rappel.getHeure()));
+                              }
+                          }
+                    }
+                    else {
+                        if (!isAlarmExpired(rappel.getHeure(), rappel.getMinutes())) {
+                            homeFragment.createAlarm(rappel.getHeure(), rappel.getMinutes(), Math.toIntExact(rappel.getId() + rappel.getMinutes() + rappel.getHeure()));
+                        }
+                    }
 
 
 
                 }
                 programme.setRappelList(rappelList);
                if(!isAlarmExpired(programme.getHeure(),programme.getMinutes())){
-                   homeFragment.createAlarm(programme.getHeure(),programme.getMinutes(),i+100);
+                   homeFragment.createAlarm(programme.getHeure(),programme.getMinutes(),Math.toIntExact(programme.getId()));
                }
 
             }
@@ -136,15 +157,17 @@ public class HomeFragmentViewModel  extends  HomeActivityViewModel{
             if(calendar.getTimeInMillis()<new Date().getTime()- TimeUnit.MINUTES.toMillis(10) ){
                 List<Rapport>rapportList=rapportDao.findRapportByIdRappel(rappel.getId());
                 boolean isTaken=false;
+                boolean isAlreadyMissed=false;
                 for (Rapport rapport:rapportList){
-                    if(rapport.getStatut().equals("pris")){
+                    if(rapport.getStatut().equals("pris") ){
                         isTaken=true;
                         break;
                     }
-
-
+                    if(rapport.getStatut().equals("manque")){
+                        isAlreadyMissed=true;
+                    }
                 }
-                if(!isTaken){
+                if(!isTaken && !isAlreadyMissed){
                     Rapport rapport=new Rapport();
                     rapport.setIdRappel(rappel.getId());
                     rapport.setDate(new Date().getTime());
@@ -174,6 +197,5 @@ public class HomeFragmentViewModel  extends  HomeActivityViewModel{
           }
           programmeDao.delete(programme);
     }
-
 
 }

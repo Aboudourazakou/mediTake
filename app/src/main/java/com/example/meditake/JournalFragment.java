@@ -1,7 +1,11 @@
 package com.example.meditake;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,20 +14,34 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.meditake.adapters.RapportAdapter;
 import com.example.meditake.database.AppDatabase;
+import com.example.meditake.database.dao.MedicamentDao;
+import com.example.meditake.database.dao.RappelDao;
+import com.example.meditake.database.dao.RapportDao;
 import com.example.meditake.database.dto.MailObject;
 import com.example.meditake.database.dto.RapportDto;
+import com.example.meditake.database.dto.UtilisateurLogin;
 import com.example.meditake.database.entities.Medicament;
 import com.example.meditake.database.entities.Rappel;
 import com.example.meditake.database.entities.Rapport;
+import com.example.meditake.database.entities.Utilisateur;
 import com.example.meditake.databinding.FragmentJournalBinding;
 import com.example.meditake.services.RapportService;
 import com.example.meditake.services.RetrofitGenerator;
+import com.example.meditake.services.UtilisateurService;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -80,26 +98,82 @@ public class JournalFragment extends Fragment {
         binding.sendReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RapportService rapportService = RetrofitGenerator.getRetrofit().create(RapportService.class);
-                List<RapportDto> rapportDtos = new ArrayList<>();
+                AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
 
-                rapports.forEach(r->{
-                    RapportDto rapportDto= new RapportDto();
-                    rapportDto.setDate(r.getDate());
-                    rapportDto.setMessage(r.getMessage());
-                    rapportDto.setStatut(r.getStatut());
-                    rapportDto.setNomMedicament(r.getRappel().getMedicament().getNom());
-                    rapportDtos.add(rapportDto);
+                alertDialog.setIcon(R.drawable.no_internet);
+                LayoutInflater inflater = LayoutInflater.from(getContext());
+                View v = inflater.inflate(R.layout.mail_to_edittext, null);
+                TextView sendBtn=v.findViewById(R.id.sendBtn);
+                EditText emailEditText=v.findViewById(R.id.mailEdit);
+                sendBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String email=emailEditText.getText().toString();
+                        sendReports(email);
+                        alertDialog.cancel();
+                    }
                 });
+                alertDialog.setView(v);
+              alertDialog.show();
 
-                MailObject mail  = new MailObject();
-                mail.setToEmail("godwinkvg@gmail.com");
-                mail.setSubject("Rapport sur la prise de medicament");
-                mail.setRapports(rapportDtos);
-                rapportService.sendReportToMail(mail);
+
             }
         });
 
         return binding.getRoot();
+    }
+
+
+
+
+
+    public  void sendReports(String email){
+        AppDatabase db=AppDatabase.getDataBase(getActivity().getApplicationContext());
+        MailObject mail  = new MailObject();
+        mail.setToEmail(email);
+        mail.setSubject("Rapport sur la prise de medicament");
+        RapportDao rapportDao=db.rapportDao();
+        RappelDao rappelDao=db.rappelDao();
+        MedicamentDao medicamentDao=db.medicamentDao();
+
+
+         List<Rappel>rappelList=rappelDao.getAll();
+         List<RapportDto>rapportDtoList=new ArrayList<>();
+
+        for (Rappel rappel:rappelList) {
+            Medicament medicament=medicamentDao.getById(rappel.getMedicamentId());
+            List<Rapport>rapportList=rapportDao.findRapportByIdRappel(rappel.getId());
+            for (Rapport rapport:rapportList) {
+                RapportDto rapportDto=new RapportDto();
+                rapportDto.setNomMedicament(medicament.getNom());
+                rapportDto.setStatut(rapport.getStatut());
+                rapportDto.setDate(rapport.getDate());
+                rapportDto.setMessage(rapport.getMessage());
+                rapportDtoList.add(rapportDto);
+
+            }
+
+        }
+        mail.setRapports(rapportDtoList);
+
+        Call<Void> sendReportToMail = RetrofitGenerator
+                .getRetrofit()
+                .create(RapportService.class)
+                .sendReportToMail(mail);
+
+       sendReportToMail.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+
+
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+                System.out.println("Erreur : "+t.getMessage());
+            }
+        });
+
     }
 }

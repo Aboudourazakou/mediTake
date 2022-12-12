@@ -71,6 +71,13 @@ public class RapportAdapter extends RecyclerView.Adapter<RapportAdapter.rapportH
         }else if (status.equals("manque")){
             color = ContextCompat.getColor(context,R.color.app_red_color);
         }
+        else if (status.equals("reprogramme")){
+            color = ContextCompat.getColor(context,R.color.main_blue);
+        }
+        else if (status.equals("ignore")){
+            color = ContextCompat.getColor(context,R.color.black);
+        }
+
 
         holder.binding.status.setTextColor(color);
         holder.binding.status.setText("Status : "+rapport.getStatut());

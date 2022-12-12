@@ -2,10 +2,12 @@ package com.example.meditake;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.WindowManager;
 
 
@@ -19,13 +21,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         new Handler().postDelayed(()->{
-            SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREF_NAME,0);
 
-            boolean hasLoggedIn = sharedPreferences.getBoolean("hasLoggedIn",false);
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            String mail= sharedPreferences.getString("mail","");
 
- 
-            if(hasLoggedIn){
-
+            System.out.println(mail +"Ceci est un mail ");
+            if(!mail.equals("")){
 
                 Intent intent = new Intent(MainActivity.this,HomeActivity.class);
                 startActivity(intent);

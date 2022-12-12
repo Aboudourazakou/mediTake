@@ -1,5 +1,7 @@
 package com.example.meditake.adapters;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +48,13 @@ public class RappelAdapter extends RecyclerView.Adapter<RappelAdapter.medicament
     @Override
     public void onBindViewHolder(@NonNull medicamentViewHolder holder, int position) {
         Rappel rappel=rappelList.get(position);
+
         holder.binding.setRappel(rappel);
+
+        Bitmap bitmap = BitmapFactory.decodeByteArray(rappel.getMedicament().getImage(), 0, rappel.getMedicament().getImage().length);
+        holder.binding.mediPicture.setImageBitmap(bitmap);
+       // System.out.println(rappel.getMedicament().getImage() +"Ceci est le bitmap");
+
        if(rappel.getRapportList().size()>0){
            Rapport dernierRapport=rappel.getRapportList().get(rappel.getRapportList().size()-1);
         for (int i = 0; i <rappel.getRapportList().size() ; i++) {

@@ -26,7 +26,7 @@ import com.example.meditake.database.entities.Rapport;
 
 @Database(entities = {Medecin.class, Programme.class,
         Patient.class, Journal.class, Medicament.class,
-        Rappel.class, CategorieMedicament.class, Rapport.class}, version = 5)
+        Rappel.class, CategorieMedicament.class, Rapport.class}, version = 7)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract MedecinDao medecinDao();
     public abstract PatientDao patientDao();

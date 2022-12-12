@@ -46,10 +46,22 @@
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/reschedule_reminder_dialog.xml" value="0.1" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/layout/segment_medicament_home_list.xml" value="0.7333333333333334" />
         <entry key="..\:/Users/teter/AndroidStudioProjects/MediTake/app/src/main/res/menu/bottom_nav_menu.xml" value="0.103125" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/miniprojet/mediTake/app/src/main/res/drawable/round_element.xml" value="0.1" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/miniprojet/mediTake/app/src/main/res/drawable/round_green.xml" value="0.1" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/miniprojet/mediTake/app/src/main/res/layout/activity_code_input.xml" value="0.22" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/miniprojet/mediTake/app/src/main/res/layout/activity_new_password.xml" value="0.1" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/miniprojet/mediTake/app/src/main/res/layout/fragment_add_medicament.xml" value="0.1" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/miniprojet/mediTake/app/src/main/res/layout/fragment_add_pill.xml" value="0.1" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/miniprojet/mediTake/app/src/main/res/layout/fragment_journal.xml" value="0.1" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/miniprojet/mediTake/app/src/main/res/layout/incorrect_credentials_dialog.xml" value="0.1" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/miniprojet/mediTake/app/src/main/res/layout/mail_to_edittext.xml" value="0.1" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/miniprojet/mediTake/app/src/main/res/layout/medicament_item.xml" value="0.1" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/miniprojet/mediTake/app/src/main/res/layout/more_menu_item.xml" value="0.1" />
+        <entry key="..\:/Users/teter/AndroidStudioProjects/miniprojet/mediTake/app/src/main/res/layout/segment_medicament_home_list.xml" value="0.1" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_17_PREVIEW" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -31,4 +31,7 @@ public interface RapportDao {
 
     @Delete
     void delete(Rapport rapport);
+
+    @Query("delete from rapport")
+    void deleteAll();
 }

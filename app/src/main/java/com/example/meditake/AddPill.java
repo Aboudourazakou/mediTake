@@ -4,6 +4,8 @@ import static android.content.ContentValues.TAG;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -13,6 +15,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
@@ -33,9 +36,12 @@ import com.example.meditake.database.entities.Medicament;
 import com.example.meditake.databinding.FragmentAddPillBinding;
 
 import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 /**
@@ -60,6 +66,9 @@ public class AddPill extends Fragment {
     FragmentAddPillBinding binding;
     AppDatabase db;
     Long idCategorie;
+    Boolean isModification=false;
+    long idSelected=0;
+    ProgressDialog progressDialog;
     public AddPill() {
         // Required empty public constructor
     }
@@ -114,66 +123,116 @@ public class AddPill extends Fragment {
             }
         });
 
+
+
+
         db=AppDatabase.getDataBase(getContext().getApplicationContext());
+        MedicamentDao medicamentDao=db.medicamentDao();
+        //For update
+        if(HomeActivity.selectedMedicamentId>0){
+            Medicament medicament=medicamentDao.getById(HomeActivity.selectedMedicamentId);
+            idSelected=medicament.getId();
+            HomeActivity.selectedMedicamentId=-1000;
+            binding.qtePill.setText(medicament.getQte()+"");
+            binding.nommMed.setText(medicament.getNom()+"");
+            binding.seuilRenouvelement.setText(medicament.getMinQte()+"");
+            binding.minRappel.setText(medicament.getMin()+"");
+            binding.heureRappel.setText(medicament.getHeure()+"");
+            isModification=true;
+
+        }
+
         CategorieMedicamentDao categorieMedicamentDao = db.categorieMedicamentDao();
+        CategorieMedicament categorieMedicament=new CategorieMedicament();
+         //categorieMedicamentDao.insertAll(new CategorieMedicament("Flacon"),new CategorieMedicament("Pilule"));
+
 
         List<CategorieMedicament> list = categorieMedicamentDao.getAll();
 
-        Log.e("tag",list.toString());
-        Toast.makeText(getContext(), list.toString(), Toast.LENGTH_SHORT).show();
+
+
         ArrayList<String> categoriesName = new ArrayList<>();
         for (CategorieMedicament c:list
         ) {
             categoriesName.add(c.getLibelle());
         }
 
+        idCategorie=list.get(0).getId();
+
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,categoriesName);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         binding.categoriePill.setAdapter(dataAdapter);
 
+        binding.categoriePill.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
+                idCategorie = list.get(i).getId();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         binding.savePill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // AppDatabase db=AppDatabase.getDataBase(getContext().getApplicationContext());
+
+                AppDatabase db=AppDatabase.getDataBase(getContext().getApplicationContext());
                 MedicamentDao medicamentDao = db.medicamentDao();
 
                 Medicament medicament=new Medicament();
                 int qte=Integer.valueOf(binding.qtePill.getText().toString());
                 medicament.setQte(qte);
 
-                binding.categoriePill.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                        idCategorie = list.get(i).getId();
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-
-                    }
-                });
                 medicament.setCategorieId(idCategorie);
-
+                medicament.setCategorieId(idCategorie);
                 medicament.setNom(binding.nommMed.getText().toString());
+                medicament.setHeure(Integer.valueOf(binding.heureRappel.getText().toString()));
+                medicament.setMin(Integer.valueOf(binding.minRappel.getText().toString()));
+                medicament.setMinQte(Integer.valueOf(binding.seuilRenouvelement.getText().toString()));
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 cameraBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
                 byte[] imageInByte = stream.toByteArray();
                 medicament.setImage(imageInByte);
+                binding.heureRappel.setText("");
+                binding.minRappel.setText("");
+                binding.seuilRenouvelement.setText("");
+                binding.qtePill.setText("");
 
 
-                if(  medicamentDao.insert(
-                        medicament)>0){
-                    binding.insertionMessage.setVisibility(View.VISIBLE);
-                    binding.codeBar.setText("");
-                    binding.nommMed.setText("");
-                    binding.qtePill.setText("");
-                    binding.uploadedPicture.setVisibility(View.GONE);
+                if(isModification){
+                     medicament.setId(idSelected);
+                    if( medicamentDao.update(medicament)>0){
 
+                        binding.insertionMessage.setVisibility(View.VISIBLE);
+                        binding.nommMed.setText("");
+                        binding.qtePill.setText("");
+                        binding.uploadedPicture.setVisibility(View.GONE);
+                        medicament.setDernierRenouvelement(new SimpleDateFormat("EEE d MMM", Locale.FRANCE).format(new Date().getTime()));
+                        isModification=false;
+
+                    }
+
+                }else{
+                    if( medicamentDao.insert(
+                            medicament)>0){
+                        binding.insertionMessage.setVisibility(View.VISIBLE);
+
+                        binding.nommMed.setText("");
+                        binding.qtePill.setText("");
+                        binding.uploadedPicture.setVisibility(View.GONE);
+                        showDialog("ENREGISTREMENT MEDICAMENT","Medicament sauvegarde avec succes");
+
+                    }
                 }
+
+
+
             }
         });
         return   binding.getRoot();
@@ -209,5 +268,15 @@ public class AddPill extends Fragment {
                 Toast.makeText(getContext(), "camera permission denied", Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    public  void showDialog(String title,String message){
+        AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+        alertDialog.setTitle(title);
+        alertDialog.setIcon(R.drawable.no_internet);
+        alertDialog.setMessage(message);
+
+
+        alertDialog.show();
     }
 }

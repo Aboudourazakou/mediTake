@@ -7,6 +7,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,14 +16,13 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,17 +34,11 @@ import android.widget.EditText;
 import com.example.meditake.adapters.DaysAdapter;
 import com.example.meditake.adapters.IgnoreReasonAdapter;
 import com.example.meditake.adapters.ProgrammeAdapter;
-import com.example.meditake.alarm.AlarmReceiver;
-import com.example.meditake.database.AppDatabase;
-import com.example.meditake.database.dao.ProgrammeDao;
+import com.example.meditake.alarm.RappelPriseMedicamentReceiver;
 import com.example.meditake.database.entities.Medicament;
 import com.example.meditake.database.entities.Programme;
-import com.example.meditake.database.entities.ProgrammeWithRappel;
-import com.example.meditake.database.entities.ProgrammeWithRappelWithRapportAndMedicament;
 import com.example.meditake.database.entities.Rappel;
-import com.example.meditake.database.entities.RappelWithRapportAndMedicament;
 import com.example.meditake.database.entities.Rapport;
-import com.example.meditake.databinding.ActivityHomeBinding;
 import com.example.meditake.databinding.FragmentHomeBinding;
 import com.example.meditake.databinding.IgnoreMessageDialogBinding;
 import com.example.meditake.databinding.RappelClickDialogBinding;
@@ -134,10 +128,13 @@ public class HomeFragment extends Fragment {
                 inflater, R.layout.fragment_home, container, false);
         View view=binding.getRoot();
         cancelAlarm();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+        binding.patientName.setText(sharedPreferences.getString("nom","")+" "+sharedPreferences.getString("prenom",""));
         init();
         homeFragmentViewModel= new ViewModelProvider(this).get(HomeFragmentViewModel.class);
        homeFragmentViewModel.setHomeFragment(this);
        homeFragmentViewModel.getUpdateMissedPills();
+
 
        homeFragmentViewModel.getAllPrograms().observe(getViewLifecycleOwner(), new Observer<List<Programme>>() {
             @Override
@@ -157,7 +154,7 @@ public class HomeFragment extends Fragment {
     public void createAlarm(int hour,int minutes,int requestCode) {
 
         alarmManager=(AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-        Intent intent=new Intent(getContext(), AlarmReceiver.class);
+        Intent intent=new Intent(getContext(), RappelPriseMedicamentReceiver.class);
         // context variable contains your `Context`
         AlarmManager mgrAlarm = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
 
@@ -167,16 +164,15 @@ public class HomeFragment extends Fragment {
         calendar.set(Calendar.MINUTE,minutes);
         calendar.set(Calendar.SECOND,0);
         calendar.set(Calendar.MILLISECOND,0);
-        //alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
 
-            // Loop counter `i` is used as a `requestCode`
             PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), requestCode, intent, 0);
-            // Single alarms in 1, 2, ..., 10 minutes (in `i` minutes)
+
             mgrAlarm.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,
                     calendar.getTimeInMillis(),
                     pendingIntent);
 
             intentArray.add(pendingIntent);
+
 
 
 
@@ -197,8 +193,10 @@ public class HomeFragment extends Fragment {
 
 
     }
+
+
     private void cancelAlarm(){
-        Intent intent=new Intent(getContext(),AlarmReceiver.class);
+        Intent intent=new Intent(getContext(), RappelPriseMedicamentReceiver.class);
         pendingIntent=PendingIntent.getBroadcast(getContext(),0,intent,0);
         if(alarmManager==null){
             alarmManager= (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
@@ -504,6 +502,7 @@ public class HomeFragment extends Fragment {
                 rapport.setMessage("La pilule a ete reprogramme pour " +rappel.getHeure()+":"+rappel.getMinutes());
                 homeFragmentViewModel.saveRapport(rapport);
                 homeFragmentViewModel.updateRappel(rappel);
+                homeFragmentViewModel.getProgramsFromRoomDb();
 
                 dialog2.cancel();
 
@@ -535,10 +534,9 @@ public class HomeFragment extends Fragment {
             String d= new SimpleDateFormat("EEE d MMM", Locale.FRANCE).format(calendar.getTime());
             daysAfter.put(d,"ici");
 
-
-
             if(i==0) {
                 fullSelectedDay=d;
+                binding.day.setText(d);
                 String[] arr = d.split(" ");
                 selectedDay = arr[0].substring(0,3);
 
@@ -608,6 +606,11 @@ public class HomeFragment extends Fragment {
         fullSelectedDay=d;
     }
     public  String getFullSelectedDay(){return  fullSelectedDay;}
+
+
+    public  List<PendingIntent> getPendingIntents(){
+        return  intentArray;
+    }
 
 
 }

@@ -28,5 +28,7 @@ public interface UtilisateurService {
 
     @GET("utilisateur/verifymail/{mail}")
     Call<String> verifyMail(@Path("mail") String mail);
+    @GET("utilisateur/changepassword/{mail}/{password}")
+    Call<String> changePassword(@Path("mail") String mail,@Path("password") String password);
 
 }

@@ -15,9 +15,6 @@
         android:background="@color/coton"
 
         >
-
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -34,7 +31,6 @@
                 android:id="@+id/close_btn"
                 android:src="@drawable/ic_baseline_clear_24"
                 android:backgroundTint="@color/main_blue"
-                app:tint="@color/white"
                 />
             <TextView
                 android:layout_width="0dp"
@@ -46,16 +42,6 @@
                 android:textStyle="bold"
                 />
 
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnbar_save"
-                android:layout_weight="3"
-                android:text="Effectué"
-                android:backgroundTint="@color/main_blue"
-                android:textColor="@color/white"
-                android:visibility="gone"
-                />
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
@@ -93,6 +79,16 @@
                     android:backgroundTint="@color/main_blue"
 
                     />
+
+                <ListView
+                    android:layout_height="wrap_content"
+                    android:minHeight="100dp"
+                    android:id="@+id/medicamentListview"
+                    android:visibility="invisible"
+                    android:scrollbars="none"
+                    android:layout_width="match_parent"
+                    android:divider="@null"
+                    />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
@@ -121,89 +117,40 @@
                     android:background="@color/cardview_light_background"
                     android:padding="8dp">
 
-                    <LinearLayout
+
+
+                    <Spinner
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
+                        android:id="@+id/spinner_frequence"
                         android:layout_marginBottom="10dp"
+                        android:layout_gravity="start"
+                        />
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/med_hour_and_number"
                         android:orientation="horizontal">
-
-
-
-                        <Switch
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/switch_hour_alert"
-                            android:layout_gravity="end"
-                            android:checked="true"
-                            android:theme="@style/SwitchCompatTheme"
-                            android:text="Heures de rappel"
-                            android:textColor="@color/main_blue"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:id="@+id/med_without_alert"
-                        android:padding="8dp"
-                        android:visibility="gone">
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textSize="13sp"
-                            android:text="Prendre au besoin"
+                            android:layout_weight="1"
+                            android:id="@+id/alert_hour"
+                            android:text="08:00"
+                            android:textColor="@color/main_blue"
+                            />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:id="@+id/number_medication"
+                            android:text="Prendre 1"
+                            android:gravity="end"
+                            android:textColor="@color/main_blue"
                             />
 
                     </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:id="@+id/med_with_alert">
-
-                        <Spinner
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/spinner_frequence"
-                            android:layout_marginBottom="10dp"
-                            android:layout_gravity="start"
-                            />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/med_hour_and_number"
-                            android:orientation="horizontal">
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:id="@+id/alert_hour"
-                                android:text="08:00"
-                                android:textColor="@color/main_blue"
-                                />
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:id="@+id/number_medication"
-                                android:text="Prendre 1"
-                                android:gravity="end"
-                                android:textColor="@color/main_blue"
-                                />
-
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -215,8 +162,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:id="@+id/program_form">
+                android:layout_marginBottom="20dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -229,7 +175,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Programme"
-                        android:id="@+id/programm_txtview"
+                        android:id="@+id/programme"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:textColor="@color/main_blue"
@@ -237,37 +183,6 @@
                         />
 
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:orientation="horizontal"
-                        android:id="@+id/date_begin_llayout">
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Date de début"
-                            android:textColor="@color/black"
-                            android:textSize="13sp"
-                            />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:id="@+id/date_begin"
-                            android:text=""
-                            android:textColor="@color/main_blue"
-                            />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="20px"
-                        android:outlineSpotShadowColor="@color/black"
-                        android:layout_marginBottom="8dp"
-                        />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -287,19 +202,17 @@
                         <RadioGroup
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/rd_group_duration">
+                            android:id="@+id/rd_group_duree">
 
                             <RadioButton
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Traitement en cours"
-                                android:id="@+id/duration_no_specified"
                                 android:textSize="13sp"/>
                             <RadioButton
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="13sp"
-                                android:id="@+id/days_number"
                                 android:text="nombre de jours"/>
                         </RadioGroup>
 
@@ -355,27 +268,6 @@
             </androidx.cardview.widget.CardView>
 
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:visibility="gone"
-                android:id="@+id/cardview_icon_med">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Icone du médicament"
-                    android:id="@+id/icon_med"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/main_blue"
-                    android:layout_marginBottom="10dp"
-                    />
-
-
-            </androidx.cardview.widget.CardView>
-
             <Button
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
@@ -406,31 +298,29 @@
 
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/buttons"
             android:orientation="horizontal"
-            android:padding="12dp"
             android:visibility="gone"
-
             >
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="2"
                 android:layout_height="wrap_content"
                 android:id="@+id/other_option"
                 android:text="Plus d'options"
-                android:layout_marginHorizontal="24dp"
-                android:padding="12dp"
+                android:layout_marginRight="8dp"
                 android:layout_marginTop="20sp"
                 android:backgroundTint="@color/granite"
                 android:textColor="@color/white"
                 />
             <Button
-                android:layout_width="140dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:id="@+id/btn_save_first"
-                android:padding="16dp"
                 android:text="Effectué"
                 android:background="@drawable/round_element"
                 android:layout_marginTop="20sp"
@@ -569,6 +459,7 @@
                                 android:text="Apres avoir mangé"/>
 
                             <RadioButton
+                                android:checked="true"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/anyway"
@@ -583,124 +474,13 @@
                             android:layout_marginBottom="8dp"
                             />
 
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/other_instruction"
-                            android:hint="D'autres instructions?"
-                            android:singleLine="true"
-                            android:backgroundTint="@color/main_blue"
-
-                            />
 
                     </LinearLayout>
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="4dp"
-                    >
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Renouvellement d'ordonnance"
-                        android:id="@+id/update"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/main_blue"
-                        android:layout_marginBottom="10dp"
-                        />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Indiquez le nombre de médicaments que vous avez actuellement pour recevoir un rappel de renouvellemetn"
-                        android:id="@+id/update_text"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="14dp"
-                        />
-
-
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/number_medication_to_add"
-                            android:hint="Nombre de médicaments"
-                            android:layout_marginBottom="8dp"
-
-
-                            />
-
-
-
-                            <Switch
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/switch_renouvellement_alert"
-                                android:layout_gravity="end"
-                                android:checked="false"
-                                android:theme="@style/SwitchCompatTheme"
-                                android:text="Rappel de renouvellement"
-                                android:textSize="13sp"
-
-                                />
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/renewal_info"
-                                android:orientation="vertical"
-                                android:visibility="gone"
-                                >
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:id="@+id/txtview_med_number_renewal"
-                                    android:text="Lorsqu'il me reste 20 médicaments"
-                                    android:textColor="@color/main_blue"
-                                    android:textSize="13sp"
-                                    android:layout_marginBottom="10dp"
-                                    />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="A quelle heure?"
-                                    android:textSize="13sp"
-                                    android:textColor="@color/black"
-                                    android:layout_marginBottom="10dp"
-                                    />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:id="@+id/hourmin_renewal"
-                                    android:textColor="@color/main_blue"
-                                    android:text="11:00"
-                                    android:textSize="13sp"
-                                    />
-
-
-                            </LinearLayout>
-
-
-
-
-                    </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
 
             <Button
                 android:layout_width="300dp"

@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil;
 import android.annotation.SuppressLint;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 
 import android.content.DialogInterface;
@@ -17,6 +18,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 
+import android.preference.PreferenceManager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +33,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.meditake.adapters.IgnoreReasonAdapter;
+import com.example.meditake.database.entities.Programme;
 import com.example.meditake.database.entities.Utilisateur;
 import com.example.meditake.databinding.IgnoreMessageDialogBinding;
 import com.example.meditake.databinding.InternetUnavalaibleDialogBinding;
@@ -60,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
     Dialog internetDialog;
     public static  LoginActivity INSTANCE;
     CircularProgressIndicator mCircularProgressIndicator;
+    ProgressDialog progressDialog;
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -82,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
         forgetPassword = findViewById(R.id.forgetPasswordBtn);
         mCircularProgressIndicator = findViewById(R.id.circular_indicator);
 
-        sharedPreferences = getSharedPreferences(this.SHARED_PREF_NAME, MODE_PRIVATE);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
 
 
@@ -90,7 +94,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
               //  showIsLoggingDialog();
-                System.out.println("qyoi?");
+                progressDialog = ProgressDialog.show(LoginActivity.this, "",
+                        "Veuillez patienter s'il vous plait...", true);
+
                 String username = mail.getText().toString();
                 String pwd = password.getText().toString();
 
@@ -103,12 +109,33 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Utilisateur> call, Response<Utilisateur> response) {
                         Utilisateur user = response.body();
+                        progressDialog.cancel();
                         System.out.println();
                         if (user==null){
-                            showLogginIncorrectDialog();
+                            AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
+                            alertDialog.setTitle("IDENTIFIANTS INCORRECTS");
+                            alertDialog.setIcon(R.drawable.no_internet);
+                            alertDialog.setMessage("Veuillez corriger vos identifiants.Puis reessayer.");
+                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            dialogInterface.dismiss();
+                                        }
+                                    });
+
+                            alertDialog.show();
                         }else {
 
-                            sharedPreferences.edit().putString(KEY_PHONE,username).putString(KEY_PASSWORD,pwd).putBoolean("hasLoggedIn",true);
+                            SharedPreferences.Editor editor=sharedPreferences.edit();
+                            editor.clear();
+                            editor.putString("mail",user.getLogin());
+                            editor.putString("nom",user.getNom());
+                            editor.putString("prenom",user.getPrenom());
+                            editor.putString("password",user.getMotDePasse());
+                            editor.apply();
+
+                            System.out.println("Apres connexion on la ceci est un mail "+user.getLogin() +" haha");
                             Intent myIntent = new Intent(LoginActivity.this,HomeActivity.class);
                             startActivity(myIntent);
                             finish();
@@ -119,6 +146,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<Utilisateur> call, Throwable t) {
+                        progressDialog.cancel();
                         System.out.println("Erreur : "+t.getMessage());
                     }
                 });
@@ -139,30 +167,20 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void showDialog() {
-        dialog = new Dialog(LoginActivity.this, android.R.style.Theme_Light_NoTitleBar_Fullscreen);
-        //We have added a title in the custom layout. So let's disable the default title.
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //The user will be able to cancel the dialog bu clicking anywhere outside the dialog.
-        dialog.setCancelable(true);
-        internetDialog=dialog;
+        AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
+        alertDialog.setTitle("PAS D'INTERNET");
+        alertDialog.setIcon(R.drawable.no_internet);
+        alertDialog.setMessage("Veuillez verifier si vous etes connecte a internet!");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
 
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        //Mention the name of the layout of your custom dialog.
-        dialog.setContentView(R.layout.internet_unavalaible_dialog);
-        Button btn=dialog.findViewById(R.id.skippDialogButtonPhoneIncorrect);
-
-
-
-
-        btn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                cancelDialog();
-            }
-        });
-        dialog.show();
-            }
+        alertDialog.show();
+    }
 
 
     @Override
@@ -185,27 +203,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-    public  void  showLogginIncorrectDialog() {
-            dialog = new Dialog(LoginActivity.this, android.R.style.Theme_Light_NoTitleBar_Fullscreen);
-            //We have added a title in the custom layout. So let's disable the default title.
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            //The user will be able to cancel the dialog bu clicking anywhere outside the dialog.
-            dialog.setCancelable(true);
 
-
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-            //Mention the name of the layout of your custom dialog.
-            dialog.setContentView(R.layout.incorrect_credentials_dialog);
-            Button btn = dialog.findViewById(R.id.skippDialogButtonPhoneIncorrect);
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.cancel();
-                }
-            });
-            dialog.show();
-
-        }
 
     public  void showIsLoggingDialog(){
         dialog = new Dialog(LoginActivity.this, android.R.style.Theme_Light_NoTitleBar_Fullscreen);

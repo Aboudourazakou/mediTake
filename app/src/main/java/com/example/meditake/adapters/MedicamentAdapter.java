@@ -1,5 +1,10 @@
 package com.example.meditake.adapters;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,7 +12,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.meditake.AddMedicamentFragment;
+import com.example.meditake.AddMedicamentFragmentToRappel;
+import com.example.meditake.AddPill;
+import com.example.meditake.HomeActivity;
 import com.example.meditake.database.entities.Medicament;
 import com.example.meditake.databinding.MedicamentItemBinding;
 
@@ -20,8 +27,11 @@ import java.util.List;
  */
 public class MedicamentAdapter  extends RecyclerView.Adapter<MedicamentAdapter.medicamentHolder> {
     List<Medicament> medicamentList=new ArrayList<>();
+    AddMedicamentFragmentToRappel context;
 
-    public MedicamentAdapter(List<Medicament> medicamentList, AddMedicamentFragment addMedicamentFragment) {
+
+    public MedicamentAdapter(List<Medicament> medicamentList, AddMedicamentFragmentToRappel addMedicamentFragmentToRappel) {
+        this.context=addMedicamentFragmentToRappel;
         this.medicamentList=medicamentList;
     }
 
@@ -36,9 +46,16 @@ public class MedicamentAdapter  extends RecyclerView.Adapter<MedicamentAdapter.m
 
     @Override
     public void onBindViewHolder(@NonNull medicamentHolder holder, int position) {
-        System.out.println("ON AFFICHE TOUT");
-             Medicament medicament=medicamentList.get(position);
-             holder.binding.setMedicament(medicament);
+
+        Medicament medicament=medicamentList.get(position);
+
+
+        Bitmap bitmap = BitmapFactory.decodeByteArray(medicament.getImage(), 0,medicament.getImage().length);
+
+       holder.binding.setMedicament(medicament);
+
+        System.out.println(medicament.getQte()+" Ceci est bien sur la quantite "+medicament.getMinQte());
+        holder.binding.iconPill.setImageBitmap(bitmap);
     }
 
     @Override
@@ -51,6 +68,24 @@ public class MedicamentAdapter  extends RecyclerView.Adapter<MedicamentAdapter.m
         public medicamentHolder(@NonNull MedicamentItemBinding binding) {
             super(binding.getRoot());
             this.binding=binding;
+
+            binding.update.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    HomeActivity.selectedMedicamentId=medicamentList.get(getAdapterPosition()).getId();
+                   HomeActivity.homeActivity.replaceFragment(new AddPill());
+                }
+            });
+
+            binding.enableAlarm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    System.out.println("Alarme creeee");
+                        Medicament medicament=medicamentList.get(getAdapterPosition());
+                      context.createAlarm(0,0,37,Math.toIntExact(medicament.getId()+90));
+                }
+            });
         }
     }
 }

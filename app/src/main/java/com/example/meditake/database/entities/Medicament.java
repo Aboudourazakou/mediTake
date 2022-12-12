@@ -3,6 +3,7 @@ package com.example.meditake.database.entities;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(foreignKeys = @ForeignKey(entity=CategorieMedicament.class, parentColumns="id", childColumns="categorieId"))
@@ -13,7 +14,46 @@ public class Medicament {
     private String nom;
     private int qte;
 
+    private  String dernierRenouvelement;
+
+    private  int heure;
+    private  int min;
+    private  int minQte;
+
+
     private long categorieId;
+
+    public String getDernierRenouvelement() {
+        return dernierRenouvelement;
+    }
+
+    public void setDernierRenouvelement(String dernierRenouvelement) {
+        this.dernierRenouvelement = dernierRenouvelement;
+    }
+
+    public int getHeure() {
+        return heure;
+    }
+
+    public void setHeure(int heure) {
+        this.heure = heure;
+    }
+
+    public int getMin() {
+        return min;
+    }
+
+    public void setMin(int min) {
+        this.min = min;
+    }
+
+    public int getMinQte() {
+        return minQte;
+    }
+
+    public void setMinQte(int minQte) {
+        this.minQte = minQte;
+    }
 
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
     private byte[] image;
