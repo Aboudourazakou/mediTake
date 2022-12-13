@@ -1,10 +1,7 @@
 package com.example.meditake.adapters;
 
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +9,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.meditake.AddMedicamentFragmentToRappel;
-import com.example.meditake.AddPill;
-import com.example.meditake.HomeActivity;
+import com.example.meditake.fragment.AddMedicamentFragmentToRappel;
+import com.example.meditake.fragment.AddPill;
+import com.example.meditake.ui.HomeActivity;
 import com.example.meditake.database.entities.Medicament;
 import com.example.meditake.databinding.MedicamentItemBinding;
 
@@ -78,14 +75,7 @@ public class MedicamentAdapter  extends RecyclerView.Adapter<MedicamentAdapter.m
                 }
             });
 
-            binding.enableAlarm.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    System.out.println("Alarme creeee");
-                        Medicament medicament=medicamentList.get(getAdapterPosition());
-                      context.createAlarm(0,0,37,Math.toIntExact(medicament.getId()+90));
-                }
-            });
+
         }
     }
 }

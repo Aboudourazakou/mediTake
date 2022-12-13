@@ -1,4 +1,4 @@
-package com.example.meditake;
+package com.example.meditake.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.example.meditake.R;
 import com.example.meditake.database.AppDatabase;
 import com.example.meditake.database.dao.CategorieMedicamentDao;
 import com.example.meditake.database.dao.MedicamentDao;

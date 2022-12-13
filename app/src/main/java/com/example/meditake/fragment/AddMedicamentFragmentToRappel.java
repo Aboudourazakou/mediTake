@@ -1,12 +1,6 @@
-package com.example.meditake;
+package com.example.meditake.fragment;
 
-import android.app.AlarmManager;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
@@ -18,18 +12,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.meditake.R;
 import com.example.meditake.adapters.MedicamentAdapter;
-import com.example.meditake.alarm.RappelPriseMedicamentReceiver;
-import com.example.meditake.alarm.RappelRenouvellementMedicamentReceiver;
 import com.example.meditake.database.AppDatabase;
 import com.example.meditake.database.dao.MedicamentDao;
 import com.example.meditake.database.dao.RappelDao;
 import com.example.meditake.database.entities.Medicament;
 import com.example.meditake.database.entities.Rappel;
 import com.example.meditake.databinding.FragmentAddMedicamentBinding;
+import com.example.meditake.ui.AddMedicationActivity;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -87,13 +80,12 @@ public class AddMedicamentFragmentToRappel extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        binding=DataBindingUtil.inflate(inflater,R.layout.fragment_add_medicament, container, false);
+        binding=DataBindingUtil.inflate(inflater, R.layout.fragment_add_medicament, container, false);
         AppDatabase db = AppDatabase.getDataBase(getActivity().getApplicationContext());
         MedicamentDao medicamentDao=db.medicamentDao();
         RappelDao rappelDao=db.rappelDao();
 
         List<Rappel>rappelList=rappelDao.getAll();
-        createRappelRenouvellementMedicamentNotification();
 
         for (int i = 0; i <rappelList.size() ; i++) {
                 Medicament medicament=medicamentDao.getById(rappelList.get(i).getMedicamentId());
@@ -117,7 +109,7 @@ public class AddMedicamentFragmentToRappel extends Fragment {
        binding.addMedicament.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               Intent intent=new Intent(getContext(),AddMedicationActivity.class);
+               Intent intent=new Intent(getContext(), AddMedicationActivity.class);
                startActivity(intent);
            }
        });
@@ -125,47 +117,7 @@ public class AddMedicamentFragmentToRappel extends Fragment {
        return  binding.getRoot();
     }
 
-    private  void createRappelRenouvellementMedicamentNotification(){
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
-            CharSequence sequence="RenouvelleMedicament";
-            String description="Ce canal permet de creer une notification pour alerter le renouvelement de medicaments";
-            int importance= NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel channel=new NotificationChannel("renouvelleMedicament",sequence,importance);
-            channel.setDescription(description);
-            NotificationManager notificationManager=getActivity().getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-
-        }
-    }
-
-    public void createAlarm(int jour,int hour,int minutes,int requestCode) {
-
-
-        Intent intent=new Intent(getContext(), RappelRenouvellementMedicamentReceiver.class);
-        // context variable contains your `Context`
-        AlarmManager mgrAlarm = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-
-
-        Calendar calendar=Calendar.getInstance();
-        // calendar.set(Calendar.DATE,jour);
-        calendar.set(Calendar.HOUR_OF_DAY,8);
-        calendar.set(Calendar.MINUTE,49);
-        calendar.set(Calendar.SECOND,0);
-        calendar.set(Calendar.MILLISECOND,0);
-        System.out.println("Methode invoque");
-        PendingIntent pendingIntent= PendingIntent.getBroadcast(getContext(),requestCode,intent,0);
-
-         //pendingIntent = PendingIntent.getBroadcast(getContext(), requestCode, intent, 0);
-
-        mgrAlarm.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,
-                calendar.getTimeInMillis(),
-                pendingIntent);
 
 
 
-
-
-
-
-    }
 }

@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".AddPill"
+        tools:context=".fragment.AddPill"
         android:layout_marginBottom="10dp">
 
         <LinearLayout
@@ -123,48 +123,8 @@
                 android:layout_height="60dp"/>
 
         </LinearLayout>
-        <LinearLayout
-            android:padding="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="60dp"
-                android:textColor="@color/main_blue"
-                android:text="Heure de rappel renouvelement">
 
-            </TextView>
-            <EditText
-                android:id="@+id/heureRappel"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:inputType="number"
-                android:layout_height="60dp"/>
 
-        </LinearLayout>
-        <LinearLayout
-            android:padding="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="60dp"
-                android:textColor="@color/main_blue"
-                android:text="Minutes de rappel renouvelement">
-
-            </TextView>
-            <EditText
-                android:id="@+id/minRappel"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:inputType="number"
-                android:layout_height="60dp"/>
-
-        </LinearLayout>
         <LinearLayout
             android:padding="10dp"
             android:layout_width="match_parent"

@@ -2,7 +2,6 @@ package com.example.meditake.adapters;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,15 +9,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.meditake.HomeFragment;
+import com.example.meditake.fragment.HomeFragment;
 import com.example.meditake.database.entities.Rappel;
 import com.example.meditake.database.entities.Rapport;
 import com.example.meditake.databinding.SegmentMedicamentHomeListBinding;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 

@@ -1,19 +1,14 @@
 package com.example.meditake.adapters;
 
-import android.content.Context;
-import android.graphics.Point;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.meditake.HomeActivity;
-import com.example.meditake.HomeFragment;
+import com.example.meditake.fragment.HomeFragment;
 import com.example.meditake.R;
 import com.example.meditake.databinding.DaysItemBinding;
 
@@ -89,7 +84,11 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.daysViewHolder
                   // homeFragment.getProgrammes(dayList.get(activeDay));
                       String []day=dayList.get(activeDay).split(" ");
                       homeFragment.setFullSelectedDay(dayList.get(activeDay));
-                      homeFragment.setSelectedDay(day[0].substring(0,3));
+                      try{
+                          homeFragment.setSelectedDay(day[0].substring(0,3));
+                      }catch (Exception e){
+                          System.out.println(e.getMessage()+"  message de l exception");
+                      }
                       System.out.println("LE JOUR ACTIF "+day[0].substring(0,3));
                       //System.out.println(dayLis);
 

@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.meditake.HomeFragment;
+import com.example.meditake.fragment.HomeFragment;
 import com.example.meditake.database.entities.Programme;
 import com.example.meditake.databinding.RappelsListWrapperBinding;
 

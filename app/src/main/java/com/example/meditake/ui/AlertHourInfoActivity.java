@@ -1,4 +1,4 @@
-package com.example.meditake;
+package com.example.meditake.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,8 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
+import com.example.meditake.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;

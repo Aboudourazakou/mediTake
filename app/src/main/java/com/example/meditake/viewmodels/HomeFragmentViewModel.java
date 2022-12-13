@@ -5,8 +5,7 @@ import android.app.PendingIntent;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.meditake.HomeActivity;
-import com.example.meditake.HomeFragment;
+import com.example.meditake.fragment.HomeFragment;
 import com.example.meditake.database.AppDatabase;
 import com.example.meditake.database.dao.MedicamentDao;
 import com.example.meditake.database.dao.ProgrammeDao;
@@ -48,8 +47,7 @@ public class HomeFragmentViewModel  extends  HomeActivityViewModel{
         }
 
         AppDatabase db = AppDatabase.getDataBase(homeFragment.getActivity().getApplicationContext());
-        //RapportDao rapportDao1=db.rapportDao();
-        //rapportDao1.deleteAll();
+
         ProgrammeDao programmeDao=db.programmeDao();
         List<Programme>programmes=programmeDao.getAll();
 
@@ -71,7 +69,8 @@ public class HomeFragmentViewModel  extends  HomeActivityViewModel{
                     rappel.setMedicament(medicamentDao.getById(rappel.getMedicamentId()));
                     List< Rapport >rapports=rapportDao.findRapportByIdRappel(rappel.getId());
                     rappel.setRapportList(rapports);
-                    Rapport dernierRapport=rapports.get(rapports.size()-1);
+                    Rapport dernierRapport=null;
+                   if(rapports.size()>0){ dernierRapport=rapports.get(rapports.size()-1);}
                     if(dernierRapport!=null ){
                           if(!dernierRapport.getStatut().equals("ignore")){
                               if (!isAlarmExpired(rappel.getHeure(), rappel.getMinutes())) {
@@ -97,6 +96,7 @@ public class HomeFragmentViewModel  extends  HomeActivityViewModel{
 
             programmeList=dayProgramList;
             programLiveData.postValue(programmeList);
+
 
 
         }
@@ -154,20 +154,23 @@ public class HomeFragmentViewModel  extends  HomeActivityViewModel{
             calendar.set(Calendar.MINUTE,rappel.getMinutes());
             calendar.set(Calendar.SECOND,0);
             calendar.set(Calendar.MILLISECOND,0);
-            if(calendar.getTimeInMillis()<new Date().getTime()- TimeUnit.MINUTES.toMillis(10) ){
+            if(calendar.getTimeInMillis()<new Date().getTime()- TimeUnit.MINUTES.toMillis(1) ){
                 List<Rapport>rapportList=rapportDao.findRapportByIdRappel(rappel.getId());
-                boolean isTaken=false;
-                boolean isAlreadyMissed=false;
-                for (Rapport rapport:rapportList){
-                    if(rapport.getStatut().equals("pris") ){
-                        isTaken=true;
-                        break;
-                    }
-                    if(rapport.getStatut().equals("manque")){
-                        isAlreadyMissed=true;
+                if(rapportList.size()>0){
+                    Rapport dernierRapport=rapportList.get(rapportList.size()-1);
+                    if(dernierRapport.getStatut().equals("ignore") || dernierRapport.getStatut().equals("manque") || dernierRapport.getStatut().equals("pris")){
+
+                    }else{
+                        Rapport rapport=new Rapport();
+                        rapport.setIdRappel(rappel.getId());
+                        rapport.setDate(new Date().getTime());
+                        rapport.setMessage("Vous avez manque ce medicament");
+                        rapport.setStatut("manque");
+                        rapportDao.insert(rapport);
                     }
                 }
-                if(!isTaken && !isAlreadyMissed){
+                else{
+                    System.out.println("AFFICHE TOI MERDE");
                     Rapport rapport=new Rapport();
                     rapport.setIdRappel(rappel.getId());
                     rapport.setDate(new Date().getTime());
@@ -175,6 +178,7 @@ public class HomeFragmentViewModel  extends  HomeActivityViewModel{
                     rapport.setStatut("manque");
                     rapportDao.insert(rapport);
                 }
+
 
             };
         }

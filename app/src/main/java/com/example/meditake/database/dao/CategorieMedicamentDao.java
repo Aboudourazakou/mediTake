@@ -28,4 +28,6 @@ public interface CategorieMedicamentDao {
 
     @Delete
     void delete(CategorieMedicament categorieMedicament);
+    @Query("DELETE FROM CATEGORIEMEDICAMENT")
+    void deleteAll();
 }

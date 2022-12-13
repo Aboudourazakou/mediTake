@@ -7,17 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.meditake.HomeActivity;
-import com.example.meditake.HomeFragment;
+import com.example.meditake.fragment.HomeFragment;
 import com.example.meditake.R;
-import com.example.meditake.models.MenuItem;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /***

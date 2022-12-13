@@ -43,4 +43,6 @@ public interface RappelDao {
 
     @Update
     void update(Rappel rappel);
+    @Query("DELETE FROM Rappel")
+    void deleteAll();
 }

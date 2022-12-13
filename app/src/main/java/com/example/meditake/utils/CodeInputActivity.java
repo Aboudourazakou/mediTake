@@ -1,9 +1,8 @@
 
-package com.example.meditake;
+package com.example.meditake.utils;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,15 +12,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.meditake.ui.NewPasswordActivity;
 import com.example.meditake.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class CodeInputActivity  extends AppCompatActivity {
@@ -49,7 +47,7 @@ public class CodeInputActivity  extends AppCompatActivity {
             public void onClick(View view) {
                 String  enteredCode=editText1.getText().toString()+editText2.getText().toString()+editText3.getText().toString()+editText4.getText().toString();
                 if(enteredCode.equals(code)){
-                           Intent intent=new Intent(CodeInputActivity.this,NewPasswordActivity.class);
+                           Intent intent=new Intent(CodeInputActivity.this, NewPasswordActivity.class);
                            intent.putExtra("mail",mail);
                            startActivity(intent);
                 }

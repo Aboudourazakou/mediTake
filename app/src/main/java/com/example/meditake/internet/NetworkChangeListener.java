@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 ;
 
-import com.example.meditake.LoginActivity;
+import com.example.meditake.ui.LoginActivity;
 
 
 

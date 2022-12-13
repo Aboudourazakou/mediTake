@@ -1,17 +1,11 @@
-package com.example.meditake;
-
-import static android.content.ContentValues.TAG;
+package com.example.meditake.fragment;
 
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,7 +13,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,17 +21,18 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.meditake.R;
 import com.example.meditake.database.AppDatabase;
 import com.example.meditake.database.dao.CategorieMedicamentDao;
 import com.example.meditake.database.dao.MedicamentDao;
 import com.example.meditake.database.entities.CategorieMedicament;
 import com.example.meditake.database.entities.Medicament;
 import com.example.meditake.databinding.FragmentAddPillBinding;
+import com.example.meditake.ui.HomeActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -68,6 +62,7 @@ public class AddPill extends Fragment {
     Long idCategorie;
     Boolean isModification=false;
     long idSelected=0;
+    byte[] bytes;
     ProgressDialog progressDialog;
     public AddPill() {
         // Required empty public constructor
@@ -107,7 +102,7 @@ public class AddPill extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        binding= DataBindingUtil.inflate(inflater,R.layout.fragment_add_pill, container, false);
+        binding= DataBindingUtil.inflate(inflater, R.layout.fragment_add_pill, container, false);
         binding.uploadPictureBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,11 +128,11 @@ public class AddPill extends Fragment {
             Medicament medicament=medicamentDao.getById(HomeActivity.selectedMedicamentId);
             idSelected=medicament.getId();
             HomeActivity.selectedMedicamentId=-1000;
+            bytes=medicament.getImage();
             binding.qtePill.setText(medicament.getQte()+"");
             binding.nommMed.setText(medicament.getNom()+"");
             binding.seuilRenouvelement.setText(medicament.getMinQte()+"");
-            binding.minRappel.setText(medicament.getMin()+"");
-            binding.heureRappel.setText(medicament.getHeure()+"");
+
             isModification=true;
 
         }
@@ -191,22 +186,19 @@ public class AddPill extends Fragment {
                 medicament.setCategorieId(idCategorie);
                 medicament.setCategorieId(idCategorie);
                 medicament.setNom(binding.nommMed.getText().toString());
-                medicament.setHeure(Integer.valueOf(binding.heureRappel.getText().toString()));
-                medicament.setMin(Integer.valueOf(binding.minRappel.getText().toString()));
+
                 medicament.setMinQte(Integer.valueOf(binding.seuilRenouvelement.getText().toString()));
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                cameraBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-                byte[] imageInByte = stream.toByteArray();
-                medicament.setImage(imageInByte);
-                binding.heureRappel.setText("");
-                binding.minRappel.setText("");
+
+
                 binding.seuilRenouvelement.setText("");
                 binding.qtePill.setText("");
 
 
                 if(isModification){
                      medicament.setId(idSelected);
+                     medicament.setImage(bytes);
                     if( medicamentDao.update(medicament)>0){
 
                         binding.insertionMessage.setVisibility(View.VISIBLE);
@@ -219,6 +211,9 @@ public class AddPill extends Fragment {
                     }
 
                 }else{
+                    cameraBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                    byte[] imageInByte = stream.toByteArray();
+                    medicament.setImage(imageInByte);
                     if( medicamentDao.insert(
                             medicament)>0){
                         binding.insertionMessage.setVisibility(View.VISIBLE);
@@ -226,7 +221,7 @@ public class AddPill extends Fragment {
                         binding.nommMed.setText("");
                         binding.qtePill.setText("");
                         binding.uploadedPicture.setVisibility(View.GONE);
-                        showDialog("ENREGISTREMENT MEDICAMENT","Medicament sauvegarde avec succes");
+                      //  showDialog("ENREGISTREMENT MEDICAMENT","Medicament sauvegarde avec succes");
 
                     }
                 }

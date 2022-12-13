@@ -1,6 +1,4 @@
-package com.example.meditake;
-
-import static android.content.ContentValues.TAG;
+package com.example.meditake.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -10,16 +8,10 @@ import androidx.core.content.res.ResourcesCompat;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -35,17 +27,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.meditake.R;
 import com.example.meditake.adapters.DaysSelectionAdapter;
 import com.example.meditake.adapters.MedicamentPropositionListviewAdapter;
 import com.example.meditake.database.AppDatabase;
-import com.example.meditake.database.dao.CategorieMedicamentDao;
 import com.example.meditake.database.dao.MedicamentDao;
-import com.example.meditake.database.dao.PatientDao;
 import com.example.meditake.database.dao.ProgrammeDao;
 import com.example.meditake.database.dao.RappelDao;
-import com.example.meditake.database.entities.CategorieMedicament;
 import com.example.meditake.database.entities.Medicament;
-import com.example.meditake.database.entities.Patient;
 import com.example.meditake.database.entities.Programme;
 import com.example.meditake.database.entities.Rappel;
 
@@ -58,7 +47,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 

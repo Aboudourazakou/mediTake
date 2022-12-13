@@ -1,8 +1,5 @@
-package com.example.meditake;
+package com.example.meditake.fragment;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -17,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.meditake.R;
 import com.example.meditake.adapters.RapportAdapter;
 import com.example.meditake.database.AppDatabase;
 import com.example.meditake.database.dao.MedicamentDao;
@@ -24,17 +22,12 @@ import com.example.meditake.database.dao.RappelDao;
 import com.example.meditake.database.dao.RapportDao;
 import com.example.meditake.database.dto.MailObject;
 import com.example.meditake.database.dto.RapportDto;
-import com.example.meditake.database.dto.UtilisateurLogin;
 import com.example.meditake.database.entities.Medicament;
 import com.example.meditake.database.entities.Rappel;
 import com.example.meditake.database.entities.Rapport;
-import com.example.meditake.database.entities.Utilisateur;
 import com.example.meditake.databinding.FragmentJournalBinding;
 import com.example.meditake.services.RapportService;
 import com.example.meditake.services.RetrofitGenerator;
-import com.example.meditake.services.UtilisateurService;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +82,7 @@ public class JournalFragment extends Fragment {
         });
 
         // Inflate the layout for this fragment
-        binding= DataBindingUtil.inflate(inflater,R.layout.fragment_journal, container, false);
+        binding= DataBindingUtil.inflate(inflater, R.layout.fragment_journal, container, false);
 
 
         binding.journalRecycle.setLayoutManager(new LinearLayoutManager(getContext()));

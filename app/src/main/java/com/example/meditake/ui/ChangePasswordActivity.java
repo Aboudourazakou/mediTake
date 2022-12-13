@@ -1,6 +1,4 @@
-package com.example.meditake;
-
-import static java.security.AccessController.getContext;
+package com.example.meditake.ui;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,9 +13,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.meditake.database.AppDatabase;
+import com.example.meditake.R;
 import com.example.meditake.services.RetrofitGenerator;
 import com.example.meditake.services.UtilisateurService;
+import com.example.meditake.utils.CodeInputActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -73,7 +72,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                    alertDialog.show();
                }
                else{
-                   Intent intent=new Intent(ChangePasswordActivity.this,CodeInputActivity.class);
+                   Intent intent=new Intent(ChangePasswordActivity.this, CodeInputActivity.class);
                    intent.putExtra("code",response.body());
                    intent.putExtra("mail",mail);
                    startActivity(intent);

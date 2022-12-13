@@ -1,4 +1,4 @@
-package com.example.meditake;
+package com.example.meditake.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +10,11 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.meditake.fragment.AddMedicamentFragmentToRappel;
+import com.example.meditake.fragment.AddPill;
+import com.example.meditake.fragment.HomeFragment;
+import com.example.meditake.fragment.JournalFragment;
+import com.example.meditake.R;
 import com.example.meditake.databinding.ActivityHomeBinding;
 import com.google.android.material.navigation.NavigationBarView;
 

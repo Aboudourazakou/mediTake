@@ -1,4 +1,4 @@
-package com.example.meditake;
+package com.example.meditake.fragment;
 
 import android.app.AlarmManager;
 import android.app.Dialog;
@@ -6,12 +6,16 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -30,7 +34,9 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 
+import com.example.meditake.R;
 import com.example.meditake.adapters.DaysAdapter;
 import com.example.meditake.adapters.IgnoreReasonAdapter;
 import com.example.meditake.adapters.ProgrammeAdapter;
@@ -44,9 +50,12 @@ import com.example.meditake.databinding.IgnoreMessageDialogBinding;
 import com.example.meditake.databinding.RappelClickDialogBinding;
 import com.example.meditake.databinding.RescheduleReminderDialogBinding;
 
+import com.example.meditake.ui.HomeActivity;
 import com.example.meditake.viewmodels.HomeActivityViewModel;
 import com.example.meditake.viewmodels.HomeFragmentViewModel;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -232,6 +241,11 @@ public class HomeFragment extends Fragment {
         this.dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
         //Mention the name of the layout of your custom dialog.
         this.dialog.setContentView(dialogBinding.getRoot());
+        InputStream is = new ByteArrayInputStream(rappel.getMedicament().getImage());
+        Bitmap bmp = BitmapFactory.decodeStream(is);
+        ImageView img=this.dialog.findViewById(R.id.medi_picture);
+        img.setImageBitmap(bmp);
+
 
            if(rappel.getRapportList().size()>0) {
                Rapport dernierRapport=rappel.getRapportList().get(rappel.getRapportList().size()-1);
@@ -272,18 +286,29 @@ public class HomeFragment extends Fragment {
         dialogBinding.takePillBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Rapport rapport=new Rapport();
-                rapport.setDate(new Date().getTime());
-                rapport.setStatut("pris");
-                rapport.setMessage("Le pilule a ete pris le "+new SimpleDateFormat("EEE d MMM h:mm a", Locale.FRANCE).format(Calendar.getInstance().getTime()));
-                rapport.setIdRappel(rappel.getId());
-                rappel.setLastTimeTaken(new SimpleDateFormat("EEE d MMM h:mm a", Locale.FRANCE).format(Calendar.getInstance().getTime()));
-                homeFragmentViewModel.saveRapport(rapport);
-                Medicament medicament=rappel.getMedicament();
-                medicament.setQte((int) (medicament.getQte()-rappel.getQtePilule()));
-                homeFragmentViewModel.updateMedicament(medicament);
-                homeFragmentViewModel.updateRappel(rappel);
-                dialog.cancel();
+                Boolean insuffisant=false;
+                if(rappel.getMedicament().getMinQte()>=rappel.getMedicament().getQte()-rappel.getQtePilule()){
+                      showWarning("Vous tendez ou avez depasse le seuil");
+                }
+                else if(rappel.getMedicament().getQte()-rappel.getQtePilule()<0){
+                    showWarning("Stock Insuffisant!");
+                    insuffisant=true;
+
+                }
+                if(!insuffisant){
+                    Rapport rapport=new Rapport();
+                    rapport.setDate(new Date().getTime());
+                    rapport.setStatut("pris");
+                    rapport.setMessage("Le pilule a ete pris le "+new SimpleDateFormat("EEE d MMM h:mm a", Locale.FRANCE).format(Calendar.getInstance().getTime()));
+                    rapport.setIdRappel(rappel.getId());
+                    rappel.setLastTimeTaken(new SimpleDateFormat("EEE d MMM h:mm a", Locale.FRANCE).format(Calendar.getInstance().getTime()));
+                    homeFragmentViewModel.saveRapport(rapport);
+                    Medicament medicament=rappel.getMedicament();
+                    medicament.setQte((int) (medicament.getQte()-rappel.getQtePilule()));
+                    homeFragmentViewModel.updateMedicament(medicament);
+                    homeFragmentViewModel.updateRappel(rappel);
+                    dialog.cancel();
+                }
             }
         });
 
@@ -610,6 +635,23 @@ public class HomeFragment extends Fragment {
 
     public  List<PendingIntent> getPendingIntents(){
         return  intentArray;
+    }
+
+
+    public  void showWarning(String message){
+        AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+        alertDialog.setTitle("ATTENTION!");
+        alertDialog.setIcon(R.drawable.no_internet);
+        alertDialog.setMessage(message);
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+
+        alertDialog.show();
     }
 
 

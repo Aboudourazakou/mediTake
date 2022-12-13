@@ -26,27 +26,27 @@
         android:theme="@style/Theme.MediTake"
         tools:targetApi="31">
         <activity
-            android:name=".NewPasswordActivity"
+            android:name=".ui.NewPasswordActivity"
             android:exported="false"
             android:theme="@style/AppTheme.fullscreen"/>
         <activity
-            android:name=".CodeInputActivity"
+            android:name=".utils.CodeInputActivity"
             android:exported="false"
             android:theme="@style/AppTheme.fullscreen" />
         <activity
-            android:name=".AddMedicationActivity"
+            android:name=".ui.AddMedicationActivity"
             android:theme="@style/AppTheme.fullscreen" />
         <activity
-            android:name=".AlertHourInfoActivity"
+            android:name=".ui.AlertHourInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".ui.HomeActivity"
             android:exported="true"
             android:theme="@style/AppTheme.fullscreen" />
-        <activity android:name=".LoginActivity"
+        <activity android:name=".ui.LoginActivity"
             android:theme="@style/AppTheme.fullscreen"></activity>
         <activity
-            android:name=".ChangePasswordActivity"
+            android:name=".ui.ChangePasswordActivity"
             android:exported="false"
             android:theme="@style/AppTheme.fullscreen">
             <meta-data
@@ -54,7 +54,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".utils.MainActivity"
             android:exported="true"
             android:theme="@style/AppTheme.fullscreen">
             <intent-filter>

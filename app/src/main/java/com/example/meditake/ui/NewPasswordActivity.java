@@ -1,4 +1,4 @@
-package com.example.meditake;
+package com.example.meditake.ui;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +11,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.meditake.databinding.ActivityHomeBinding;
 import com.example.meditake.databinding.ActivityNewPasswordBinding;
 import com.example.meditake.services.RetrofitGenerator;
 import com.example.meditake.services.UtilisateurService;
@@ -70,7 +69,7 @@ public class NewPasswordActivity extends AppCompatActivity {
                                 alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                                     @Override
                                     public void onDismiss(DialogInterface dialogInterface) {
-                                        Intent intent=new Intent(NewPasswordActivity.this,LoginActivity.class);
+                                        Intent intent=new Intent(NewPasswordActivity.this, LoginActivity.class);
                                         startActivity(intent);
                                     }
                                 });

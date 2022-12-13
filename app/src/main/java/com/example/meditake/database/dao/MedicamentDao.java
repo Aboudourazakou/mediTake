@@ -35,4 +35,7 @@ public interface MedicamentDao {
 
     @Query("select * from medicament where nom LIKE '%'+:nom+'%'")
     List<Medicament> getByNom(String nom);
+
+    @Query("DELETE FROM MEDICAMENT")
+     void deleteAll();
 }

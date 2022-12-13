@@ -160,30 +160,7 @@
 
             </LinearLayout>
             <!--End info -->
-            <!--Info -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:textStyle="bold"
-                    android:text="Heure de rappel sous seuil:"
-                    android:textColor="@color/green_medi">
-                </TextView>
-                <TextView
-                    android:id="@+id/renewQteTimme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:text='@{medicament.heure +": "+medicament.min}'
-                    android:textColor="@color/black">
-                </TextView>
 
-            </LinearLayout>
-            <!--End info -->
 
             <TextView
                 android:id="@+id/update"
@@ -199,18 +176,7 @@
             </TextView>
 
 
-            <TextView
-                android:id="@+id/enableAlarm"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/white"
-                android:gravity="center"
-                android:background="@drawable/round_green"
-                android:text="Activer rappel">
-
-            </TextView>
+          
 
 
 

@@ -1,14 +1,17 @@
-package com.example.meditake;
+package com.example.meditake.utils;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.WindowManager;
+
+import com.example.meditake.ui.HomeActivity;
+import com.example.meditake.R;
+import com.example.meditake.ui.LoginActivity;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -28,13 +31,13 @@ public class MainActivity extends AppCompatActivity {
             System.out.println(mail +"Ceci est un mail ");
             if(!mail.equals("")){
 
-                Intent intent = new Intent(MainActivity.this,HomeActivity.class);
+                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                 startActivity(intent);
                 finish();
             }
             else{
 
-                Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
             }

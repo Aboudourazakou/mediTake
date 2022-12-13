@@ -3,24 +3,20 @@ package com.example.meditake.adapters;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.meditake.JournalFragment;
+import com.example.meditake.fragment.JournalFragment;
 import com.example.meditake.R;
-import com.example.meditake.database.entities.Medicament;
 import com.example.meditake.database.entities.Rapport;
 import com.example.meditake.databinding.RapportItemViewBinding;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;

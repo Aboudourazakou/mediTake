@@ -1,7 +1,5 @@
 package com.example.meditake.adapters;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,18 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.RadioButton;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.meditake.AddMedicationActivity;
-import com.example.meditake.HomeActivity;
+import com.example.meditake.ui.AddMedicationActivity;
 import com.example.meditake.R;
-import com.example.meditake.models.MenuItem;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /***
