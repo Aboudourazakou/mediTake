@@ -141,10 +141,7 @@ public class AddPill extends Fragment {
         CategorieMedicament categorieMedicament=new CategorieMedicament();
          //categorieMedicamentDao.insertAll(new CategorieMedicament("Flacon"),new CategorieMedicament("Pilule"));
 
-
         List<CategorieMedicament> list = categorieMedicamentDao.getAll();
-
-
 
         ArrayList<String> categoriesName = new ArrayList<>();
         for (CategorieMedicament c:list
@@ -152,7 +149,8 @@ public class AddPill extends Fragment {
             categoriesName.add(c.getLibelle());
         }
 
-        idCategorie=list.get(0).getId();
+        if(list.size()>0)
+            idCategorie=list.get(0).getId();
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,categoriesName);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

@@ -47,8 +47,7 @@ public class TestActivity extends AppCompatActivity {
     void test(){
 
         CategorieMedicamentDao typeMedicamentDao = db.categorieMedicamentDao();
-
-        typeMedicamentDao.insertAll(new CategorieMedicament(1L,"pillule"));
+        typeMedicamentDao.insertAll(new CategorieMedicament(1L,"pillule"), new CategorieMedicament(2L,"Goutes ophtalmiques"), new CategorieMedicament(3L,"injections"));
         addMedicaments();
 
     }

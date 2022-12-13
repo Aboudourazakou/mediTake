@@ -248,6 +248,13 @@ public class HomeFragment extends Fragment {
 
 
            if(rappel.getRapportList().size()>0) {
+
+               InputStream is = new ByteArrayInputStream(rappel.getMedicament().getImage());
+               Bitmap bmp = BitmapFactory.decodeStream(is);
+
+               dialogBinding.mediPicture.setImageBitmap(bmp);
+
+
                Rapport dernierRapport=rappel.getRapportList().get(rappel.getRapportList().size()-1);
                if (dernierRapport != null && dernierRapport.getStatut().equals("pris")) {
 
